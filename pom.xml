@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.gmail.sshekh</groupId>
+    <artifactId>proj.test1</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>proj.test1</name>
+    <modules>
+        <module>dao</module>
+        <module>service</module>
+        <module>web</module>
+    </modules>
+    <properties>
+        <jstl.version>1.2</jstl.version>
+        <servlet.version>3.1.0</servlet.version>
+        <mysql.version>8.0.12</mysql.version>
+        <log4j2.version>2.2</log4j2.version>
+        <hibernate.version>5.3.6.Final</hibernate.version>
+    </properties>
+</project>
