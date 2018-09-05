@@ -16,7 +16,7 @@ public class UserConverter implements Converter<UserDTO, User> {
         user.setFirstName(dto.getName());
         user.setLastName(dto.getSurname());
         user.setPassword(dto.getPassword());
-        user.setRoleId(dto.getRoleId());
+        //user.setRoleId(dto.getRoleId());
         return user;
     }
 

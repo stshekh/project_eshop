@@ -14,10 +14,10 @@ public class Profile implements Serializable {
     @GenericGenerator(
             name = "generator",
             strategy = "foreign",
-            parameters = @Parameter(name = "property", value = "USER_ID"))
+            parameters = @Parameter(name = "property", value = "user"))
     @Id
     @GeneratedValue(generator = "generator")
-    @Column(unique = true, nullable = false)
+    @Column(name = "ID_USER",unique = true, nullable = false)
     private Long userId;
     @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn

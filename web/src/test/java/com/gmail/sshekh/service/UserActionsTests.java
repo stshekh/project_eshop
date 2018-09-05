@@ -1,9 +1,12 @@
 package com.gmail.sshekh.service;
 
+import com.gmail.sshekh.dao.ProfileDao;
 import com.gmail.sshekh.dao.RoleDao;
 import com.gmail.sshekh.dao.UserDao;
+import com.gmail.sshekh.dao.impl.ProfileDaoImpl;
 import com.gmail.sshekh.dao.impl.RoleDaoImpl;
 import com.gmail.sshekh.dao.impl.UserDaoImpl;
+import com.gmail.sshekh.dao.model.Profile;
 import com.gmail.sshekh.dao.model.Role;
 import com.gmail.sshekh.dao.model.User;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +21,7 @@ public class UserActionsTests {
     private static final Logger logger = LogManager.getLogger(UserActionsTests.class);
     private UserDao userDao = new UserDaoImpl(User.class);
     private RoleDao roleDao = new RoleDaoImpl(Role.class);
+    private ProfileDao profileDao = new ProfileDaoImpl(Profile.class);
 
     @Test
     public void userSaveInfo() {
@@ -31,8 +35,8 @@ public class UserActionsTests {
         user.setEmail("admin@admin");
         user.setPassword("admin");
 
+        role.getUsers().add(user);
         user.setRole(role);
-        role.setUser(user);
 
         Session session = userDao.getCurrentSession();
         try {
@@ -41,12 +45,51 @@ public class UserActionsTests {
                 transaction.begin();
             }
             roleDao.create(role);
-            user.setRoleId(role.getIdRole());
             userDao.create(user);
             List<User> users = userDao.findAll();
             logger.info(users.stream().findAny().get().getFirstName());
             transaction.commit();
         } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
+    }
+
+    @Test
+    public void userProfileInfo() {
+        Role role = new Role();
+        User user = new User();
+        Profile profile = new Profile();
+
+        role.setRoleName("Admin");
+
+        user.setFirstName("admin");
+        user.setLastName("admin");
+        user.setEmail("admin@admin");
+        user.setPassword("admin");
+
+        profile.setAddress("Minsk");
+        profile.setTelephone("22222222");
+
+        role.getUsers().add(user);
+        user.setRole(role);
+        user.setProfile(profile);
+        profile.setUser(user);
+
+        Session session = roleDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction.begin();
+            }
+            roleDao.create(role);
+            userDao.create(user);
+            profileDao.create(profile);
+            List<User> users = userDao.findAll();
+            logger.info(users.stream().findAny().get().getProfile().getAddress());
+            logger.info(users.stream().findAny().get().getRole().getRoleName());
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error(e);
             session.getTransaction().rollback();
         }
     }
