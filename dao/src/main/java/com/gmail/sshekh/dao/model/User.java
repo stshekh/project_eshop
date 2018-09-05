@@ -2,7 +2,9 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "T_USER")
@@ -20,26 +22,16 @@ public class User implements Serializable {
     private String lastName;
     @Column(name = "ID_ROLE")
     private Long roleId;
+    @Column(name = "PASSWORD")
+    private String password;
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Role role;
 
-    public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    private String password;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "USER_ID")
+    private Set<Audit> audits = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -57,6 +49,30 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -65,12 +81,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Long getRole() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRole(Long roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

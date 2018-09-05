@@ -18,5 +18,14 @@
         <mysql.version>8.0.12</mysql.version>
         <log4j2.version>2.2</log4j2.version>
         <hibernate.version>5.3.6.Final</hibernate.version>
+        <junit.version>4.12</junit.version>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

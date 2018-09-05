@@ -2,8 +2,7 @@ package com.gmail.sshekh.dao.util;
 
 
 import com.gmail.sshekh.config.ConfigurationManager;
-import com.gmail.sshekh.dao.model.Role;
-import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.dao.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -46,7 +45,15 @@ public class HibernateUtil {
 
                 MetadataSources sources = new MetadataSources(registry).
                         addAnnotatedClass(User.class).
-                        addAnnotatedClass(Role.class);
+                        addAnnotatedClass(Role.class).
+                        addAnnotatedClass(Audit.class).
+                        addAnnotatedClass(Comment.class).
+                        addAnnotatedClass(Item.class).
+                        addAnnotatedClass(News.class).
+                        addAnnotatedClass(Order.class).
+                        addAnnotatedClass(Permission.class).
+                        addAnnotatedClass(Profile.class).
+                        addAnnotatedClass(RolePermission.class);
                 Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
                 logger.info("Session Factory created.");
