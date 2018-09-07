@@ -9,13 +9,13 @@ public class UserDTO {
     private String surname;
     private String email;
     private String password;
-    private Role role;
+    private RoleDTO role;
 
-    public Role getRole() {
+    public RoleDTO getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleDTO role) {
         this.role = role;
     }
 

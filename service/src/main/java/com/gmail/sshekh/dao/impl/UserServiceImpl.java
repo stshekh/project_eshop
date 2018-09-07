@@ -57,8 +57,9 @@ public class UserServiceImpl implements UserService {
                 session.beginTransaction();
             }
             User savedUser = userDao.findUserByEmail(email);
+            UserDTO userDTO = userDTOConverter.toDTO(savedUser);
             transaction.commit();
-            return userDTOConverter.toDTO(savedUser);
+            return userDTO;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -79,8 +80,9 @@ public class UserServiceImpl implements UserService {
             }
 
             List<User> users = userDao.findAll();
+            List<UserDTO> userDTOS = userDTOConverter.toDTOList(users);
             transaction.commit();
-            return userDTOConverter.toDTOList(users);
+            return userDTOS;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();

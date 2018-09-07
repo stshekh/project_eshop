@@ -1,6 +1,7 @@
 package com.gmail.sshekh.dao.impl;
 
 import com.gmail.sshekh.dao.UserDao;
+import com.gmail.sshekh.dao.model.Role;
 import com.gmail.sshekh.dao.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,4 +24,14 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setParameter("email", email);
         return (User) query.uniqueResult();
     }
+
+    @Override
+    public Role getRoleByEmail(String email) {
+        String hql = "select role from User as U where U.email=:email";
+        Query query=getCurrentSession().createQuery(hql);
+        query.setParameter("email", email);
+        return (Role) query.uniqueResult();
+    }
+
+
 }

@@ -10,13 +10,14 @@ import java.util.stream.Collectors;
 public class UserDTOConverter implements DTOConverter<User, UserDTO> {
     @Override
     public UserDTO toDTO(User entity) {
+        RoleDTOConverter roleDTOConverter=new RoleDTOConverter();
         UserDTO userDTO = new UserDTO();
         userDTO.setId(entity.getId());
         userDTO.setEmail(entity.getEmail());
         userDTO.setName(entity.getFirstName());
         userDTO.setSurname(entity.getLastName());
         userDTO.setPassword(entity.getPassword());
-        userDTO.setRole(entity.getRole());
+        userDTO.setRole(roleDTOConverter.toDTO(entity.getRole()));
         return userDTO;
     }
 
