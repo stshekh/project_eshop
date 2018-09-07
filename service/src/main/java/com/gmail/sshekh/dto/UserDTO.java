@@ -1,13 +1,23 @@
 package com.gmail.sshekh.dto;
 
 
+import com.gmail.sshekh.dao.model.Role;
+
 public class UserDTO {
     private Long id;
     private String name;
     private String surname;
     private String email;
     private String password;
-    private Long roleId;
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
@@ -47,13 +57,5 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
     }
 }

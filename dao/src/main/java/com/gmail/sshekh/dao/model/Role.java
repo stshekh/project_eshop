@@ -2,9 +2,7 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "T_ROLE")
@@ -17,20 +15,8 @@ public class Role implements Serializable {
     @Column(name = "ROLE_NAME")
     private String roleName;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "ID_ROLE")
-    private Set<User> users = new HashSet<>();
-
     public Long getIdRole() {
         return idRole;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     public void setIdRole(Long idRole) {

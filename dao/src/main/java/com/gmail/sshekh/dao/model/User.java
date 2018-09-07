@@ -2,9 +2,7 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "T_USER")
@@ -20,8 +18,6 @@ public class User implements Serializable {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
-//    @Column(name = "ID_ROLE")
-//    private Long roleId;
     @Column(name = "PASSWORD")
     private String password;
 
@@ -31,10 +27,6 @@ public class User implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "USER_ID")
-    private Set<Audit> audits = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -68,14 +60,6 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-/*    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }*/
-
     public String getPassword() {
         return password;
     }
@@ -100,14 +84,6 @@ public class User implements Serializable {
         this.profile = profile;
     }
 
-    /*public Set<Audit> getAudits() {
-        return audits;
-    }
-
-    public void setAudits(Set<Audit> audits) {
-        this.audits = audits;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -117,12 +93,12 @@ public class User implements Serializable {
                 Objects.equals(email, user.email) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-//                Objects.equals(roleId, user.roleId) &&
+                Objects.equals(role, user.role) &&
                 Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName/*, roleId*/, password);
+        return Objects.hash(id, email, firstName, lastName, role, password);
     }
 }
