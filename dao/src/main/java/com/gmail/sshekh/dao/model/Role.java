@@ -2,7 +2,9 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "T_ROLE")
@@ -14,6 +16,9 @@ public class Role implements Serializable {
     private Long idRole;
     @Column(name = "ROLE_NAME")
     private String roleName;
+
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
+    private Set<Permission> permissions = new HashSet<>();
 
     public Long getIdRole() {
         return idRole;
@@ -29,6 +34,14 @@ public class Role implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override

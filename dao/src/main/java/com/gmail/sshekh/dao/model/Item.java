@@ -1,4 +1,6 @@
 package com.gmail.sshekh.dao.model;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
 }

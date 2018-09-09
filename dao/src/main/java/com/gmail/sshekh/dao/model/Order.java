@@ -1,4 +1,6 @@
 package com.gmail.sshekh.dao.model;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
 }
