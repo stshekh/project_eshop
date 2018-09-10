@@ -24,6 +24,8 @@ public class UserActionsTests {
     private NewsDao newsDao = new NewsDaoImpl(News.class);
     private CommentDao commentDao = new CommentDaoImpl(Comment.class);
     private PermissionDao permissionDao = new PermissionDaoImpl(Permission.class);
+    private OrderDao orderDao = new OrderDaoImpl(Order.class);
+    private ItemDao itemDao = new ItemDaoImpl(Item.class);
 
     @Test
     public void userSaveInfo() {
@@ -254,12 +256,72 @@ public class UserActionsTests {
             roleDao.create(role1);
             permissionDao.create(permission);
             permissionDao.create(permission1);
-            List<Role> roles=roleDao.findAll();
+            List<Role> roles = roleDao.findAll();
             logger.info(roles.stream().findFirst().get().getRoleName());
             transaction.commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
 
+    }
+
+    @Test
+    public void userOrderTest() {
+        Role role = new Role();
+        Role role1 = new Role();
+        User user = new User();
+        User user1 = new User();
+
+
+        role.setRoleName("Admin");
+        role1.setRoleName("User");
+
+        user.setFirstName("admin");
+        user.setLastName("admin");
+        user.setEmail("admin@admin");
+        user.setPassword("admin");
+
+        user1.setFirstName("user");
+        user1.setLastName("userov");
+        user1.setEmail("user@user");
+        user1.setPassword("user");
+
+        user.setRole(role);
+        user1.setRole(role1);
+
+        Item item=new Item();
+
+        item.setItemName("Phone");
+        item.setDescription("Best phone of 2019");
+        item.setUniqueNumber("PH20102");
+        item.setPrice(199.12);
+
+
+        Session session = userDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction.begin();
+            }
+            roleDao.create(role);
+            roleDao.create(role1);
+            userDao.create(user);
+            userDao.create(user1);
+            itemDao.create(item);
+
+            Order order=new Order(user,item);
+//            order.setItem(item);
+//            order.setUser(user);
+            order.setQuantity(5);
+            order.setCreated(LocalDateTime.now());
+            orderDao.create(order);
+            List<Order> orders = orderDao.findAll();
+            logger.info(orders.stream().findFirst().get().getUser().getFirstName()+" "
+                    +orders.stream().findFirst().get().getItem().getItemName()+" "
+                    +orders.stream().findFirst().get().getQuantity());
+            transaction.commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +29,9 @@ public class User implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> items=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -82,6 +87,14 @@ public class User implements Serializable {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public List<Order> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Order> items) {
+        this.items = items;
     }
 
     @Override
