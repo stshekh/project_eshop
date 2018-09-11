@@ -37,8 +37,9 @@ public class UserServiceImpl implements UserService {
             transaction.begin();
             User user = userConverter.toEntity(userDTO);
             userDao.create(user);
+            UserDTO userDTONew = userDTOConverter.toDTO(user);
             transaction.commit();
-            return userDTOConverter.toDTO(user);
+            return userDTONew;
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
@@ -46,6 +47,48 @@ public class UserServiceImpl implements UserService {
             logger.error("Failed to save user", e);
         }
         return userDTO;
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        Session session = userDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            User user = userConverter.toEntity(userDTO);
+            userDao.update(user);
+            UserDTO userDTONew = userDTOConverter.toDTO(user);
+            transaction.commit();
+            return userDTONew;
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("Failed to update user", e);
+        }
+        return userDTO;
+    }
+
+    @Override
+    public void delete(UserDTO userDTO) {
+        Session session = userDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            User user = userConverter.toEntity(userDTO);
+            userDao.delete(user);
+            transaction.commit();
+            logger.info("User " + user.getFirstName() + " was successfully deleted!");
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            logger.error("User wasn't deleted!", e);
+        }
     }
 
     @Override
@@ -78,7 +121,6 @@ public class UserServiceImpl implements UserService {
             if (!transaction.isActive()) {
                 session.beginTransaction();
             }
-
             List<User> users = userDao.findAll();
             List<UserDTO> userDTOS = userDTOConverter.toDTOList(users);
             transaction.commit();
