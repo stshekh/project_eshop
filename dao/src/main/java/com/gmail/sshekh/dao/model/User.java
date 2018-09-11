@@ -31,7 +31,7 @@ public class User implements Serializable {
     private Profile profile;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> items=new ArrayList<>();
+    private List<Order> items = new ArrayList<>();
 
     public Long getId() {
         return id;

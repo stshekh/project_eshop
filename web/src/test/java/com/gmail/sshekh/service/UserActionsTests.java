@@ -289,13 +289,12 @@ public class UserActionsTests {
         user.setRole(role);
         user1.setRole(role1);
 
-        Item item=new Item();
+       Item item=new Item();
 
-        item.setItemName("Phone");
+        item.setName("Phone");
         item.setDescription("Best phone of 2019");
         item.setUniqueNumber("PH20102");
         item.setPrice(199.12);
-
 
         Session session = userDao.getCurrentSession();
         try {
@@ -308,16 +307,14 @@ public class UserActionsTests {
             userDao.create(user);
             userDao.create(user1);
             itemDao.create(item);
-
             Order order=new Order(user,item);
-//            order.setItem(item);
-//            order.setUser(user);
             order.setQuantity(5);
             order.setCreated(LocalDateTime.now());
+
             orderDao.create(order);
             List<Order> orders = orderDao.findAll();
             logger.info(orders.stream().findFirst().get().getUser().getFirstName()+" "
-                    +orders.stream().findFirst().get().getItem().getItemName()+" "
+                    +orders.stream().findFirst().get().getItem().getName()+" "
                     +orders.stream().findFirst().get().getQuantity());
             transaction.commit();
         } catch (Exception e) {

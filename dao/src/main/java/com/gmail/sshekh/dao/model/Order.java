@@ -13,12 +13,13 @@ public class Order implements Serializable {
     private OrderId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("ITEM_ID")
+    private Item item;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("USER_ID")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("ITEM_ID")
-    private Item item;
 
     @Column(name = "CREATED")
     private LocalDateTime created;
@@ -27,9 +28,9 @@ public class Order implements Serializable {
     private Integer quantity;
 
     public Order(User user, Item item) {
-        this.id = new OrderId(user.getId(), item.getidItem());
         this.user = user;
         this.item = item;
+        this.id = new OrderId(user.getId(), item.getId());
     }
 
     public OrderId getId() {

@@ -12,10 +12,10 @@ public class Item implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_ITEM", nullable = false, updatable = false)
-    private Long idItem;
+    @Column(name = "ID", nullable = false, updatable = false)
+    private Long id;
     @Column(name = "NAME")
-    private String itemName;
+    private String name;
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "UNIQUE_NUMBER")
@@ -26,20 +26,20 @@ public class Item implements Serializable {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> users = new ArrayList<>();
 
-    public Long getidItem() {
-        return idItem;
+    public Long getId() {
+        return id;
     }
 
-    public void setidItem(Long idItem) {
-        this.idItem = idItem;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -79,8 +79,8 @@ public class Item implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(idItem, item.idItem) &&
-                Objects.equals(itemName, item.itemName) &&
+        return Objects.equals(id, item.id) &&
+                Objects.equals(name, item.name) &&
                 Objects.equals(description, item.description) &&
                 Objects.equals(uniqueNumber, item.uniqueNumber) &&
                 Objects.equals(price, item.price);
@@ -88,6 +88,6 @@ public class Item implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idItem, itemName, description, uniqueNumber, price);
+        return Objects.hash(id, name, description, uniqueNumber, price);
     }
 }
