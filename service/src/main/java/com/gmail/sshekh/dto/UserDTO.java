@@ -1,5 +1,8 @@
 package com.gmail.sshekh.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDTO {
     private Long id;
     private String name;
@@ -8,22 +11,7 @@ public class UserDTO {
     private String password;
     private RoleDTO role;
     private ProfileDTO profile;
-
-    public ProfileDTO getProfile() {
-        return profile;
-    }
-
-    public void setProfile(ProfileDTO profile) {
-        this.profile = profile;
-    }
-
-    public RoleDTO getRole() {
-        return role;
-    }
-
-    public void setRole(RoleDTO role) {
-        this.role = role;
-    }
+    private List<OrderDTO> orders=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -63,5 +51,29 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
+    }
+
+    public ProfileDTO getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileDTO profile) {
+        this.profile = profile;
+    }
+
+    public List<OrderDTO> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderDTO> orders) {
+        this.orders = orders;
     }
 }

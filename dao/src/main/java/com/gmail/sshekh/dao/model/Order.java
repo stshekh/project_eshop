@@ -20,7 +20,6 @@ public class Order implements Serializable {
     @MapsId("USER_ID")
     private User user;
 
-
     @Column(name = "CREATED")
     private LocalDateTime created;
 
