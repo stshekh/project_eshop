@@ -2,6 +2,7 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,10 +22,10 @@ public class Item implements Serializable {
     @Column(name = "UNIQUE_NUMBER")
     private String uniqueNumber;
     @Column(name = "PRICE")
-    private Double price;
+    private BigDecimal price;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> users = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -58,20 +59,20 @@ public class Item implements Serializable {
         this.uniqueNumber = uniqueNumber;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public List<Order> getUsers() {
-        return users;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setUsers(List<Order> users) {
-        this.users = users;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

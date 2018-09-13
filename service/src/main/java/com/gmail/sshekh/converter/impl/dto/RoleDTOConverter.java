@@ -1,4 +1,4 @@
-package com.gmail.sshekh.converter.impl;
+package com.gmail.sshekh.converter.impl.dto;
 
 import com.gmail.sshekh.converter.DTOConverter;
 import com.gmail.sshekh.dao.model.Role;

@@ -53,7 +53,8 @@ public class HibernateUtil {
                         addAnnotatedClass(Order.class).
                         addAnnotatedClass(Permission.class).
                         addAnnotatedClass(Profile.class).
-                        addAnnotatedClass(RolePermission.class);
+                        addAnnotatedClass(RolePermission.class).
+                        addAnnotatedClass(OrderId.class);
                 Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
                 logger.info("Session Factory created.");
@@ -63,6 +64,7 @@ public class HibernateUtil {
                 if (registry != null) {
                     StandardServiceRegistryBuilder.destroy(registry);
                 }
+                throw new RuntimeException(e);
             }
         }
         return sessionFactory;

@@ -24,14 +24,4 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setParameter("email", email);
         return (User) query.uniqueResult();
     }
-
-    @Override
-    public Role getRoleByEmail(String email) {
-        String hql = "select role from User as U where U.email=:email";
-        Query query=getCurrentSession().createQuery(hql);
-        query.setParameter("email", email);
-        return (Role) query.uniqueResult();
-    }
-
-
 }

@@ -1,10 +1,9 @@
 package com.gmail.sshekh.dao.impl;
 
-import com.gmail.sshekh.converter.impl.UserConverter;
-import com.gmail.sshekh.converter.impl.UserDTOConverter;
+import com.gmail.sshekh.converter.impl.entity.UserConverter;
+import com.gmail.sshekh.converter.impl.dto.UserDTOConverter;
 import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.UserService;
-import com.gmail.sshekh.dao.connection.ConnectionService;
 import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.dto.UserDTO;
 import org.apache.logging.log4j.LogManager;
@@ -12,9 +11,6 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

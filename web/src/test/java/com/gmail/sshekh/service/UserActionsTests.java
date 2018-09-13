@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -294,7 +295,7 @@ public class UserActionsTests {
         item.setName("Phone");
         item.setDescription("Best phone of 2019");
         item.setUniqueNumber("PH20102");
-        item.setPrice(199.12);
+        item.setPrice(new BigDecimal(300.123));
 
         Session session = userDao.getCurrentSession();
         try {

@@ -1,4 +1,4 @@
-package com.gmail.sshekh.converter.impl;
+package com.gmail.sshekh.converter.impl.entity;
 
 import com.gmail.sshekh.converter.Converter;
 import com.gmail.sshekh.dao.model.Role;

@@ -1,4 +1,4 @@
-package com.gmail.sshekh.converter.impl;
+package com.gmail.sshekh.converter.impl.entity;
 
 import com.gmail.sshekh.converter.Converter;
 import com.gmail.sshekh.dto.UserDTO;
@@ -10,13 +10,15 @@ import java.util.stream.Collectors;
 public class UserConverter implements Converter<UserDTO, User> {
     @Override
     public User toEntity(UserDTO dto) {
+        RoleConverter roleConverter = new RoleConverter();
         User user = new User();
         user.setId(dto.getId());
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getName());
         user.setLastName(dto.getSurname());
         user.setPassword(dto.getPassword());
-        //user.setRoleId(dto.getRoleId());
+        user.setRole(roleConverter.toEntity(dto.getRole()));
+        user.setProfile(new ProfileConverter().toEntity(dto.getProfile()));
         return user;
     }
 

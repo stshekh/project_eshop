@@ -1,8 +1,5 @@
 package com.gmail.sshekh.dto;
 
-
-import com.gmail.sshekh.dao.model.Role;
-
 public class UserDTO {
     private Long id;
     private String name;
@@ -10,6 +7,15 @@ public class UserDTO {
     private String email;
     private String password;
     private RoleDTO role;
+    private ProfileDTO profile;
+
+    public ProfileDTO getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileDTO profile) {
+        this.profile = profile;
+    }
 
     public RoleDTO getRole() {
         return role;

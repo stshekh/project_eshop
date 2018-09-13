@@ -1,4 +1,4 @@
-package com.gmail.sshekh.converter.impl;
+package com.gmail.sshekh.converter.impl.dto;
 
 import com.gmail.sshekh.converter.DTOConverter;
 import com.gmail.sshekh.dao.model.User;
@@ -18,6 +18,7 @@ public class UserDTOConverter implements DTOConverter<User, UserDTO> {
         userDTO.setSurname(entity.getLastName());
         userDTO.setPassword(entity.getPassword());
         userDTO.setRole(roleDTOConverter.toDTO(entity.getRole()));
+        userDTO.setProfile(new ProfileDTOConverter().toDTO(entity.getProfile()));
         return userDTO;
     }
 

@@ -1243,7 +1243,7 @@
     </column>
     <column id="318" parent="281" name="PRICE">
       <Position>4</Position>
-      <DataType>double|0s</DataType>
+      <DataType>decimal(19,2 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="319" parent="281" name="UNIQUE_NUMBER">

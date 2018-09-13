@@ -1,8 +1,8 @@
 package com.gmail.sshekh.dao.impl;
 
 import com.gmail.sshekh.RoleService;
-import com.gmail.sshekh.converter.impl.RoleConverter;
-import com.gmail.sshekh.converter.impl.RoleDTOConverter;
+import com.gmail.sshekh.converter.impl.entity.RoleConverter;
+import com.gmail.sshekh.converter.impl.dto.RoleDTOConverter;
 import com.gmail.sshekh.dao.RoleDao;
 import com.gmail.sshekh.dao.model.Role;
 import com.gmail.sshekh.dto.RoleDTO;
@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 
 import java.util.Collections;
 import java.util.List;
-
 
 public class RoleServiceImpl implements RoleService {
 

@@ -31,7 +31,7 @@ public class User implements Serializable {
     private Profile profile;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> items = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -89,12 +89,12 @@ public class User implements Serializable {
         this.profile = profile;
     }
 
-    public List<Order> getItems() {
-        return items;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setItems(List<Order> items) {
-        this.items = items;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
