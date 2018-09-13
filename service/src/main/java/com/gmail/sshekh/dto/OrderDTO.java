@@ -3,27 +3,18 @@ package com.gmail.sshekh.dto;
 import java.time.LocalDateTime;
 
 public class OrderDTO {
-    private Long userId;
-    private Long itemId;
+    private OrderIdDTO id;
     private LocalDateTime created;
     private Integer quantity;
     private UserDTO user;
     private ItemDTO item;
 
-    public Long getUserId() {
-        return userId;
+    public OrderIdDTO getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public void setId(OrderIdDTO id) {
+        this.id = id;
     }
 
     public LocalDateTime getCreated() {

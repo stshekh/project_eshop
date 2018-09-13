@@ -5,6 +5,7 @@ import com.gmail.sshekh.dao.model.Profile;
 import com.gmail.sshekh.dto.ProfileDTO;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProfileDTOConverter implements DTOConverter<Profile, ProfileDTO> {
@@ -21,4 +22,10 @@ public class ProfileDTOConverter implements DTOConverter<Profile, ProfileDTO> {
     public List<ProfileDTO> toDTOList(List<Profile> list) {
         return list.stream().map(this::toDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public Set<ProfileDTO> toDTOSet(Set<Profile> set) {
+        return set.stream().map(this::toDTO).collect(Collectors.toSet());
+    }
+
 }

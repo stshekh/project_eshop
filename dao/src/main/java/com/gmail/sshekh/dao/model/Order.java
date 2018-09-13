@@ -32,6 +32,9 @@ public class Order implements Serializable {
         this.id = new OrderId(user.getId(), item.getId());
     }
 
+    public Order() {
+    }
+
     public OrderId getId() {
         return id;
     }

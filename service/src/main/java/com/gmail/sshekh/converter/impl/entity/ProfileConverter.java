@@ -5,6 +5,7 @@ import com.gmail.sshekh.dao.model.Profile;
 import com.gmail.sshekh.dto.ProfileDTO;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProfileConverter implements Converter<ProfileDTO, Profile> {
@@ -20,6 +21,11 @@ public class ProfileConverter implements Converter<ProfileDTO, Profile> {
     @Override
     public List<Profile> toEntityList(List<ProfileDTO> list) {
         return list.stream().map(this::toEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public Set<Profile> toEntitySet(Set<ProfileDTO> set) {
+        return set.stream().map(this::toEntity).collect(Collectors.toSet());
     }
 }
 
