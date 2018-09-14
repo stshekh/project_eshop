@@ -53,7 +53,6 @@ public class HibernateUtil {
                         addAnnotatedClass(Order.class).
                         addAnnotatedClass(Permission.class).
                         addAnnotatedClass(Profile.class).
-                        addAnnotatedClass(RolePermission.class).
                         addAnnotatedClass(OrderId.class);
                 Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();

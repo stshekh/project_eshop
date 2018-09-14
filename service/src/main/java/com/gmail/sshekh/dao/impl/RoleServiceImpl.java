@@ -16,8 +16,7 @@ import java.util.List;
 
 public class RoleServiceImpl implements RoleService {
 
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-
+    private static final Logger logger = LogManager.getLogger(RoleServiceImpl.class);
 
     private RoleDao roleDao = new RoleDaoImpl(Role.class);
     private RoleDTOConverter roleDTOConverter = new RoleDTOConverter();
