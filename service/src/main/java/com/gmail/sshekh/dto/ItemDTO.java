@@ -2,7 +2,9 @@ package com.gmail.sshekh.dto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ItemDTO {
     private Long id;
@@ -10,7 +12,8 @@ public class ItemDTO {
     private String description;
     private String unqueNumber;
     private BigDecimal price;
-    private List<OrderDTO> orders=new ArrayList<>();
+    private List<OrderDTO> orders = new ArrayList<>();
+    private Set<DiscountDTO> disounts = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -58,5 +61,13 @@ public class ItemDTO {
 
     public void setOrders(List<OrderDTO> orders) {
         this.orders = orders;
+    }
+
+    public Set<DiscountDTO> getDisounts() {
+        return disounts;
+    }
+
+    public void setDisounts(Set<DiscountDTO> disounts) {
+        this.disounts = disounts;
     }
 }

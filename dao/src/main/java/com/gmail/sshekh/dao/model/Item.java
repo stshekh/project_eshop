@@ -3,9 +3,7 @@ package com.gmail.sshekh.dao.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "T_ITEM")
@@ -26,6 +24,9 @@ public class Item implements Serializable {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "items", cascade = CascadeType.ALL)
+    private Set<Discount> discounts = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -73,6 +74,14 @@ public class Item implements Serializable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Set<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(Set<Discount> discounts) {
+        this.discounts = discounts;
     }
 
     @Override

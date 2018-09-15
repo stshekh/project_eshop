@@ -33,6 +33,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DISCOUNT", nullable = false)
+    private Discount discount;
+
     public Long getId() {
         return id;
     }
@@ -97,21 +101,31 @@ public class User implements Serializable {
         this.orders = orders;
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(role, user.role) &&
-                Objects.equals(password, user.password);
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getFirstName(), user.getFirstName()) &&
+                Objects.equals(getLastName(), user.getLastName()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getRole(), user.getRole()) &&
+                Objects.equals(getProfile(), user.getProfile()) &&
+                Objects.equals(getDiscount(), user.getDiscount());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName, role, password);
+        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName(), getPassword(), getRole(), getProfile(), getDiscount());
     }
 }

@@ -18,6 +18,7 @@ public class ItemConverter implements Converter<ItemDTO, Item> {
         item.setName(dto.getName());
         item.setPrice(dto.getPrice());
         item.setOrders(new OrderConverter().toEntityList(dto.getOrders()));
+        //item.setDiscounts(new DiscountConverter().toEntitySet(dto.getDisounts()));
         return item;
     }
 

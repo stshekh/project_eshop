@@ -4,6 +4,15 @@ public class ProfileDTO {
     private Long userId;
     private String address;
     private String telephone;
+    private UserDTO user;
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
 
     public Long getUserId() {
         return userId;

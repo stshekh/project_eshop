@@ -11,7 +11,8 @@ public class UserDTO {
     private String password;
     private RoleDTO role;
     private ProfileDTO profile;
-    private List<OrderDTO> orders=new ArrayList<>();
+    private List<OrderDTO> orders = new ArrayList<>();
+    private DiscountDTO discountDTO;
 
     public Long getId() {
         return id;
@@ -75,5 +76,13 @@ public class UserDTO {
 
     public void setOrders(List<OrderDTO> orders) {
         this.orders = orders;
+    }
+
+    public DiscountDTO getDiscountDTO() {
+        return discountDTO;
+    }
+
+    public void setDiscountDTO(DiscountDTO discountDTO) {
+        this.discountDTO = discountDTO;
     }
 }

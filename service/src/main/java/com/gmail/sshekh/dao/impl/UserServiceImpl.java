@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
             if (!transaction.isActive()) {
                 session.beginTransaction();
             }
-            transaction.begin();
             User user = userConverter.toEntity(userDTO);
             userDao.create(user);
             UserDTO userDTONew = userDTOConverter.toDTO(user);
