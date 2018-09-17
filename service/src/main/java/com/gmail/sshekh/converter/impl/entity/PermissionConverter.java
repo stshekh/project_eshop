@@ -14,7 +14,6 @@ public class PermissionConverter implements Converter<PermissionDTO, Permission>
         Permission permission = new Permission();
         permission.setIdPermission(dto.getId());
         permission.setPermissionName(dto.getName());
-        permission.setRoles(new RoleConverter().toEntitySet(dto.getRoles()));
         return permission;
     }
 

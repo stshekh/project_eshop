@@ -96,4 +96,27 @@ public class DiscountServiceImpl implements DiscountService {
         }
         return null;
     }
+
+    @Override
+    public DiscountDTO getRandomDiscount() {
+        Session session = discountDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            Long ids = discountDao.countDiscounts();
+            Long id = 1+(long) Math.random() * (ids-1);
+            Discount discount = discountDao.getDiscountById(id);
+            DiscountDTO discountDTO = discountDTOConverter.toDTO(discount);
+            transaction.commit();
+            return discountDTO;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
+        }
+        return null;
+    }
+
+
 }

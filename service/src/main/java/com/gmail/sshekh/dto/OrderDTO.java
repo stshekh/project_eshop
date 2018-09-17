@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class OrderDTO {
     private OrderIdDTO id;
     private LocalDateTime created;
-    private Integer quantity;
+    private Long quantity;
     private UserDTO user;
     private ItemDTO item;
 
@@ -25,11 +25,11 @@ public class OrderDTO {
         this.created = created;
     }
 
-    public Integer getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

@@ -18,8 +18,9 @@ public class UserConverter implements Converter<UserDTO, User> {
         user.setLastName(dto.getSurname());
         user.setPassword(dto.getPassword());
         user.setRole(new RoleConverter().toEntity(dto.getRole()));
-        user.setProfile(new ProfileConverter().toEntity(dto.getProfile()));
-        user.setOrders(new OrderConverter().toEntityList(dto.getOrders()));
+        if (dto.getDiscountDTO() != null) {
+            user.setDiscount(new DiscountConverter().toEntity(dto.getDiscountDTO()));
+        }
         return user;
     }
 

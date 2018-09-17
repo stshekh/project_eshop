@@ -24,7 +24,7 @@ public class Order implements Serializable {
     private LocalDateTime created;
 
     @Column(name = "QUANTITY")
-    private Integer quantity;
+    private Long quantity;
 
     public Order(User user, Item item) {
         this.user = user;
@@ -67,11 +67,11 @@ public class Order implements Serializable {
         this.created = created;
     }
 
-    public Integer getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

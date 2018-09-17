@@ -24,6 +24,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
         return (List<Item>) query.list();
     }
 
+
     @Override
     public List<Item> getItemOfRate(Long id) {
         String hql = "select i from Item i JOIN i.discounts discounts where discounts.id=:id";
@@ -32,4 +33,15 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
         return (List<Item>) query.list();
 
     }
+
+    @Override
+    public Long countItemsInRange(BigDecimal fromPrice, BigDecimal toPrice) {
+        String hql = "SELECT COUNT(*) FROM Item AS i WHERE i.price>:fromPrice AND i.price<:toPrice";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("fromPrice", fromPrice);
+        query.setParameter("toPrice", toPrice);
+        return (Long) query.uniqueResult();
+    }
+
+
 }

@@ -12,4 +12,6 @@ public interface DiscountService {
     void update(DiscountDTO discountDTO);
 
     Long getIdByRate(Integer rate);
+
+    DiscountDTO getRandomDiscount();
 }

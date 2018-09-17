@@ -309,7 +309,7 @@ public class UserActionsTests {
             userDao.create(user1);
             itemDao.create(item);
             Order order=new Order(user,item);
-            order.setQuantity(5);
+
             order.setCreated(LocalDateTime.now());
 
             orderDao.create(order);

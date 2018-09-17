@@ -13,12 +13,10 @@ public class ItemConverter implements Converter<ItemDTO, Item> {
     public Item toEntity(ItemDTO dto) {
         Item item = new Item();
         item.setId(dto.getId());
-        item.setUniqueNumber(dto.getUnqueNumber());
-        item.setDescription(dto.getDescription());
         item.setName(dto.getName());
+        item.setDescription(dto.getDescription());
         item.setPrice(dto.getPrice());
-        item.setOrders(new OrderConverter().toEntityList(dto.getOrders()));
-        //item.setDiscounts(new DiscountConverter().toEntitySet(dto.getDisounts()));
+        item.setUniqueNumber(dto.getUnqueNumber());
         return item;
     }
 

@@ -27,5 +27,20 @@ public class DiscountDaoImpl extends GenericDaoImpl<Discount> implements Discoun
         return (Long) query.uniqueResult();
     }
 
+    @Override
+    public Discount getDiscountById(Long id) {
+        String hql = "from Discount as d where d.id=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (Discount) query.uniqueResult();
+    }
+
+    @Override
+    public Long countDiscounts() {
+        String hql = "select count(*) from Discount as d";
+        Query query = getCurrentSession().createQuery(hql);
+        return (Long) query.uniqueResult();
+    }
+
 
 }
