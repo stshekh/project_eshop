@@ -29,15 +29,4 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
         return (Role) query.uniqueResult();
     }
 
-    @Override
-    public List<Role> findAll(Connection connection) {
-        return null;
-    }
-
-    private Role getRole(ResultSet resultSet) throws SQLException {
-        Role role = new Role();
-        role.setIdRole(resultSet.getLong("ID_ROLE"));
-        role.setRoleName(resultSet.getString("ROLE_NAME"));
-        return role;
-    }
 }

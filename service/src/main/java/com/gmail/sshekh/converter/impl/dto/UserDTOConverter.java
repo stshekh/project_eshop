@@ -1,10 +1,11 @@
-package com.gmail.sshekh.converter.impl;
+package com.gmail.sshekh.converter.impl.dto;
 
 import com.gmail.sshekh.converter.DTOConverter;
 import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.dto.UserDTO;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDTOConverter implements DTOConverter<User, UserDTO> {
@@ -16,12 +17,19 @@ public class UserDTOConverter implements DTOConverter<User, UserDTO> {
         userDTO.setName(entity.getFirstName());
         userDTO.setSurname(entity.getLastName());
         userDTO.setPassword(entity.getPassword());
-        userDTO.setRoleId(entity.getRole());
+        userDTO.setRole(new RoleDTOConverter().toDTO(entity.getRole()));
+        userDTO.setProfile(new ProfileDTOConverter().toDTO(entity.getProfile()));
+        userDTO.setOrders(new OrderDTOConverter().toDTOList(entity.getOrders()));
         return userDTO;
     }
 
     @Override
     public List<UserDTO> toDTOList(List<User> list) {
         return list.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Set<UserDTO> toDTOSet(Set<User> set) {
+        return set.stream().map(this::toDTO).collect(Collectors.toSet());
     }
 }

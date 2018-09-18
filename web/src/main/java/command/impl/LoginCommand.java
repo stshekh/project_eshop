@@ -29,9 +29,7 @@ public class LoginCommand implements Command {
                 if (userByUsername.getPassword().equals(password.trim())) {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", UserPrincipalConverter.toUserPrincipal(userByUsername));
-                    Long roleId=userByUsername.getRoleId();
-                    RoleDTO roleById=roleService.findRoleById(roleId);
-                    String role=roleById.getRoleName();
+                    String role=userByUsername.getRole().getRoleName();
 
                     switch (role) {
                         case "Admin":

@@ -2,6 +2,8 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,28 +20,22 @@ public class User implements Serializable {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
-    @Column(name = "ID_ROLE")
-    private Long roleId;
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(name = "PASSWORD")
+    private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ROLE", nullable = false)
     private Role role;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private Profile profile;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DISCOUNT", nullable = false)
+    private Discount discount;
 
     public Long getId() {
         return id;
@@ -57,6 +53,22 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -65,12 +77,36 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Long getRole() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRole(Long roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
     @Override
@@ -78,16 +114,18 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(roleId, user.roleId) &&
-                Objects.equals(password, user.password);
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getFirstName(), user.getFirstName()) &&
+                Objects.equals(getLastName(), user.getLastName()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getRole(), user.getRole()) &&
+                Objects.equals(getProfile(), user.getProfile()) &&
+                Objects.equals(getDiscount(), user.getDiscount());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName, roleId, password);
+        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName(), getPassword(), getRole(), getProfile(), getDiscount());
     }
 }

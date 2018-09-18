@@ -1,29 +1,24 @@
 package com.gmail.sshekh.dao.model;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "T_ROLE")
 public class Role implements Serializable {
 
-    @GenericGenerator(
-            name="generator",
-            strategy = "foreign",
-            parameters = @Parameter(name="property", value="ID_ROLE"))
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ROLE", updatable = false, nullable = false)
     private Long idRole;
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private User user;
     @Column(name = "ROLE_NAME")
     private String roleName;
+
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
+    private Set<Permission> permissions = new HashSet<>();
 
     public Long getIdRole() {
         return idRole;
@@ -39,6 +34,14 @@ public class Role implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override
