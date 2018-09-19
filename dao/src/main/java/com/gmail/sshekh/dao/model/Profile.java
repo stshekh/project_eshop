@@ -17,9 +17,9 @@ public class Profile implements Serializable {
             parameters = @Parameter(name = "property", value = "user"))
     @Id
     @GeneratedValue(generator = "generator")
-    @Column(name = "ID_USER",unique = true, nullable = false)
+    @Column(name = "ID_USER", unique = true)
     private Long userId;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private User user;
     @Column(name = "ADRESS")

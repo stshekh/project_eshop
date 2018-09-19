@@ -1381,7 +1381,7 @@ ITEM_ID</ColNames>
     </column>
     <column id="345" parent="285" name="QUANTITY">
       <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="346" parent="285" name="FKod7yvgpte1s8padon3rba7iwh">
@@ -1525,7 +1525,6 @@ ROLE_ID</ColNames>
     <column id="371" parent="290" name="ID_DISCOUNT">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="372" parent="290" name="ID_ROLE">

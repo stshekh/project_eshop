@@ -13,8 +13,8 @@ public class ProfileConverter implements Converter<ProfileDTO, Profile> {
     public Profile toEntity(ProfileDTO dto) {
         Profile profile = new Profile();
         profile.setUserId(dto.getUserId());
-        profile.setTelephone(dto.getTelephone());
         profile.setAddress(dto.getAddress());
+        profile.setTelephone(dto.getTelephone());
         return profile;
     }
 

@@ -14,7 +14,6 @@ public class PermissionDTOConverter implements DTOConverter<Permission, Permissi
         PermissionDTO permissionDTO = new PermissionDTO();
         permissionDTO.setId(entity.getIdPermission());
         permissionDTO.setName(entity.getPermissionName());
-        permissionDTO.setRoles(new RoleDTOConverter().toDTOSet(entity.getRoles()));
         return permissionDTO;
     }
 

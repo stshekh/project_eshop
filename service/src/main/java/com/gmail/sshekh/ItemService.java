@@ -21,4 +21,6 @@ public interface ItemService {
     void setDiscountsToItems(Integer discount, BigDecimal formPrice, BigDecimal toPrice);
 
     Set<ItemDTO> showItemsOfPrice(BigDecimal fromPrice, BigDecimal toPrice);
+
+    ItemDTO getItemOfPrice(BigDecimal fromPrice, BigDecimal toPrice);
 }

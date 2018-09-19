@@ -1,6 +1,7 @@
 package com.gmail.sshekh;
 
 
+import com.gmail.sshekh.dto.DiscountDTO;
 import com.gmail.sshekh.dto.UserDTO;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface UserService {
     UserDTO findUserByEmail(String email);
 
     List<UserDTO> findAll();
+
+    void setDiscount(UserDTO userDTO);
+
+    void setOrders(UserDTO userDTO);
 }

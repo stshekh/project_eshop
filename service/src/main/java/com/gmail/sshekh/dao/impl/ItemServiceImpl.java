@@ -2,7 +2,6 @@ package com.gmail.sshekh.dao.impl;
 
 import com.gmail.sshekh.ItemService;
 import com.gmail.sshekh.converter.impl.dto.ItemDTOConverter;
-import com.gmail.sshekh.converter.impl.entity.DiscountConverter;
 import com.gmail.sshekh.converter.impl.entity.ItemConverter;
 import com.gmail.sshekh.dao.DiscountDao;
 import com.gmail.sshekh.dao.ItemDao;
@@ -150,6 +149,28 @@ public class ItemServiceImpl implements ItemService {
             session.getTransaction().rollback();
         }
         return Collections.emptySet();
+    }
+
+    @Override
+    public ItemDTO getItemOfPrice(BigDecimal fromPrice, BigDecimal toPrice) {
+        Session session = itemDao.getCurrentSession();
+        try {
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+
+            List<Item> items = itemDao.getItemsInRange(fromPrice, toPrice);
+            List<ItemDTO> itemDTOS = itemDTOConverter.toDTOList(items);
+            int index = 0 + (int) (Math.random() * itemDTOS.size());
+            ItemDTO itemDTO = itemDTOS.get(index);
+            transaction.commit();
+            return itemDTO;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
+        }
+        return null;
     }
 
     @Override

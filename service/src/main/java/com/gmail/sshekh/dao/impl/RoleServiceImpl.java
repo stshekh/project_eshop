@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            logger.error("Cannot save role", e);
+            logger.error(e.getMessage(), e);
         }
         return roleDTO;
     }

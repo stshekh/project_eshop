@@ -9,4 +9,6 @@ public interface ItemDao extends GenericDao<Item> {
     List<Item> getItemsInRange(BigDecimal from, BigDecimal to);
 
     List<Item> getItemOfRate(Long id);
+
+    Long countItemsInRange(BigDecimal fromPrice, BigDecimal toPrice);
 }
