@@ -2,6 +2,7 @@ package com.gmail.sshekh.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,7 +19,7 @@ public class Discount implements Serializable {
     @Column(name = "NAME")
     private String name;
     @Column(name = "DISCOUNT_RATE")
-    private Integer rate;
+    private BigDecimal rate;
     @Column(name = "EXPIRATION_DATE")
     private LocalDateTime expDate;
 
@@ -47,11 +48,11 @@ public class Discount implements Serializable {
         this.name = name;
     }
 
-    public Integer getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 

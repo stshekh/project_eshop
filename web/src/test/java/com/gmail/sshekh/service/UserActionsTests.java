@@ -18,15 +18,15 @@ import java.util.Set;
 
 public class UserActionsTests {
     private static final Logger logger = LogManager.getLogger(UserActionsTests.class);
-    private UserDao userDao = new UserDaoImpl(User.class);
-    private RoleDao roleDao = new RoleDaoImpl(Role.class);
-    private ProfileDao profileDao = new ProfileDaoImpl(Profile.class);
-    private AuditDao auditDao = new AuditDaoImpl(Audit.class);
-    private NewsDao newsDao = new NewsDaoImpl(News.class);
-    private CommentDao commentDao = new CommentDaoImpl(Comment.class);
-    private PermissionDao permissionDao = new PermissionDaoImpl(Permission.class);
-    private OrderDao orderDao = new OrderDaoImpl(Order.class);
-    private ItemDao itemDao = new ItemDaoImpl(Item.class);
+    private UserDao userDao = new UserDaoImpl();
+    private RoleDao roleDao = new RoleDaoImpl();
+    private ProfileDao profileDao = new ProfileDaoImpl();
+    private AuditDao auditDao = new AuditDaoImpl();
+    private NewsDao newsDao = new NewsDaoImpl();
+    private CommentDao commentDao = new CommentDaoImpl();
+    private PermissionDao permissionDao = new PermissionDaoImpl();
+    private OrderDao orderDao = new OrderDaoImpl();
+    private ItemDao itemDao = new ItemDaoImpl();
 
     @Test
     public void userSaveInfo() {

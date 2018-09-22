@@ -1,4 +1,4 @@
-<%@ page import="com.gmail.sshekh.dao.impl.RoleServiceImpl" %>
+<%@ page import="com.gmail.sshekh.service.impl.RoleServiceImpl" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">

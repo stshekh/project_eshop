@@ -17,7 +17,7 @@
                     <c:out value="${error}"/>
                 </div>
             </c:if>
-            <form action="${pageContext.request.contextPath}/dispatcher?command=login" method="post">
+            <form action="${pageContext.request.contextPath}/dispatcher?=login" method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
                     <input type="email" name="email" value="${email}" class="form-control" id="exampleInputEmail1"

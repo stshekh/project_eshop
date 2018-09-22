@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import java.io.Serializable;
 import java.util.List;
 
+
 public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
     private Class<T> clazz;
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

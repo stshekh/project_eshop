@@ -1,18 +1,17 @@
 package com.gmail.sshekh.dao.impl;
 
 import com.gmail.sshekh.dao.ItemDao;
-import com.gmail.sshekh.dao.model.Discount;
 import com.gmail.sshekh.dao.model.Item;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+@Repository
 public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
-    public ItemDaoImpl(Class<Item> clazz) {
-        super(clazz);
+    public ItemDaoImpl() {
+        super(Item.class);
     }
 
     @Override

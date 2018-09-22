@@ -6,19 +6,15 @@ import com.gmail.sshekh.dao.model.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
+@Repository
 public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
 
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
-    public RoleDaoImpl(Class<Role> clazz) {
-        super(clazz);
+    public RoleDaoImpl() {
+        super(Role.class);
     }
 
     @Override

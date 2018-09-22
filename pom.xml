@@ -19,6 +19,8 @@
         <log4j2.version>2.2</log4j2.version>
         <hibernate.version>5.3.6.Final</hibernate.version>
         <junit.version>4.12</junit.version>
+        <spring.version>5.0.8.RELEASE</spring.version>
+        <commons-lang3.version>3.8</commons-lang3.version>
     </properties>
     <dependencies>
         <dependency>
@@ -26,6 +28,21 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
         </dependency>
     </dependencies>
 </project>

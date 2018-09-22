@@ -1,8 +1,7 @@
 package com.gmail.sshekh.service;
 
-import com.gmail.sshekh.*;
-import com.gmail.sshekh.dao.impl.*;
-import com.gmail.sshekh.dto.*;
+import com.gmail.sshekh.service.impl.*;
+import com.gmail.sshekh.service.dto.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
@@ -10,7 +9,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class UserActionsTests {
@@ -22,46 +21,46 @@ public class UserActionsTests {
     private OrderService orderService = new OrderServiceImpl();
     private int fromAmount = 100;
     private int toAmount = 500;
+    private Random random = new Random();
 
     @Test
     public void createTest() {
 
-        ItemDTO[] itemDTO = new ItemDTO[30];
-        DiscountDTO discountDTO[] = new DiscountDTO[3];
-        Set<ItemDTO> items = new HashSet<>();
-        Set<DiscountDTO> discounts = new HashSet<>();
 
-
-        for (int i = 0; i < 30; i++) {
-            itemDTO[i] = new ItemDTO();
-            itemDTO[i].setName("Tov" + i);
-            itemDTO[i].setUnqueNumber("tov" + i);
-            itemDTO[i].setPrice(new BigDecimal(fromAmount + (int) (Math.random() * (toAmount - fromAmount))));
-            itemDTO[i].setDescription(i + "sometext" + i);
-            itemService.save(itemDTO[i]);
-            items.add(itemDTO[i]);
+        //Создаем товары
+        for (int i = 1; i <= 30; i++) {
+            ItemDTO itemDTO = new ItemDTO();
+            itemDTO.setName("Tov" + i);
+            itemDTO.setUnqueNumber("tov" + i);
+            itemDTO.setPrice(BigDecimal.valueOf(fromAmount + random.nextInt(toAmount - fromAmount + 1)));
+            itemDTO.setDescription(i + "sometext" + i);
+            itemService.save(itemDTO);
+        }
+        //Создаем скидки
+        for (int i = 1; i <= 3; i++) {
+            DiscountDTO discountDTO = new DiscountDTO();
+            discountDTO.setName("Discount " + i);
+            discountDTO.setRate(BigDecimal.valueOf(i * 10));
+            discountDTO.setExpTime(LocalDateTime.of(2018, Month.NOVEMBER, 25, 0, 0));
+            discountService.save(discountDTO);
         }
 
-        for (int i = 0; i < 3; i++) {
-            discountDTO[i] = new DiscountDTO();
-            discountDTO[i].setName("Discount " + (i + 1));
-            discountDTO[i].setRate((i + 1) * 10);
-            discountDTO[i].setExpTime(LocalDateTime.of(2018, Month.NOVEMBER, 25, 0, 0));
-            discountService.save(discountDTO[i]);
-            discounts.add(discountDTO[i]);
-        }
 
-        itemService.setDiscountsToItems(10, new BigDecimal(200), new BigDecimal(299));
+        //Присваиваем товарам скидку
+        itemService.setDiscountsToItems(BigDecimal.valueOf(10), new BigDecimal(200), new BigDecimal(299));
 
-        itemService.setDiscountsToItems(20, new BigDecimal(300), new BigDecimal(399));
+        itemService.setDiscountsToItems(BigDecimal.valueOf(20), new BigDecimal(300), new BigDecimal(399));
 
-        itemService.setDiscountsToItems(30, new BigDecimal(400), new BigDecimal(500));
+        itemService.setDiscountsToItems(BigDecimal.valueOf(30), new BigDecimal(400), new BigDecimal(500));
 
-        Set<ItemDTO> itemDTOS = itemService.showItems(30);
+
+        //Вывести товары в зависимости от скидки
+        Set<ItemDTO> itemDTOS = itemService.showItems(BigDecimal.valueOf(30));
         for (ItemDTO itemDto : itemDTOS) {
             logger.info(itemDto.getName() + itemDto.getDescription());
         }
 
+        //Создаем новые роли и пользователя
         RoleDTO roleDTO = new RoleDTO();
         roleDTO.setRoleName("admin");
 
@@ -74,16 +73,42 @@ public class UserActionsTests {
         userDTO.setRole(roleDTO);
         roleDTO = roleService.save(roleDTO);
         userDTO = userService.save(userDTO);
-        logger.info(roleDTO.getRoleName());
+
+        //Присвоить произвольную скидку Пользователю
         userService.setDiscount(userDTO);
         logger.info(userDTO.getDiscountDTO().getName());
+
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setCreated(LocalDateTime.now());
+        orderDTO.setUser(userDTO);
+        orderService.save(orderDTO);
+
         for (int i = 0; i < 4; i++) {
-            orderService.addOrderUsingSum(new BigDecimal(250), new BigDecimal(450), userDTO);
+            orderService.addOrdersToItemsAndUsers(new BigDecimal(250), new BigDecimal(450), orderDTO);//TODO change method name
         }
-        userService.setOrders(userDTO);
-        //TODO Create method that adds orders to user
+        userDTO=userService.findUserByEmail("user@user");
         for (int i = 0; i < userDTO.getOrders().size(); i++) {
             logger.info(userDTO.getName() + " " + userDTO.getOrders().get(i).getItem().getName() + " " + userDTO.getOrders().get(i).getQuantity());
         }
+    }
+
+    @Test
+    public void userRoleCreateTest() {
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTO.setRoleName("admin");
+
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName("User1");
+        userDTO.setSurname("UserSur");
+        userDTO.setEmail("user@user");
+        userDTO.setPassword("user");
+        userDTO.setRole(roleDTO);
+        roleDTO = roleService.save(roleDTO);
+        userDTO = userService.save(userDTO);
+
+        logger.debug(userDTO);
+        logger.debug(roleDTO);
     }
 }
