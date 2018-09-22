@@ -19,7 +19,7 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
 
     @Override
     public Role findRoleById(Long id) {
-        String hql = "from Role as R where R.idRole=:id";
+        String hql = "FROM Role AS R WHERE R.idRole=:id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (Role) query.uniqueResult();

@@ -16,7 +16,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
 
     @Override
     public List<Item> getItemsInRange(BigDecimal from, BigDecimal to) {
-        String hql = "from Item as i where i.price>:fromPrice AND i.price<:toPrice";
+        String hql = "FROM Item AS i WHERE i.price BETWEEN :fromPrice AND :toPrice";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("fromPrice", from);
         query.setParameter("toPrice", to);
@@ -26,7 +26,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
 
     @Override
     public List<Item> getItemOfRate(Long id) {
-        String hql = "select i from Item i JOIN i.discounts discounts where discounts.id=:id";
+        String hql = "SELECT i FROM Item i JOIN i.discounts discounts WHERE discounts.id=:id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (List<Item>) query.list();
@@ -35,7 +35,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
 
     @Override
     public Long countItemsInRange(BigDecimal fromPrice, BigDecimal toPrice) {
-        String hql = "SELECT COUNT(*) FROM Item AS i WHERE i.price>:fromPrice AND i.price<:toPrice";
+        String hql = "SELECT COUNT(*) FROM Item AS i WHERE i.price BETWEEN :fromPrice AND :toPrice";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("fromPrice", fromPrice);
         query.setParameter("toPrice", toPrice);

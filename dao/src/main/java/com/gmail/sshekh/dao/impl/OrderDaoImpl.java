@@ -15,7 +15,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     @Override
     public List<Order> findOrdersByUserId(Long id) {
-        String hql = "FROM Order as o WHERE o.user.id=:id";
+        String hql = "FROM Order AS o WHERE o.user.id=:id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (List<Order>) query.list();

@@ -23,7 +23,7 @@ public abstract class GenericDaoImpl<T extends Serializable> implements GenericD
 
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return getCurrentSession().createQuery("from " + clazz.getSimpleName()).list();
+        return getCurrentSession().createQuery("FROM " + clazz.getSimpleName()).list();
     }
 
     public void create(T entity) {
