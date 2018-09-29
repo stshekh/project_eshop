@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-//@PropertySource({"classpath:database.properties", "classpath:application.properties"})
+@PropertySource({"classpath:database.properties", "classpath:page.properties"})
 @ComponentScan(basePackages = {
         "com.gmail.sshekh.service",
         "com.gmail.sshekh.dao",
@@ -15,8 +15,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
         "com.gmail.sshekh.controllers"
 })
 public class AppConfig {
-    /*@Bean
+    @Bean
     public static PropertySourcesPlaceholderConfigurer configurer() {
         return new PropertySourcesPlaceholderConfigurer();
-    }*/
+    }
 }

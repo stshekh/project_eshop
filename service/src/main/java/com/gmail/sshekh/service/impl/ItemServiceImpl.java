@@ -1,11 +1,10 @@
 package com.gmail.sshekh.service.impl;
 
-import com.gmail.sshekh.dao.impl.ItemDaoImpl;
-import com.gmail.sshekh.service.ItemService;
-import com.gmail.sshekh.service.converter.impl.dto.ItemDTOConverter;
-import com.gmail.sshekh.service.converter.impl.entity.ItemConverter;
 import com.gmail.sshekh.dao.ItemDao;
 import com.gmail.sshekh.dao.model.Item;
+import com.gmail.sshekh.service.ItemService;
+import com.gmail.sshekh.service.converter.Converter;
+import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.DiscountDTO;
 import com.gmail.sshekh.service.dto.ItemDTO;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,11 +22,17 @@ import java.util.*;
 @Service
 public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
-    private ItemDao itemDao = new ItemDaoImpl();
-    private ItemDTOConverter itemDTOConverter = new ItemDTOConverter();
-    private ItemConverter itemConverter = new ItemConverter();
+    @Autowired
+    private ItemDao itemDao;
+    @Autowired
+    @Qualifier("itemDTOConverter")
+    private DTOConverter<Item, ItemDTO> itemDTOConverter;
+    @Autowired
+    @Qualifier("itemConverter")
+    private Converter<ItemDTO, Item> itemConverter;
+    @Autowired
+    private DiscountServiceImpl discountService;
     private Random random = new Random();
-    private DiscountServiceImpl discountService = new DiscountServiceImpl();
 
     @Override
     public ItemDTO save(ItemDTO itemDTO) {

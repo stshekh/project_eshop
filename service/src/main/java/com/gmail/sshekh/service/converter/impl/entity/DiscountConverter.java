@@ -1,16 +1,25 @@
 package com.gmail.sshekh.service.converter.impl.entity;
 
-import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.dao.model.Discount;
+import com.gmail.sshekh.dao.model.Item;
+import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.dto.DiscountDTO;
+import com.gmail.sshekh.service.dto.ItemDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("discountConverter")
 public class DiscountConverter implements Converter<DiscountDTO, Discount> {
+
+    @Autowired
+    @Qualifier("itemConverter")
+    private Converter<ItemDTO, Item> itemConverter;
+
     @Override
     public Discount toEntity(DiscountDTO dto) {
         Discount discount = new Discount();
@@ -18,7 +27,7 @@ public class DiscountConverter implements Converter<DiscountDTO, Discount> {
         discount.setName(dto.getName());
         discount.setRate(dto.getRate());
         discount.setExpDate(dto.getExpTime());
-        discount.setItems(new ItemConverter().toEntitySet(dto.getItems()));
+        discount.setItems(itemConverter.toEntitySet(dto.getItems()));
         return discount;
     }
 

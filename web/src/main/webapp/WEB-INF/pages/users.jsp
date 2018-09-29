@@ -13,10 +13,10 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <form action="${pageContext.request.contextPath}/dispatcher?command=deleteUser" method="post">
+            <form action="${pageContext.request.contextPath}/users" method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="${pageContext.request.contextPath}/dispatcher?command=addUser" class="btn btn-primary"
+                        <a href="${pageContext.request.contextPath}/users" class="btn btn-primary"
                            aria-pressed="true" role="button">ADD</a>
                         <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>
@@ -43,9 +43,9 @@
                                     <td>${user.surname}</td>
                                     <td>${user.role.getRoleName()}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/dispatcher?command=updateUser&id=${user.id}"
+                                        <a href="${pageContext.request.contextPath}/users/${user.id}"
                                            class="btn btn-primary" aria-pressed="true"
-                                           role="button">UPDATE</a>
+                                           role="button">Update</a>
                                     </td>
                                 </tr>
                             </c:forEach>

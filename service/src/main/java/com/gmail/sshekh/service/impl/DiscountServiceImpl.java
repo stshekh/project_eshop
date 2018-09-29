@@ -1,16 +1,17 @@
 package com.gmail.sshekh.service.impl;
 
-import com.gmail.sshekh.dao.impl.DiscountDaoImpl;
-import com.gmail.sshekh.service.DiscountService;
-import com.gmail.sshekh.service.converter.impl.dto.DiscountDTOConverter;
-import com.gmail.sshekh.service.converter.impl.entity.DiscountConverter;
-import com.gmail.sshekh.dao.model.Discount;
 import com.gmail.sshekh.dao.DiscountDao;
+import com.gmail.sshekh.dao.model.Discount;
+import com.gmail.sshekh.service.DiscountService;
+import com.gmail.sshekh.service.converter.Converter;
+import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.DiscountDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,9 +21,14 @@ import java.util.*;
 public class DiscountServiceImpl implements DiscountService {
 
     private static final Logger logger = LogManager.getLogger(DiscountServiceImpl.class);
-    private DiscountDao discountDao = new DiscountDaoImpl();
-    private DiscountDTOConverter discountDTOConverter = new DiscountDTOConverter();
-    private DiscountConverter discountConverter = new DiscountConverter();
+    @Autowired
+    private DiscountDao discountDao;
+    @Autowired
+    @Qualifier("discountDTOConverter")
+    private DTOConverter<Discount, DiscountDTO> discountDTOConverter;
+    @Autowired
+    @Qualifier("discountConverter")
+    private Converter<DiscountDTO, Discount> discountConverter;
     private Random random = new Random();
 
     @Override

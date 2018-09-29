@@ -1,17 +1,24 @@
 package com.gmail.sshekh.service.converter.impl.dto;
 
-import com.gmail.sshekh.service.converter.DTOConverter;
+import com.gmail.sshekh.dao.model.Permission;
 import com.gmail.sshekh.dao.model.Role;
+import com.gmail.sshekh.service.converter.DTOConverter;
+import com.gmail.sshekh.service.dto.PermissionDTO;
 import com.gmail.sshekh.service.dto.RoleDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("roleDTOConverter")
 public class RoleDTOConverter implements DTOConverter<Role, RoleDTO> {
-    private PermissionDTOConverter permissionDTOConverter = new PermissionDTOConverter();
+
+    @Autowired
+    @Qualifier("permissionDTOConverter")
+    private DTOConverter<Permission, PermissionDTO> permissionDTOConverter;
 
     @Override
     public RoleDTO toDTO(Role entity) {

@@ -1,19 +1,33 @@
 package com.gmail.sshekh.service.converter.impl.dto;
 
-import com.gmail.sshekh.service.converter.DTOConverter;
+import com.gmail.sshekh.dao.model.Discount;
+import com.gmail.sshekh.dao.model.Order;
+import com.gmail.sshekh.dao.model.Role;
 import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.service.converter.DTOConverter;
+import com.gmail.sshekh.service.dto.DiscountDTO;
+import com.gmail.sshekh.service.dto.OrderDTO;
+import com.gmail.sshekh.service.dto.RoleDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("userDTOConverter")
 public class UserDTOConverter implements DTOConverter<User, UserDTO> {
-    private OrderDTOConverter orderDTOConverter = new OrderDTOConverter();
-    private RoleDTOConverter roleDTOConverter = new RoleDTOConverter();
-    private DiscountDTOConverter discountDTOConverter = new DiscountDTOConverter();
+    @Autowired
+    @Qualifier("orderDTOConverter")
+    private DTOConverter<Order, OrderDTO> orderDTOConverter;
+    @Autowired
+    @Qualifier("roleDTOConverter")
+    private DTOConverter<Role, RoleDTO> roleDTOConverter;
+    @Autowired
+    @Qualifier("discountDTOConverter")
+    private DTOConverter<Discount, DiscountDTO> discountDTOConverter;
 
     @Override
     public UserDTO toDTO(User entity) {
@@ -23,7 +37,9 @@ public class UserDTOConverter implements DTOConverter<User, UserDTO> {
         userDTO.setName(entity.getFirstName());
         userDTO.setSurname(entity.getLastName());
         userDTO.setPassword(entity.getPassword());
-        userDTO.setRole(roleDTOConverter.toDTO(entity.getRole()));
+        if (entity.getRole() != null) {
+            userDTO.setRole(roleDTOConverter.toDTO(entity.getRole()));
+        }
         if (entity.getDiscount() != null) {
             userDTO.setDiscountDTO(discountDTOConverter.toDTO(entity.getDiscount()));
         }

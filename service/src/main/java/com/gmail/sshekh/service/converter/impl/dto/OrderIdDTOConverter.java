@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("orderIdDTOConverter")
 public class OrderIdDTOConverter implements DTOConverter<OrderId, OrderIdDTO> {
     @Override
     public OrderIdDTO toDTO(OrderId entity) {

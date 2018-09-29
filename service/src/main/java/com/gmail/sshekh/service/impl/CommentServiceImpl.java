@@ -1,16 +1,17 @@
 package com.gmail.sshekh.service.impl;
 
-import com.gmail.sshekh.dao.impl.CommentDaoImpl;
-import com.gmail.sshekh.service.CommentService;
-import com.gmail.sshekh.service.converter.impl.dto.CommentDTOConverter;
-import com.gmail.sshekh.service.converter.impl.entity.CommentConverter;
 import com.gmail.sshekh.dao.CommentDao;
 import com.gmail.sshekh.dao.model.Comment;
+import com.gmail.sshekh.service.CommentService;
+import com.gmail.sshekh.service.converter.Converter;
+import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.CommentDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,9 +20,14 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
     private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
-    private CommentDao commentDao = new CommentDaoImpl();
-    private CommentDTOConverter commentDTOConverter = new CommentDTOConverter();
-    private CommentConverter commentConverter = new CommentConverter();
+    @Autowired
+    private CommentDao commentDao;
+    @Autowired
+    @Qualifier("commentDTOConverter")
+    private DTOConverter<Comment, CommentDTO> commentDTOConverter;
+    @Autowired
+    @Qualifier("commentConverter")
+    private Converter<CommentDTO, Comment> commentConverter;
 
     @Override
     public CommentDTO save(CommentDTO commentDTO) {

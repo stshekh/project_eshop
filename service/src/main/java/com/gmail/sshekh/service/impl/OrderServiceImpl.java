@@ -1,22 +1,21 @@
 package com.gmail.sshekh.service.impl;
 
-import com.gmail.sshekh.dao.impl.ItemDaoImpl;
-import com.gmail.sshekh.dao.impl.OrderDaoImpl;
-import com.gmail.sshekh.dao.impl.UserDaoImpl;
-import com.gmail.sshekh.service.OrderService;
-import com.gmail.sshekh.service.converter.impl.dto.OrderDTOConverter;
 import com.gmail.sshekh.dao.ItemDao;
 import com.gmail.sshekh.dao.OrderDao;
 import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Item;
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.service.OrderService;
+import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.ItemDTO;
 import com.gmail.sshekh.service.dto.OrderDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,11 +26,17 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
-    private OrderDao orderDao = new OrderDaoImpl();
-    private ItemDao itemDao = new ItemDaoImpl();
-    private UserDao userDao = new UserDaoImpl();
-    private OrderDTOConverter orderDTOConverter = new OrderDTOConverter();
-    private ItemServiceImpl itemService = new ItemServiceImpl();
+    @Autowired
+    private OrderDao orderDao;
+    @Autowired
+    private ItemDao itemDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    @Qualifier("orderDTOConverter")
+    private DTOConverter<Order, OrderDTO> orderDTOConverter;
+    @Autowired
+    private ItemServiceImpl itemService;
 
     @Override
     public void save(OrderDTO orderDTO) {

@@ -1,16 +1,17 @@
 package com.gmail.sshekh.service.impl;
 
-import com.gmail.sshekh.dao.impl.NewsDaoImpl;
-import com.gmail.sshekh.service.NewsService;
-import com.gmail.sshekh.service.converter.impl.dto.NewsDTOConverter;
-import com.gmail.sshekh.service.converter.impl.entity.NewsConverter;
 import com.gmail.sshekh.dao.NewsDao;
 import com.gmail.sshekh.dao.model.News;
+import com.gmail.sshekh.service.NewsService;
+import com.gmail.sshekh.service.converter.Converter;
+import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.NewsDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,9 +20,14 @@ import java.util.List;
 @Service
 public class NewsServiceImpl implements NewsService {
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
-    private NewsDao newsDao = new NewsDaoImpl();
-    private NewsDTOConverter newsDTOConverter = new NewsDTOConverter();
-    private NewsConverter newsConverter = new NewsConverter();
+    @Autowired
+    private NewsDao newsDao;
+    @Autowired
+    @Qualifier("newsDTOConverter")
+    private DTOConverter<News, NewsDTO> newsDTOConverter;
+    @Autowired
+    @Qualifier("newsConverter")
+    private Converter<NewsDTO, News> newsConverter;
 
     @Override
     public NewsDTO save(NewsDTO newsDTO) {

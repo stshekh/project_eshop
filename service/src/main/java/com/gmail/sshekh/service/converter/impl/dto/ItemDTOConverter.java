@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("itemDTOConverter")
 public class ItemDTOConverter implements DTOConverter<Item, ItemDTO> {
     @Override
     public ItemDTO toDTO(Item entity) {

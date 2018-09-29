@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("permissionDTOConverter")
 public class PermissionDTOConverter implements DTOConverter<Permission, PermissionDTO> {
     @Override
     public PermissionDTO toDTO(Permission entity) {

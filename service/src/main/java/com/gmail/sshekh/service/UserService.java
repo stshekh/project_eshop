@@ -18,4 +18,6 @@ public interface UserService {
     List<UserDTO> findAll();
 
     void setDiscount(UserDTO userDTO);
+
+    UserDTO findById(Long id);
 }

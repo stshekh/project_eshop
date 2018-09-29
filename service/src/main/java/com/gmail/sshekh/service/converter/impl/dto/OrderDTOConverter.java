@@ -1,17 +1,23 @@
 package com.gmail.sshekh.service.converter.impl.dto;
 
-import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.dao.model.Order;
+import com.gmail.sshekh.dao.model.OrderId;
+import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.OrderDTO;
+import com.gmail.sshekh.service.dto.OrderIdDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("orderDTOConverter")
 public class OrderDTOConverter implements DTOConverter<Order, OrderDTO> {
-    private OrderIdDTOConverter orderIdDTOConverter = new OrderIdDTOConverter();
+    @Autowired
+    @Qualifier("orderIdDTOConverter")
+    private DTOConverter<OrderId, OrderIdDTO> orderIdDTOConverter;
 
     @Override
     public OrderDTO toDTO(Order entity) {

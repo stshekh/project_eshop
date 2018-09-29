@@ -1,17 +1,20 @@
 package com.gmail.sshekh.dao.impl;
 
 import com.gmail.sshekh.dao.GenericDao;
-import com.gmail.sshekh.dao.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.List;
 
 
 public abstract class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
+
     private Class<T> clazz;
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public GenericDaoImpl(Class<T> clazz) {
         this.clazz = clazz;

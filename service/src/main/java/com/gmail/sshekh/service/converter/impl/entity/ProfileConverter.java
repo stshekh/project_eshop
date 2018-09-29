@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Component("profileConverter")
 public class ProfileConverter implements Converter<ProfileDTO, Profile> {
     @Override
     public Profile toEntity(ProfileDTO dto) {
