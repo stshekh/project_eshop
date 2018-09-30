@@ -17,12 +17,14 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);
@@ -40,91 +42,42 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(OrderDTO orderDTO) {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Item item = itemDao.findOne(orderDTO.getItem().getId());
-            User user = userDao.findOne(orderDTO.getUser().getId());
-
-            Order order = new Order(user, item);
-            order.setQuantity(orderDTO.getQuantity());
-            order.setCreated(orderDTO.getCreated());
-
-            user.getOrders().add(order);
-            order.getUser().getOrders().add(order);
-
-            userDao.update(user);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
+        //TODO test either it works or not
+        Item item = itemDao.findOne(orderDTO.getItem().getId());
+        User user = userDao.findOne(orderDTO.getUser().getId());
+        Order order = new Order(user, item);
+        order.setQuantity(orderDTO.getQuantity());
+        order.setCreated(orderDTO.getCreated());
+        user.getOrders().add(order);
+        item.getOrders().add(order);
+        userDao.update(user);
+        itemDao.update(item);
     }
 
     @Override
     public List<OrderDTO> findAll() {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<Order> orders = orderDao.findAll();
-            List<OrderDTO> orderDTOS = orderDTOConverter.toDTOList(orders);
-            transaction.commit();
-            return orderDTOS;
-
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
-        return Collections.emptyList();
+        List<Order> orders = orderDao.findAll();
+        return orderDTOConverter.toDTOList(orders);
     }
 
     @Override
     public void addOrdersToItemsAndUsers(BigDecimal fromAmount, BigDecimal toAmount, OrderDTO orderDTO) {
         ItemDTO item = itemService.getItemOfPrice(fromAmount, toAmount);
-        Session session = orderDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Long amount = itemDao.countItemsInRange(fromAmount, toAmount);
-            orderDTO.setQuantity(amount);
-            orderDTO.setItem(item);
-            update(orderDTO);
-            transaction.commit();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
+        Long amount = itemDao.countItemsInRange(fromAmount, toAmount);
+        orderDTO.setQuantity(amount);
+        orderDTO.setItem(item);
+        update(orderDTO);
     }
 
     @Override
     public void update(OrderDTO orderDTO) {
-        Session session = orderDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Item item = itemDao.findOne(orderDTO.getItem().getId());
-            User user = userDao.findOne(orderDTO.getUser().getId());
-
-            Order order = new Order(user, item);
-            order.setQuantity(orderDTO.getQuantity());
-            order.setCreated(orderDTO.getCreated());
-
-            user.getOrders().add(order);
-            order.getUser().getOrders().add(order);
-
-            userDao.update(user);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
+        Item item = itemDao.findOne(orderDTO.getItem().getId());
+        User user = userDao.findOne(orderDTO.getUser().getId());
+        Order order = new Order(user, item);
+        order.setQuantity(orderDTO.getQuantity());
+        order.setCreated(orderDTO.getCreated());
+        user.getOrders().add(order);
+        order.getUser().getOrders().add(order);
+        userDao.update(user);
     }
 }
