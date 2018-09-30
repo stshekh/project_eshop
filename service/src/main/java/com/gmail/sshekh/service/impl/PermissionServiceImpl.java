@@ -14,10 +14,12 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 
+@Transactional
 @Service
 public class PermissionServiceImpl implements PermissionService {
 
@@ -33,89 +35,29 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDTO save(PermissionDTO permissionDTO) {
-        Session session = permissionDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Permission permission = permissionConverter.toEntity(permissionDTO);
-            permissionDao.create(permission);
-            PermissionDTO permissionDTONew = permissionDTOConverter.toDTO(permission);
-            transaction.commit();
-            logger.info("Permission save was success");
-            return permissionDTONew;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error(e.getMessage(), e);
-        }
-        return permissionDTO;
+        Permission permission = permissionConverter.toEntity(permissionDTO);
+        permissionDao.create(permission);
+        return permissionDTOConverter.toDTO(permission);
     }
 
     @Override
     public PermissionDTO update(PermissionDTO permissionDTO) {
-        Session session = permissionDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Permission permission = permissionConverter.toEntity(permissionDTO);
-            permissionDao.update(permission);
-            PermissionDTO permissionDTONew = permissionDTOConverter.toDTO(permission);
-            transaction.commit();
-            logger.info("Permission update was success");
-            return permissionDTONew;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error(e.getMessage(), e);
-        }
-        return permissionDTO;
+        Permission permission = permissionConverter.toEntity(permissionDTO);
+        permissionDao.update(permission);
+        return permissionDTOConverter.toDTO(permission);
+
     }
 
     @Override
     public List<PermissionDTO> findAll() {
-        Session session = permissionDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<Permission> permissions = permissionDao.findAll();
-            List<PermissionDTO> permissionDTOS = permissionDTOConverter.toDTOList(permissions);
-            transaction.commit();
-            logger.info("Permissions were found");
-            return permissionDTOS;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error(e.getMessage(), e);
-        }
-        return Collections.emptyList();
+        List<Permission> permissions = permissionDao.findAll();
+        return permissionDTOConverter.toDTOList(permissions);
     }
 
     @Override
     public void delete(PermissionDTO permissionDTO) {
-        Session session = permissionDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Permission permission = permissionConverter.toEntity(permissionDTO);
-            permissionDao.delete(permission);
-            transaction.commit();
-            logger.info("Permission was deleted");
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error(e.getMessage(), e);
-        }
+        Permission permission = permissionConverter.toEntity(permissionDTO);
+        permissionDao.delete(permission);
+
     }
 }

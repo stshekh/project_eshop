@@ -40,43 +40,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO update(RoleDTO roleDTO) {
-        Session session = roleDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Role role = roleConverter.toEntity(roleDTO);
-            roleDao.update(role);
-            RoleDTO roleDTONew = roleDTOConverter.toDTO(role);
-            transaction.commit();
-            return roleDTONew;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-        }
-        return roleDTO;
+        Role role = roleConverter.toEntity(roleDTO);
+        roleDao.update(role);
+        return roleDTOConverter.toDTO(role);
     }
 
     @Override
     public void delete(RoleDTO roleDTO) {
-        Session session = roleDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Role role = roleConverter.toEntity(roleDTO);
-            roleDao.delete(role);
-            transaction.commit();
-            logger.info("Role " + role.getRoleName() + " was deleted");
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to delete role", e);
-        }
+        Role role = roleConverter.toEntity(roleDTO);
+        roleDao.delete(role);
     }
 
     @Override

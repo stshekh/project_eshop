@@ -53,28 +53,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public UserDTO update(UserDTO userDTO) {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<OrderDTO> orderDTOS = userDTO.getOrders();
-            List<Order> orders = orderConverter.toEntityList(orderDTOS);
-            User user = userConverter.toEntity(userDTO);
-            user.setOrders(orders);
-            userDao.update(user);
-            //TODO order user converter correctly
-            UserDTO userDTONew = userDTOConverter.toDTO(user);
-            transaction.commit();
-            return userDTONew;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error(e.getMessage(), e);
-        }
-        return userDTO;
+        List<OrderDTO> orderDTOS = userDTO.getOrders();
+        List<Order> orders = orderConverter.toEntityList(orderDTOS);
+        User user = userConverter.toEntity(userDTO);
+        user.setOrders(orders);
+        userDao.update(user);
+        //TODO order user converter correctly
+        return userDTOConverter.toDTO(user);
     }
 
     @Override

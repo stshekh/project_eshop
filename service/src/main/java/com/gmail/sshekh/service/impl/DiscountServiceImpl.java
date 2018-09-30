@@ -13,11 +13,13 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 @Service
+@Transactional
 public class DiscountServiceImpl implements DiscountService {
 
     private static final Logger logger = LogManager.getLogger(DiscountServiceImpl.class);
@@ -33,98 +35,33 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DiscountDTO save(DiscountDTO discountDTO) {
-        Session session = discountDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Discount discount = discountConverter.toEntity(discountDTO);
-            discountDao.create(discount);
-            DiscountDTO discountDTONew = discountDTOConverter.toDTO(discount);
-            transaction.commit();
-            return discountDTONew;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
-        return discountDTO;
+        Discount discount = discountConverter.toEntity(discountDTO);
+        discountDao.create(discount);
+        return discountDTOConverter.toDTO(discount);
     }
 
     @Override
     public Set<DiscountDTO> getDiscountOfRate(BigDecimal rate) {
-        Session session = discountDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<Discount> list = discountDao.getDiscountsByRate(rate);
-            Set<DiscountDTO> discounts = new HashSet<>(discountDTOConverter.toDTOList(list));
-            transaction.commit();
-            return discounts;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
-        return Collections.emptySet();
+        List<Discount> list = discountDao.getDiscountsByRate(rate);
+        return new HashSet<>(discountDTOConverter.toDTOList(list));
     }
 
     @Override
     public void update(DiscountDTO discountDTO) {
-        Session session = discountDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Discount discount = discountConverter.toEntity(discountDTO);
-            discountDao.update(discount);
-            transaction.commit();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
+        Discount discount = discountConverter.toEntity(discountDTO);
+        discountDao.update(discount);
     }
 
     @Override
     public Long getIdByRate(BigDecimal rate) {
-        Session session = discountDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Long id = discountDao.getDiscountId(rate);
-            transaction.commit();
-            return id;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
-        return null;
+        return discountDao.getDiscountId(rate);
     }
 
     @Override
     public DiscountDTO getRandomDiscount() {
-        Session session = discountDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Long ids = discountDao.countDiscounts();
-            Long id = (long) (1 + random.nextInt(ids.intValue()));
-            Discount discount = discountDao.getDiscountById(id);
-            DiscountDTO discountDTO = discountDTOConverter.toDTO(discount);
-            transaction.commit();
-            return discountDTO;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            session.getTransaction().rollback();
-        }
-        return null;
+        Long ids = discountDao.countDiscounts();
+        Long id = (long) (1 + random.nextInt(ids.intValue()));
+        Discount discount = discountDao.getDiscountById(id);
+        return discountDTOConverter.toDTO(discount);
     }
-
-
 }

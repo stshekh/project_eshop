@@ -13,11 +13,13 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
     private static final Logger logger = LogManager.getLogger(CommentServiceImpl.class);
     @Autowired
@@ -31,85 +33,27 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO save(CommentDTO commentDTO) {
-        Session session = commentDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Comment comment = commentConverter.toEntity(commentDTO);
-            commentDao.create(comment);
-            CommentDTO commentDTONew = commentDTOConverter.toDTO(comment);
-            transaction.commit();
-            return commentDTONew;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to save comment");
-        }
-        return commentDTO;
+        Comment comment = commentConverter.toEntity(commentDTO);
+        commentDao.create(comment);
+        return commentDTOConverter.toDTO(comment);
     }
 
     @Override
     public CommentDTO update(CommentDTO commentDTO) {
-        Session session = commentDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Comment comment = commentConverter.toEntity(commentDTO);
-            commentDao.update(comment);
-            CommentDTO commentDTONew = commentDTOConverter.toDTO(comment);
-            transaction.commit();
-            return commentDTONew;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to update comment");
-        }
-        return commentDTO;
+        Comment comment = commentConverter.toEntity(commentDTO);
+        commentDao.update(comment);
+        return commentDTOConverter.toDTO(comment);
     }
 
     @Override
     public List<CommentDTO> findAll() {
-        Session session = commentDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            List<Comment> comments = commentDao.findAll();
-            List<CommentDTO> commentDTOS = commentDTOConverter.toDTOList(comments);
-            transaction.commit();
-            return commentDTOS;
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Failed to get al comments");
-        }
-        return Collections.emptyList();
+        List<Comment> comments = commentDao.findAll();
+        return commentDTOConverter.toDTOList(comments);
     }
 
     @Override
     public void delete(CommentDTO commentDTO) {
-        Session session = commentDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            Comment comment = commentConverter.toEntity(commentDTO);
-            commentDao.delete(comment);
-            transaction.commit();
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("Delete wasn't completed!");
-        }
+        Comment comment = commentConverter.toEntity(commentDTO);
+        commentDao.delete(comment);
     }
 }
