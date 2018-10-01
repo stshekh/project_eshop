@@ -15,8 +15,8 @@ public class PageProperties {
     private String errorsPagePath;
     private String itemsPagePath;
     private String usersPagePath;
-    private String usersCreatePagePath;
-    private String userPagePath;
+    private String userCreatePagePath;
+    private String userUpdatePagePath;
 
     @PostConstruct
     public void initialize() {
@@ -24,8 +24,8 @@ public class PageProperties {
         this.loginPagePath = environment.getProperty("login.page.path");
         this.itemsPagePath = environment.getProperty("items.page.path");
         this.usersPagePath = environment.getProperty("users.page.path");
-        this.userPagePath = environment.getProperty("user.update.page.path");
-        this.usersCreatePagePath = environment.getProperty("users.create.page.path");
+        this.userUpdatePagePath = environment.getProperty("user.update.page.path");
+        this.userCreatePagePath = environment.getProperty("user.create.page.path");
     }
 
     public Environment getEnvironment() {
@@ -48,12 +48,12 @@ public class PageProperties {
         return itemsPagePath;
     }
 
-    public String getUsersCreatePagePath() {
-        return usersCreatePagePath;
+    public String getUserCreatePagePath() {
+        return userCreatePagePath;
     }
 
-    public String getUserPagePath() {
-        return userPagePath;
+    public String getUserUpdatePagePath() {
+        return userUpdatePagePath;
     }
 }
 

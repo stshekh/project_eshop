@@ -2,7 +2,6 @@ package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.UserService;
-import com.gmail.sshekh.service.dto.RoleDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +54,7 @@ public class UsersController {
     public String getUser(@PathVariable("id") Long id, ModelMap modelMap) {
         UserDTO user = userService.findById(id);
         modelMap.addAttribute("user", user);
-        return pageProperties.getUserPagePath();
+        return pageProperties.getUserUpdatePagePath();
     }
 
     //Updates user
@@ -82,6 +81,6 @@ public class UsersController {
     @GetMapping(value="/create")
     public String addUserPage(ModelMap modelMap){
         modelMap.addAttribute("user", new UserDTO());
-        return pageProperties.getUsersCreatePagePath();
+        return pageProperties.getUserCreatePagePath();
     }
 }
