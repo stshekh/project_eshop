@@ -16,7 +16,7 @@
             <form action="${pageContext.request.contextPath}/users" method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="${pageContext.request.contextPath}/users" class="btn btn-primary"
+                        <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
                            aria-pressed="true" role="button">ADD</a>
                         <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>

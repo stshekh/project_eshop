@@ -3,10 +3,12 @@ package com.gmail.sshekh.config;
 import com.gmail.sshekh.dao.model.*;
 import com.gmail.sshekh.dao.properties.DatabaseProperties;
 import com.zaxxer.hikari.HikariDataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -44,6 +46,16 @@ public class DatabaseConfig {
     }
 
     @Bean
+    public SpringLiquibase springLiquibase(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDataSource(dataSource);
+        liquibase.setDropFirst(Boolean.TRUE);
+        liquibase.setChangeLog("classpath:migration/db-changelog.xml");
+        return liquibase;
+    }
+
+    @Bean
+    @DependsOn("springLiquibase")
     public LocalSessionFactoryBean getSessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource);

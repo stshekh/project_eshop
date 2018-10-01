@@ -78,9 +78,27 @@ public class UsersController {
     }
 
     //Moves to the create-page of the user
-    @GetMapping(value="/create")
-    public String addUserPage(ModelMap modelMap){
+    @GetMapping(value = "/create")
+    public String addUserPage(ModelMap modelMap) {
         modelMap.addAttribute("user", new UserDTO());
         return pageProperties.getUserCreatePagePath();
+    }
+
+    //Creating new user
+    @PostMapping
+    public String createUser(
+            @ModelAttribute("user") UserDTO user,
+            BindingResult result,
+            ModelMap modelMap
+    ) {
+        userValidator.validate(user, result);
+        if (result.hasErrors()) {
+            modelMap.addAttribute("user", user);
+            return pageProperties.getUserCreatePagePath();
+        } else {
+            userService.save(user);
+            return "redirect:/users";
+        }
+
     }
 }

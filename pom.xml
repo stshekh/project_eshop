@@ -22,6 +22,7 @@
         <spring.version>5.0.8.RELEASE</spring.version>
         <commons-lang3.version>3.8</commons-lang3.version>
         <hikari.version>3.2.0</hikari.version>
+        <liquidbase.version>3.6.2</liquidbase.version>
     </properties>
     <dependencies>
         <dependency>

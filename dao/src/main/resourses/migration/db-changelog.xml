@@ -1,0 +1,227 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Dell (generated)" id="1538416069810-1">
+        <createTable tableName="t_audit">
+            <column autoIncrement="true" name="ID_AUDIT" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="CREATED" type="datetime"/>
+            <column name="EVENT_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-2">
+        <createTable tableName="t_comment">
+            <column autoIncrement="true" name="ID_COMMENT" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="CONTENT" type="VARCHAR(255)"/>
+            <column name="CREATED" type="datetime"/>
+            <column name="USER_ID" type="BIGINT"/>
+            <column name="NEWS_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-3">
+        <createTable tableName="t_discount">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="EXPIRATION_DATE" type="datetime"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="DISCOUNT_RATE" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-4">
+        <createTable tableName="t_discount_item">
+            <column name="DISCOUNT_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ITEM_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-5">
+        <createTable tableName="t_item">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="PRICE" type="DECIMAL(19, 2)"/>
+            <column name="UNIQUE_NUMBER" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-6">
+        <createTable tableName="t_news">
+            <column autoIncrement="true" name="ID_NEWS" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="CONTENT" type="VARCHAR(255)"/>
+            <column name="CREATION_TIME" type="datetime"/>
+            <column name="TITLE" type="VARCHAR(255)"/>
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-7">
+        <createTable tableName="t_order">
+            <column name="ITEM_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="USER_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="CREATED" type="datetime"/>
+            <column name="QUANTITY" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-8">
+        <createTable tableName="t_permission">
+            <column autoIncrement="true" name="ID_PERMISSION" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="PERMISSION_NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-9">
+        <createTable tableName="t_profile">
+            <column name="ID_USER" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ADRESS" type="VARCHAR(255)"/>
+            <column name="TELEPHONE" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-10">
+        <createTable tableName="t_role">
+            <column autoIncrement="true" name="ID_ROLE" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ROLE_NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-11">
+        <createTable tableName="t_role_permission">
+            <column name="PERMISSION_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ROLE_ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-12">
+        <createTable tableName="t_user">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)"/>
+            <column name="FIRST_NAME" type="VARCHAR(255)"/>
+            <column name="LAST_NAME" type="VARCHAR(255)"/>
+            <column name="PASSWORD" type="VARCHAR(255)"/>
+            <column name="ID_DISCOUNT" type="BIGINT"/>
+            <column name="ID_ROLE" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-13">
+        <createIndex indexName="FKa0xexpnhoc27elrxufr8msciw" tableName="t_discount_item">
+            <column name="ITEM_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-14">
+        <createIndex indexName="FKarcirgjq1lmcoew4k7sa1l8c4" tableName="t_audit">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-15">
+        <createIndex indexName="FKdkd4wtatiq4gri79mrk38jrdv" tableName="t_news">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-16">
+        <createIndex indexName="FKi79r2hea32cvgl97duwexnqlj" tableName="t_user">
+            <column name="ID_ROLE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-17">
+        <createIndex indexName="FKltnl4nkgy60ptf653vs9ip8kk" tableName="t_comment">
+            <column name="NEWS_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-18">
+        <createIndex indexName="FKn8f9see7nqn9l6r8i60fv3rg2" tableName="t_user">
+            <column name="ID_DISCOUNT"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-19">
+        <createIndex indexName="FKod7yvgpte1s8padon3rba7iwh" tableName="t_order">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-20">
+        <createIndex indexName="FKsgbw04ptcabb8jeclm8buvb6v" tableName="t_role_permission">
+            <column name="ROLE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-21">
+        <createIndex indexName="FKtfdfs10jlse87pexvkwu9kkbb" tableName="t_comment">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-22">
+        <addForeignKeyConstraint baseColumnNames="PERMISSION_ID" baseTableName="t_role_permission" constraintName="FK31ev2oprblmmwf6d5srontx8f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_PERMISSION" referencedTableName="t_permission" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-23">
+        <addForeignKeyConstraint baseColumnNames="ITEM_ID" baseTableName="t_discount_item" constraintName="FKa0xexpnhoc27elrxufr8msciw" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_item" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-24">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_audit" constraintName="FKarcirgjq1lmcoew4k7sa1l8c4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-25">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_news" constraintName="FKdkd4wtatiq4gri79mrk38jrdv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-26">
+        <addForeignKeyConstraint baseColumnNames="ID_ROLE" baseTableName="t_user" constraintName="FKi79r2hea32cvgl97duwexnqlj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_ROLE" referencedTableName="t_role" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-27">
+        <addForeignKeyConstraint baseColumnNames="NEWS_ID" baseTableName="t_comment" constraintName="FKltnl4nkgy60ptf653vs9ip8kk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_NEWS" referencedTableName="t_news" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-28">
+        <addForeignKeyConstraint baseColumnNames="ID_DISCOUNT" baseTableName="t_user" constraintName="FKn8f9see7nqn9l6r8i60fv3rg2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_discount" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-29">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_order" constraintName="FKod7yvgpte1s8padon3rba7iwh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-30">
+        <addForeignKeyConstraint baseColumnNames="DISCOUNT_ID" baseTableName="t_discount_item" constraintName="FKrwsfnm8si3yutdlbi8j6os6vb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_discount" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-31">
+        <addForeignKeyConstraint baseColumnNames="ROLE_ID" baseTableName="t_role_permission" constraintName="FKsgbw04ptcabb8jeclm8buvb6v" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_ROLE" referencedTableName="t_role" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-32">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_comment" constraintName="FKtfdfs10jlse87pexvkwu9kkbb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-33">
+        <addForeignKeyConstraint baseColumnNames="ITEM_ID" baseTableName="t_order" constraintName="FKtgnbsa06g79bvrkp8jgh04371" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_item" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-34" >
+        <insert tableName="T_ROLE">
+            <column name="ID_ROLE" value="1"/>
+            <column name="ROLE_NAME" value="Admin"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-35" >
+        <insert tableName="T_ROLE">
+            <column name="ID_ROLE" value="2"/>
+            <column name="ROLE_NAME" value="Plain user"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
