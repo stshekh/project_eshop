@@ -2,6 +2,7 @@ package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.ItemDao;
 import com.gmail.sshekh.dao.model.Item;
+import com.gmail.sshekh.service.DiscountService;
 import com.gmail.sshekh.service.ItemService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
@@ -9,9 +10,6 @@ import com.gmail.sshekh.service.dto.DiscountDTO;
 import com.gmail.sshekh.service.dto.ItemDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -33,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
     @Qualifier("itemConverter")
     private Converter<ItemDTO, Item> itemConverter;
     @Autowired
-    private DiscountServiceImpl discountService;
+    private DiscountService discountService;
     private Random random = new Random();
 
     @Override

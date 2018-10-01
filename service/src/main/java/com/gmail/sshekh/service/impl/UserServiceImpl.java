@@ -3,6 +3,7 @@ package com.gmail.sshekh.service.impl;
 import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.service.DiscountService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private DiscountServiceImpl discountService;
+    private DiscountService discountService;
     @Autowired
     @Qualifier("userDTOConverter")
     private DTOConverter<User, UserDTO> userDTOConverter;

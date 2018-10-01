@@ -15,7 +15,6 @@ public class PageProperties {
     private String errorsPagePath;
     private String itemsPagePath;
     private String usersPagePath;
-    private String usersUpdatePagePath;
     private String usersCreatePagePath;
     private String userPagePath;
 
@@ -25,8 +24,7 @@ public class PageProperties {
         this.loginPagePath = environment.getProperty("login.page.path");
         this.itemsPagePath = environment.getProperty("items.page.path");
         this.usersPagePath = environment.getProperty("users.page.path");
-        this.userPagePath = environment.getProperty("users.update.page.path");
-        this.usersUpdatePagePath = environment.getProperty("users.update.page.path");
+        this.userPagePath = environment.getProperty("user.update.page.path");
         this.usersCreatePagePath = environment.getProperty("users.create.page.path");
     }
 
@@ -48,10 +46,6 @@ public class PageProperties {
 
     public String getItemsPagePath() {
         return itemsPagePath;
-    }
-
-    public String getUsersUpdatePagePath() {
-        return usersUpdatePagePath;
     }
 
     public String getUsersCreatePagePath() {

@@ -6,21 +6,19 @@ import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Item;
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.service.ItemService;
 import com.gmail.sshekh.service.OrderService;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.ItemDTO;
 import com.gmail.sshekh.service.dto.OrderDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -38,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Qualifier("orderDTOConverter")
     private DTOConverter<Order, OrderDTO> orderDTOConverter;
     @Autowired
-    private ItemServiceImpl itemService;
+    private ItemService itemService;
 
     @Override
     public void save(OrderDTO orderDTO) {

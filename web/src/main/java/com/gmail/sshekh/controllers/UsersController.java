@@ -31,6 +31,7 @@ public class UsersController {
         this.userValidator = userValidator;
     }
 
+    //Shows all the users on page
     @GetMapping
     public String getUsers(ModelMap modelMap) {
         List<UserDTO> users = userService.findAll();
@@ -38,13 +39,7 @@ public class UsersController {
         return pageProperties.getUsersPagePath();
     }
 
-    @GetMapping(value = "/{id}")
-    public String getUser(@PathVariable("id") Long id, ModelMap modelMap) {
-        UserDTO user = userService.findById(id);
-        modelMap.addAttribute("user", user);
-        return pageProperties.getUserPagePath();
-    }
-
+    //Show user with set filter
     @GetMapping("/filter")
     public String getUser(
             @RequestParam(value = "email", defaultValue = "user@user.com") String email,
@@ -55,6 +50,15 @@ public class UsersController {
         return pageProperties.getUsersPagePath();
     }
 
+    //Shows one user page
+    @GetMapping(value = "/{id}")
+    public String getUser(@PathVariable("id") Long id, ModelMap modelMap) {
+        UserDTO user = userService.findById(id);
+        modelMap.addAttribute("user", user);
+        return pageProperties.getUserPagePath();
+    }
+
+    //Updates user
     @PostMapping(value = "/{id}")
     public String updateUser(
             @PathVariable("id") Long id,
@@ -72,5 +76,12 @@ public class UsersController {
             return "redirect:/users";
         }
 
+    }
+
+    //Moves to the create-page of the user
+    @GetMapping(value="/create")
+    public String addUserPage(ModelMap modelMap){
+        modelMap.addAttribute("user", new UserDTO());
+        return pageProperties.getUsersCreatePagePath();
     }
 }
