@@ -31,7 +31,10 @@
                     <form:label path="password">Password</form:label>
                     <form:input path="password" class="form-control" placeholder="Password"/>
                 </div>
-
+                <div class="form-group">
+                    <form:label path="role">Role</form:label>
+                    <form:input path="role" class="form-control" placeholder="Role"/>
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form:form>
         </div>

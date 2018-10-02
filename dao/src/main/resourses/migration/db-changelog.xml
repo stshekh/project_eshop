@@ -224,4 +224,14 @@
             <column name="ROLE_NAME" value="Plain user"/>
         </insert>
     </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-36" >
+        <insert tableName="T_USER">
+            <column name="ID" value="1"/>
+            <column name="EMAIL" value="superadmin@facades.com"/>
+            <column name="FIRST_NAME" value="Superuser"/>
+            <column name="LAST_NAME" value="Superuser"/>
+            <column name="PASSWORD" value="Superuser"/>
+            <column name="ID_ROLE" value="1"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
