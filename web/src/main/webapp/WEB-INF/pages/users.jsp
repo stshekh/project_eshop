@@ -18,7 +18,8 @@
                     <div class="col-md-12">
                         <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
                            aria-pressed="true" role="button">ADD</a>
-                        <button type="submit" class="btn btn-primary">DELETE</button>
+                        <a href="${pageContext.request.contextPath}/users/delete?ids=${ids}" class="btn btn-primary"
+                           aria-pressed="true" role="button">DELETE</a>
                     </div>
                 </div>
                 <div class="row">

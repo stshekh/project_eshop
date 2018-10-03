@@ -65,23 +65,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
-    public void delete(UserDTO userDTO) {
-        Session session = userDao.getCurrentSession();
-        try {
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            User user = userConverter.toEntity(userDTO);
-            userDao.delete(user);
-            transaction.commit();
-            logger.info("User " + user.getFirstName() + " was successfully deleted!");
-        } catch (Exception e) {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            logger.error("User wasn't deleted!", e);
-        }
+    public void delete(Long id) {
+        userDao.deleteById(id);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.UserService;
+import com.gmail.sshekh.service.dto.RoleDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -99,6 +100,15 @@ public class UsersController {
             userService.save(user);
             return "redirect:/users";
         }
+    }
 
+    @PostMapping("/delete")
+    public String deleteUser(
+            @RequestParam("ids") Long[] ids
+    ){
+        for (Long id: ids){
+            userService.delete(id);
+        }
+        return "redirect:/users";
     }
 }

@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>${liquidbase.version}</version>
+            <version>${liquibase.version}</version>
         </dependency>
     </dependencies>
 
