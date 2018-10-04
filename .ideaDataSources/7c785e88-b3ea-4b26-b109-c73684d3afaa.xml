@@ -1125,9 +1125,7 @@
     <table id="290" parent="6" name="t_role"/>
     <table id="291" parent="6" name="t_role_permission"/>
     <table id="292" parent="6" name="t_user"/>
-    <table id="293" parent="8" name="t_audit">
-      <Comment>	</Comment>
-    </table>
+    <table id="293" parent="8" name="t_audit"/>
     <table id="294" parent="8" name="t_comment"/>
     <table id="295" parent="8" name="t_item"/>
     <table id="296" parent="8" name="t_news"/>

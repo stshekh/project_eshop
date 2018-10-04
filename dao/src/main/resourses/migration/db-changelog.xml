@@ -225,12 +225,36 @@
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-36" >
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="1"/>
+            <column name="PERMISSION_NAME" value="VIEW_PROFILE"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-37" >
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="2"/>
+            <column name="PERMISSION_NAME" value="VIEW_USERS"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-38" >
+        <insert tableName="T_ROLE_PERMISSION">
+            <column name="PERMISSION_ID" value="1"/>
+            <column name="ROLE_ID" value="2"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-39" >
+        <insert tableName="T_ROLE_PERMISSION">
+            <column name="PERMISSION_ID" value="2"/>
+            <column name="ROLE_ID" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-40" >
         <insert tableName="T_USER">
             <column name="ID" value="1"/>
             <column name="EMAIL" value="superadmin@facades.com"/>
             <column name="FIRST_NAME" value="Superuser"/>
             <column name="LAST_NAME" value="Superuser"/>
-            <column name="PASSWORD" value="Superuser"/>
+            <column name="PASSWORD" value="$2y$04$6f3BV5Jz8hqEDC7hGpmFPuZV8v44lfJ7wYP4KwqGwhh6cebRe4RFa"/>
             <column name="ID_ROLE" value="1"/>
         </insert>
     </changeSet>
