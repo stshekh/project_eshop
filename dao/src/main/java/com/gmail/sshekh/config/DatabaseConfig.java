@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -49,7 +51,7 @@ public class DatabaseConfig {
     public SpringLiquibase springLiquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
-        liquibase.setDropFirst(Boolean.TRUE);
+        //liquibase.setDropFirst(Boolean.TRUE);
         liquibase.setChangeLog("classpath:migration/db-changelog.xml");
         return liquibase;
     }
