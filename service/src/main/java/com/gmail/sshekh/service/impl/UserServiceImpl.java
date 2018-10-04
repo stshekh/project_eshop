@@ -84,6 +84,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public List<UserDTO> findAll(int startPosition, int maxResult) {
+        List<User> users = userDao.findAll(startPosition, maxResult);
+        return userDTOConverter.toDTOList(users);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void setDiscount(UserDTO userDTO) {
         DiscountDTO discountDTO = discountService.getRandomDiscount();
         userDTO.setDiscountDTO(discountDTO);

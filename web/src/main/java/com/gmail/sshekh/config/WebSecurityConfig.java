@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -43,24 +43,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
-                .formLogin()
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .successHandler(appSuccessHandler)
-                .failureUrl("/login?error=true")
-                .permitAll()
+                    .formLogin()
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .successHandler(appSuccessHandler)
+                    .failureUrl("/login?error=true")
+                    .permitAll()
                 .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
+                    .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
                 .and()
                 .csrf().disable();
     }
 
-    @Bean//TODO move to webSecurityconfig
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

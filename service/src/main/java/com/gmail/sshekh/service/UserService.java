@@ -17,6 +17,8 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
+    List<UserDTO> findAll(int startPosition, int maxResult);
+
     void setDiscount(UserDTO userDTO);
 
     UserDTO findById(Long id);

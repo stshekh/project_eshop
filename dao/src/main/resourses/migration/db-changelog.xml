@@ -254,7 +254,7 @@
             <column name="EMAIL" value="superadmin@facades.com"/>
             <column name="FIRST_NAME" value="Superuser"/>
             <column name="LAST_NAME" value="Superuser"/>
-            <column name="PASSWORD" value="$2y$04$6f3BV5Jz8hqEDC7hGpmFPuZV8v44lfJ7wYP4KwqGwhh6cebRe4RFa"/>
+            <column name="PASSWORD" value="$2a$10$G3EjXdLH0j3ev/9ms.eyMe6YbGN8906bN3643nWSz.NTilEdtNMkG"/>
             <column name="ID_ROLE" value="1"/>
         </insert>
     </changeSet>

@@ -31,10 +31,6 @@
                     <form:label path="password">Password</form:label>
                     <form:input path="password" class="form-control" placeholder="Password"/>
                 </div>
-                <div class="form-group">
-                    <label>Role</label>
-                    <div class="form-control">${user.getRole().getRoleName()}</div>
-                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form:form>
         </div>

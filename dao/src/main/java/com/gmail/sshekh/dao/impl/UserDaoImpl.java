@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
@@ -31,5 +33,14 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (User) query.uniqueResult();
+    }
+
+    @Override
+    public List<User> findAll(int startPosition, int maxResult) {
+        String hql = "FROM User AS U ORDER BY U.id asc";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResult);
+        return query.list();
     }
 }

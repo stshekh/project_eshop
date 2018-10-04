@@ -47,10 +47,10 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
         boolean isAdmin = false;
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("")) {//TODO input permission names to user
+            if (grantedAuthority.getAuthority().equals("VIEW_PROFILE")) {
                 isUser = true;
                 break;
-            } else if (grantedAuthority.getAuthority().equals("")) {//TODO input permission names to admin
+            } else if (grantedAuthority.getAuthority().equals("VIEW_USERS")) {
                 isAdmin = true;
                 break;
             }
