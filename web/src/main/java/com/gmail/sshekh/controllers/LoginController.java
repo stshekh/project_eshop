@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
     private final PageProperties pageProperties;
     private final UserService userService;
@@ -31,7 +30,7 @@ public class LoginController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping
+    @GetMapping("/login")
     public String getLoginPage() {
         return pageProperties.getLoginPagePath();
     }
