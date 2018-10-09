@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO save(UserDTO userDTO) {
         User user = userConverter.toEntity(userDTO);
         user.setRole(roleDao.getRoleByName("Plain user"));
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userDao.create(user);
         UserDTO userDTONew = userDTOConverter.toDTO(user);
         return userDTONew;
@@ -71,7 +73,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Long id) {
-        User user=userDao.findUserById(id);
+        User user = userDao.findUserById(id);
         user.setRole(null);
         userDao.deleteById(id);
     }
