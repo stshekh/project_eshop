@@ -25,4 +25,11 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
         return (Role) query.uniqueResult();
     }
 
+    @Override
+    public Role getRoleByName(String name) {
+        String hql = "FROM Role AS r WHERE r.roleName=:name";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("name", name);
+        return (Role) query.uniqueResult();
+    }
 }

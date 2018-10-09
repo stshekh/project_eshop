@@ -1633,6 +1633,7 @@ ROLE_ID</ColNames>
     <column id="393" parent="292" name="ID_ROLE">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
+      <DefaultExpression>&apos;2&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="394" parent="292" name="FKn8f9see7nqn9l6r8i60fv3rg2">

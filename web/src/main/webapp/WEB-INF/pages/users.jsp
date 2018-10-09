@@ -13,13 +13,12 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <form action="${pageContext.request.contextPath}/users" method="post">
+            <form action="${pageContext.request.contextPath}/users/delete" method="post">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
                            aria-pressed="true" role="button">ADD</a>
-                        <a href="${pageContext.request.contextPath}/users/delete?ids=${ids}" class="btn btn-primary"
-                           aria-pressed="true" role="button">DELETE</a>
+                        <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>
                 </div>
                 <div class="row">

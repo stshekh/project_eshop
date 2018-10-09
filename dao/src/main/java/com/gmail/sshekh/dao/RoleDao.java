@@ -4,4 +4,6 @@ import com.gmail.sshekh.dao.model.Role;
 
 public interface RoleDao extends GenericDao<Role> {
     Role findRoleById(Long id);
+
+    Role getRoleByName(String name);
 }

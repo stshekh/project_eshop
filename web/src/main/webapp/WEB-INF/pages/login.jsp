@@ -28,6 +28,9 @@
                            placeholder="Input password">
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
+                <a href="${pageContext.request.contextPath}/register"
+                   class="btn btn-primary" aria-pressed="true"
+                   role="button">Register</a>
             </form>
         </div>
         <div class="col-md-4"></div>

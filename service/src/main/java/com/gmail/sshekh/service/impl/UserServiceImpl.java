@@ -1,9 +1,11 @@
 package com.gmail.sshekh.service.impl;
 
+import com.gmail.sshekh.dao.RoleDao;
 import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.service.DiscountService;
+import com.gmail.sshekh.service.RoleService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
@@ -31,6 +33,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DiscountService discountService;
     @Autowired
+    private RoleService roleService;
+    @Autowired
+    private RoleDao roleDao;
+    @Autowired
     @Qualifier("userDTOConverter")
     private DTOConverter<User, UserDTO> userDTOConverter;
     @Autowired
@@ -44,6 +50,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public UserDTO save(UserDTO userDTO) {
         User user = userConverter.toEntity(userDTO);
+        user.setRole(roleDao.getRoleByName("Plain user"));
         userDao.create(user);
         UserDTO userDTONew = userDTOConverter.toDTO(user);
         return userDTONew;
@@ -64,6 +71,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public void delete(Long id) {
+        User user=userDao.findUserById(id);
+        user.setRole(null);
         userDao.deleteById(id);
     }
 

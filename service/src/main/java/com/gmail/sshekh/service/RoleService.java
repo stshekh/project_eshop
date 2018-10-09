@@ -15,4 +15,6 @@ public interface RoleService {
     RoleDTO findRoleById(Long id);
 
     List<RoleDTO> findAll();
+
+    RoleDTO getRoleByName(String name);
 }

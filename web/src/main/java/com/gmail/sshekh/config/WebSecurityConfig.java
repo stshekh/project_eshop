@@ -1,7 +1,6 @@
 package com.gmail.sshekh.config;
 
 import com.gmail.sshekh.controllers.AppSuccessHandler;
-import com.gmail.sshekh.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -40,22 +39,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login**").permitAll()
+                .antMatchers("/register**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
-                    .formLogin()
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .loginPage("/login")
-                    .loginProcessingUrl("/login")
-                    .successHandler(appSuccessHandler)
-                    .failureUrl("/login?error=true")
-                    .permitAll()
+                .formLogin()
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .successHandler(appSuccessHandler)
+                .failureUrl("/login?error=true")
+                .permitAll()
                 .and()
-                    .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
                 .and()
                 .csrf().disable();
     }

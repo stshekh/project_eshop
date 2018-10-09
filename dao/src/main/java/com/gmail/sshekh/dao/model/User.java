@@ -24,7 +24,7 @@ public class User implements Serializable {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_ROLE")//TODO nullable false
+    @JoinColumn(name = "ID_ROLE", nullable = false)//TODO nullable false
     private Role role;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)

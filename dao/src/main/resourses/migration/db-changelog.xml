@@ -128,7 +128,7 @@
             <column name="LAST_NAME" type="VARCHAR(255)"/>
             <column name="PASSWORD" type="VARCHAR(255)"/>
             <column name="ID_DISCOUNT" type="BIGINT"/>
-            <column name="ID_ROLE" type="BIGINT"/>
+            <column defaultValueNumeric="2" name="ID_ROLE" type="BIGINT"/>
         </createTable>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-13">

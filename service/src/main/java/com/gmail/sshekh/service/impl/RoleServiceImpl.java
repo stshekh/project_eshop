@@ -62,4 +62,10 @@ public class RoleServiceImpl implements RoleService {
         List<Role> roles = roleDao.findAll();
         return roleDTOConverter.toDTOList(roles);
     }
+
+    @Override
+    public RoleDTO getRoleByName(String name) {
+        Role role = roleDao.getRoleByName(name);
+        return roleDTOConverter.toDTO(role);
+    }
 }
