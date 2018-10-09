@@ -10,4 +10,6 @@ public interface UserDao extends GenericDao<User> {
     User findUserById(Long id);
 
     List<User> findAll(int startPosition, int maxResult);
+
+    Long getRoleIdByUserId(Long id);
 }

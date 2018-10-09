@@ -43,4 +43,12 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setMaxResults(maxResult);
         return query.list();
     }
+
+    @Override
+    public Long getRoleIdByUserId(Long id) {
+        String hql = "SELECT role.idRole FROM User u JOIN u.role role WHERE u.id=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (Long) query.uniqueResult();
+    }
 }

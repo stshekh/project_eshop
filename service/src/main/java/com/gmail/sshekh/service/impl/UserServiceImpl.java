@@ -34,8 +34,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DiscountService discountService;
     @Autowired
-    private RoleService roleService;
-    @Autowired
     private RoleDao roleDao;
     @Autowired
     @Qualifier("userDTOConverter")
@@ -64,6 +62,8 @@ public class UserServiceImpl implements UserService {
         List<OrderDTO> orderDTOS = userDTO.getOrders();
         List<Order> orders = orderConverter.toEntityList(orderDTOS);
         User user = userConverter.toEntity(userDTO);
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setRole(roleDao.findRoleById(userDao.getRoleIdByUserId(user.getId())));
         user.setOrders(orders);
         userDao.update(user);
         //TODO order user converter correctly
