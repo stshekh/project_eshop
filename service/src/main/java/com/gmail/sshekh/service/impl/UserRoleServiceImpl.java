@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserRoleServiceImpl implements UserRoleService {
 
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(UserRoleServiceImpl.class);
 
     @Autowired
     private UserDao userDao;

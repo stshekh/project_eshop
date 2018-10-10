@@ -5,7 +5,6 @@ import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.service.DiscountService;
-import com.gmail.sshekh.service.RoleService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
