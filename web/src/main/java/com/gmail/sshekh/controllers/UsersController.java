@@ -103,7 +103,7 @@ public class UsersController {
             ModelMap modelMap
     ) {
         user.setUserId(id);
-        userRoleService.changeRole(user);//TODO if-else in converter on RoleDto
+        userRoleService.changeRole(user);
         modelMap.addAttribute("user", user);
         return "redirect:/users/roles/{id}";
 
