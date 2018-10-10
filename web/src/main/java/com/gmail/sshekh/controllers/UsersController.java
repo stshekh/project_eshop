@@ -1,9 +1,12 @@
 package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.controllers.properties.PageProperties;
+import com.gmail.sshekh.service.RoleService;
+import com.gmail.sshekh.service.UserRoleService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.RoleDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
+import com.gmail.sshekh.service.dto.UserRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,16 +22,22 @@ public class UsersController {
     private final PageProperties pageProperties;
     private final UserService userService;
     private final Validator userValidator;
+    private final UserRoleService userRoleService;
+    private final RoleService roleService;
 
     @Autowired
     public UsersController(
             PageProperties pageProperties,
             UserService userService,
-            Validator userValidator
+            Validator userValidator,
+            UserRoleService userRoleService,
+            RoleService roleService
     ) {
         this.pageProperties = pageProperties;
         this.userService = userService;
         this.userValidator = userValidator;
+        this.userRoleService = userRoleService;
+        this.roleService = roleService;
     }
 
     //Shows all the users on page
@@ -75,6 +84,28 @@ public class UsersController {
             modelMap.addAttribute("user", user);
             return "redirect:/users";
         }
+    }
+
+    @GetMapping(value = "/roles/{id}")
+    public String getUsersRole(@PathVariable("id") Long id, ModelMap modelMap) {
+        UserRoleDTO user = userRoleService.getUsersRole(id);
+        List<RoleDTO> roles = roleService.findAll();
+        modelMap.addAttribute("roles", roles);
+        modelMap.addAttribute("user", user);
+        return pageProperties.getUserRoleUpdatePage();
+    }
+
+    //Updates user
+    @PostMapping(value = "/roles/{id}")
+    public String updateUsersRole(
+            @PathVariable("id") Long id,
+            @ModelAttribute UserRoleDTO user,
+            ModelMap modelMap
+    ) {
+        user.setUserId(id);
+        userRoleService.changeRole(user);//TODO if-else in converter on RoleDto
+        modelMap.addAttribute("user", user);
+        return "redirect:/users/roles/{id}";
 
     }
 
@@ -105,8 +136,8 @@ public class UsersController {
     @PostMapping("/delete")
     public String deleteUser(
             @RequestParam("ids") Long[] ids
-    ){
-        for (Long id: ids){
+    ) {
+        for (Long id : ids) {
             userService.delete(id);
         }
         return "redirect:/users";

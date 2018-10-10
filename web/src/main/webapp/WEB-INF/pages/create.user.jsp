@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <form:label path="password">Password</form:label>
-                    <form:input path="password" class="form-control" placeholder="Password"/>
+                    <form:input path="password" class="form-control" type="password" placeholder="Password"/>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
