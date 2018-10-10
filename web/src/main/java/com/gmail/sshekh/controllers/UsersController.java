@@ -86,6 +86,8 @@ public class UsersController {
         }
     }
 
+
+    //Updates user role
     @GetMapping(value = "/roles/{id}")
     public String getUsersRole(@PathVariable("id") Long id, ModelMap modelMap) {
         UserRoleDTO user = userRoleService.getUsersRole(id);
@@ -95,7 +97,7 @@ public class UsersController {
         return pageProperties.getUserRoleUpdatePage();
     }
 
-    //Updates user
+    //Updates user role
     @PostMapping(value = "/roles/{id}")
     public String updateUsersRole(
             @PathVariable("id") Long id,
@@ -106,6 +108,29 @@ public class UsersController {
         userRoleService.changeRole(user);
         modelMap.addAttribute("user", user);
         return "redirect:/users/roles/{id}";
+
+    }
+
+    //Updates user enable status
+    @GetMapping(value = "/enabled/{id}")
+    public String getUsersStatus(@PathVariable("id") Long id, ModelMap modelMap) {
+        UserDTO user = userService.findById(id);
+        modelMap.addAttribute("user", user);
+        return pageProperties.getUserEnableUpdatePage();
+    }
+
+
+    //Updates user enable status
+    @PostMapping(value = "/enabled/{id}")
+    public String updateUsersStatus(
+            @PathVariable("id") Long id,
+            @ModelAttribute UserDTO user,
+            ModelMap modelMap
+    ) {
+        user.setId(id);
+        userService.setEnabled(user);
+        modelMap.addAttribute("user", user);
+        return "redirect:/users/enabled/{id}";
 
     }
 

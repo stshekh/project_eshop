@@ -9,6 +9,7 @@ public class UserDTO {
     private String surname;
     private String email;
     private String password;
+    private boolean enabled;
     private RoleDTO role;
     private ProfileDTO profile;
     private List<OrderDTO> orders = new ArrayList<>();
@@ -52,6 +53,14 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public RoleDTO getRole() {

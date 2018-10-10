@@ -13,17 +13,17 @@
 
     <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-16">
             <form action="${pageContext.request.contextPath}/users/delete" method="post">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-16">
                         <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
                            aria-pressed="true" role="button">ADD</a>
                         <button type="submit" class="btn btn-primary">DELETE</button>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-16">
                         <table class="table">
                             <thead>
                             <tr>
@@ -57,6 +57,13 @@
                                             <a href="${pageContext.request.contextPath}/users/roles/${user.id}"
                                                class="btn btn-primary" aria-pressed="true"
                                                role="button">Update role</a>
+                                        </td>
+                                    </security:authorize>
+                                    <security:authorize access="hasAuthority('VIEW_USERS')">
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/users/enabled/${user.id}"
+                                               class="btn btn-primary" aria-pressed="true"
+                                               role="button">Enable status</a>
                                         </td>
                                     </security:authorize>
                                 </tr>

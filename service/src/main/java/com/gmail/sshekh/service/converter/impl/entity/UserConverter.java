@@ -32,6 +32,7 @@ public class UserConverter implements Converter<UserDTO, User> {
         user.setFirstName(dto.getName());
         user.setLastName(dto.getSurname());
         user.setPassword(dto.getPassword());
+        user.setEnabled(dto.isEnabled());
         if (dto.getRole() != null) {
             user.setRole(roleConverter.toEntity(dto.getRole()));
         }

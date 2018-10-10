@@ -22,4 +22,6 @@ public interface UserService {
     void setDiscount(UserDTO userDTO);
 
     UserDTO findById(Long id);
+
+    void setEnabled(UserDTO userDTO);
 }

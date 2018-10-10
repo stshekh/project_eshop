@@ -116,4 +116,12 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findUserById(id);
         return userDTOConverter.toDTO(user);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public void setEnabled(UserDTO userDTO) {
+        User user = userDao.findUserById(userDTO.getId());
+        user.setEnabled(userDTO.isEnabled());
+        userDao.update(user);
+    }
 }
