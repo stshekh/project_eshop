@@ -15,6 +15,7 @@ public class UserPrincipal implements UserDetails {
     private String username;
     private String password;
     private List<GrantedAuthority> authorities;
+    private boolean enabled;
 
     public UserPrincipal(User user) {
         this.id = user.getId();
@@ -24,6 +25,7 @@ public class UserPrincipal implements UserDetails {
                 .map(Permission::getPermissionName)
                 .toArray(String[]::new);
         this.authorities = AuthorityUtils.createAuthorityList(authorityList);
+        this.enabled = user.isEnabled();
     }
 
 
@@ -59,7 +61,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public Long getId() {
@@ -80,5 +82,9 @@ public class UserPrincipal implements UserDetails {
 
     public void setAuthorities(List<GrantedAuthority> authorities) {
         this.authorities = authorities;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

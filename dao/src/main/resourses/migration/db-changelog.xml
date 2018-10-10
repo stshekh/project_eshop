@@ -1,5 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <changeSet author="Dell (generated)" id="1538416069810-1">
         <createTable tableName="t_audit">
             <column autoIncrement="true" name="ID_AUDIT" type="BIGINT">
@@ -129,6 +132,7 @@
             <column name="PASSWORD" type="VARCHAR(255)"/>
             <column name="ID_DISCOUNT" type="BIGINT"/>
             <column defaultValueNumeric="2" name="ID_ROLE" type="BIGINT"/>
+            <column name="ENABLED" type="TINYINT(1)"/>
         </createTable>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-13">
@@ -177,78 +181,115 @@
         </createIndex>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-22">
-        <addForeignKeyConstraint baseColumnNames="PERMISSION_ID" baseTableName="t_role_permission" constraintName="FK31ev2oprblmmwf6d5srontx8f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_PERMISSION" referencedTableName="t_permission" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="PERMISSION_ID" baseTableName="t_role_permission"
+                                 constraintName="FK31ev2oprblmmwf6d5srontx8f" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID_PERMISSION" referencedTableName="t_permission"
+                                 validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-23">
-        <addForeignKeyConstraint baseColumnNames="ITEM_ID" baseTableName="t_discount_item" constraintName="FKa0xexpnhoc27elrxufr8msciw" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_item" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ITEM_ID" baseTableName="t_discount_item"
+                                 constraintName="FKa0xexpnhoc27elrxufr8msciw" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_item" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-24">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_audit" constraintName="FKarcirgjq1lmcoew4k7sa1l8c4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_audit"
+                                 constraintName="FKarcirgjq1lmcoew4k7sa1l8c4" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-25">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_news" constraintName="FKdkd4wtatiq4gri79mrk38jrdv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_news"
+                                 constraintName="FKdkd4wtatiq4gri79mrk38jrdv" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-26">
-        <addForeignKeyConstraint baseColumnNames="ID_ROLE" baseTableName="t_user" constraintName="FKi79r2hea32cvgl97duwexnqlj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_ROLE" referencedTableName="t_role" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ID_ROLE" baseTableName="t_user"
+                                 constraintName="FKi79r2hea32cvgl97duwexnqlj" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID_ROLE" referencedTableName="t_role" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-27">
-        <addForeignKeyConstraint baseColumnNames="NEWS_ID" baseTableName="t_comment" constraintName="FKltnl4nkgy60ptf653vs9ip8kk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_NEWS" referencedTableName="t_news" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="NEWS_ID" baseTableName="t_comment"
+                                 constraintName="FKltnl4nkgy60ptf653vs9ip8kk" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID_NEWS" referencedTableName="t_news" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-28">
-        <addForeignKeyConstraint baseColumnNames="ID_DISCOUNT" baseTableName="t_user" constraintName="FKn8f9see7nqn9l6r8i60fv3rg2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_discount" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ID_DISCOUNT" baseTableName="t_user"
+                                 constraintName="FKn8f9see7nqn9l6r8i60fv3rg2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_discount" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-29">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_order" constraintName="FKod7yvgpte1s8padon3rba7iwh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_order"
+                                 constraintName="FKod7yvgpte1s8padon3rba7iwh" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-30">
-        <addForeignKeyConstraint baseColumnNames="DISCOUNT_ID" baseTableName="t_discount_item" constraintName="FKrwsfnm8si3yutdlbi8j6os6vb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_discount" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="DISCOUNT_ID" baseTableName="t_discount_item"
+                                 constraintName="FKrwsfnm8si3yutdlbi8j6os6vb" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_discount" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-31">
-        <addForeignKeyConstraint baseColumnNames="ROLE_ID" baseTableName="t_role_permission" constraintName="FKsgbw04ptcabb8jeclm8buvb6v" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID_ROLE" referencedTableName="t_role" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ROLE_ID" baseTableName="t_role_permission"
+                                 constraintName="FKsgbw04ptcabb8jeclm8buvb6v" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID_ROLE" referencedTableName="t_role" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-32">
-        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_comment" constraintName="FKtfdfs10jlse87pexvkwu9kkbb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_comment"
+                                 constraintName="FKtfdfs10jlse87pexvkwu9kkbb" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-33">
-        <addForeignKeyConstraint baseColumnNames="ITEM_ID" baseTableName="t_order" constraintName="FKtgnbsa06g79bvrkp8jgh04371" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ID" referencedTableName="t_item" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="ITEM_ID" baseTableName="t_order"
+                                 constraintName="FKtgnbsa06g79bvrkp8jgh04371" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_item" validate="true"/>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-34" >
+    <changeSet author="Dell (generated)" id="1538416069810-34">
         <insert tableName="T_ROLE">
             <column name="ID_ROLE" value="1"/>
             <column name="ROLE_NAME" value="Admin"/>
         </insert>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-35" >
+    <changeSet author="Dell (generated)" id="1538416069810-35">
         <insert tableName="T_ROLE">
             <column name="ID_ROLE" value="2"/>
             <column name="ROLE_NAME" value="Plain user"/>
         </insert>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-36" >
+    <changeSet author="Dell (generated)" id="1538416069810-36">
         <insert tableName="T_PERMISSION">
             <column name="ID_PERMISSION" value="1"/>
             <column name="PERMISSION_NAME" value="VIEW_PROFILE"/>
         </insert>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-37" >
+    <changeSet author="Dell (generated)" id="1538416069810-37">
         <insert tableName="T_PERMISSION">
             <column name="ID_PERMISSION" value="2"/>
             <column name="PERMISSION_NAME" value="VIEW_USERS"/>
         </insert>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-38" >
+    <changeSet author="Dell (generated)" id="1538416069810-38">
         <insert tableName="T_ROLE_PERMISSION">
             <column name="PERMISSION_ID" value="1"/>
             <column name="ROLE_ID" value="2"/>
         </insert>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-39" >
+    <changeSet author="Dell (generated)" id="1538416069810-39">
         <insert tableName="T_ROLE_PERMISSION">
             <column name="PERMISSION_ID" value="2"/>
             <column name="ROLE_ID" value="1"/>
         </insert>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1538416069810-40" >
+    <changeSet author="Dell (generated)" id="1538416069810-40">
         <insert tableName="T_USER">
             <column name="ID" value="1"/>
             <column name="EMAIL" value="superadmin@facades.com"/>
@@ -256,6 +297,7 @@
             <column name="LAST_NAME" value="Superuser"/>
             <column name="PASSWORD" value="$2a$10$G3EjXdLH0j3ev/9ms.eyMe6YbGN8906bN3643nWSz.NTilEdtNMkG"/>
             <column name="ID_ROLE" value="1"/>
+            <column name="ENABLED" value="1"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

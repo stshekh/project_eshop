@@ -22,6 +22,8 @@ public class User implements Serializable {
     private String lastName;
     @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "ENABLED")
+    private boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_ROLE", nullable = false)//TODO nullable false
@@ -107,6 +109,14 @@ public class User implements Serializable {
 
     public void setDiscount(Discount discount) {
         this.discount = discount;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

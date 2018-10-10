@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
         User user = userConverter.toEntity(userDTO);
         user.setRole(roleDao.getRoleByName("Plain user"));
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setEnabled(true);
         userDao.create(user);
         UserDTO userDTONew = userDTOConverter.toDTO(user);
         return userDTONew;
