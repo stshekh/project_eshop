@@ -1,22 +1,19 @@
 package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.ProfileDao;
+import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Profile;
 import com.gmail.sshekh.service.ProfileService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
-import com.gmail.sshekh.service.converter.impl.entity.ProfileConverter;
 import com.gmail.sshekh.service.dto.ProfileDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,6 +25,8 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private ProfileDao profileDao;
     @Autowired
+    private UserDao userDao;
+    @Autowired
     @Qualifier("profileDTOConverter")
     private DTOConverter<Profile, ProfileDTO> profileDTOConverter;
     @Autowired
@@ -37,6 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDTO save(ProfileDTO profileDTO) {
         Profile profile = profileConverter.toEntity(profileDTO);
+        profile.setUser(userDao.findUserById(profile.getUserId()));
         profileDao.create(profile);
         return profileDTOConverter.toDTO(profile);
     }
@@ -58,5 +58,11 @@ public class ProfileServiceImpl implements ProfileService {
     public void delete(ProfileDTO profileDTO) {
         Profile profile = profileConverter.toEntity(profileDTO);
         profileDao.delete(profile);
+    }
+
+    @Override
+    public ProfileDTO findProfileById(Long id) {
+        Profile profile = profileDao.findProfileById(id);
+        return profileDTOConverter.toDTO(profile);
     }
 }

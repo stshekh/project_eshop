@@ -8,6 +8,7 @@
     <title>Users page</title>
 </head>
 <body>
+<%@ include file="util/menu.jsp" %>
 <div class="container">
     <jsp:include page="util/logo.jsp"/>
 
@@ -19,7 +20,7 @@
                     <div class="col-md-16">
                         <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
                            aria-pressed="true" role="button">ADD</a>
-                        <button type="submit" class="btn btn-primary">DELETE</button>
+                        <button type="submit" class="btn btn-warning">DELETE</button>
                     </div>
                 </div>
                 <div class="row">
@@ -64,6 +65,13 @@
                                             <a href="${pageContext.request.contextPath}/users/enabled/${user.id}"
                                                class="btn btn-primary" aria-pressed="true"
                                                role="button">Enable status</a>
+                                        </td>
+                                    </security:authorize>
+                                    <security:authorize access="hasAuthority('VIEW_PROFILE')">
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/users/${user.id}/profile"
+                                               class="btn btn-primary" aria-pressed="true"
+                                               role="button">Manage profile</a>
                                         </td>
                                     </security:authorize>
                                 </tr>

@@ -13,4 +13,6 @@ public interface ProfileService {
     List<ProfileDTO> findAll();
 
     void delete(ProfileDTO profileDTO);
+
+    ProfileDTO findProfileById(Long id);
 }

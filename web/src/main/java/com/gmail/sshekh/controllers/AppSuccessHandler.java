@@ -1,5 +1,6 @@
 package com.gmail.sshekh.controllers;
 
+import com.gmail.sshekh.controllers.exceptions.LoginFailureException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.Authentication;
@@ -45,20 +46,29 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
     private String determineTargetUrl(Authentication authentication) {
         boolean isUser = false;
         boolean isAdmin = false;
+        boolean isSalesMan = false;
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("VIEW_PROFILE")) {
-                isUser = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("VIEW_USERS")) {
-                isAdmin = true;
-                break;
+            switch (grantedAuthority.getAuthority()) {
+                case "VIEW_PROFILE":
+                    isUser = true;
+                    break;
+                case "VIEW_USERS":
+                    isAdmin = true;
+                    break;
+                case "MANAGE_ITEMS":
+                    isSalesMan = true;
+                    break;
+                default:
+                    throw new LoginFailureException();
             }
         }
         if (isUser) {
             return "/orders";
         } else if (isAdmin) {
             return "/users";
+        } else if ((isSalesMan)) {
+            return "/news";
         } else {
             throw new IllegalArgumentException();
         }

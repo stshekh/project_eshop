@@ -9,6 +9,7 @@
     <title>Create user</title>
 </head>
 <body>
+<%@ include file="util/menu.jsp" %>
 <div class="container">
     <div class="row">
         <div class="col-md-4"></div>

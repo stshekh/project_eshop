@@ -19,6 +19,9 @@ public class PageProperties {
     private String userUpdatePagePath;
     private String userRoleUpdatePage;
     private String userEnableUpdatePage;
+    private String newsPagePath;
+    private String profilePagePath;
+    private String profileCreatePagePath;
 
     @PostConstruct
     public void initialize() {
@@ -30,6 +33,21 @@ public class PageProperties {
         this.userCreatePagePath = environment.getProperty("user.create.page.path");
         this.userRoleUpdatePage = environment.getProperty("user.role.update.page");
         this.userEnableUpdatePage = environment.getProperty("user.enable.page");
+        this.newsPagePath = environment.getProperty("news.page.path");
+        this.profilePagePath = environment.getProperty("profile.page.path");
+        this.profileCreatePagePath = environment.getProperty("profile.create.path");
+    }
+
+    public String getProfileCreatePagePath() {
+        return profileCreatePagePath;
+    }
+
+    public String getProfilePagePath() {
+        return profilePagePath;
+    }
+
+    public String getNewsPagePath() {
+        return newsPagePath;
     }
 
     public Environment getEnvironment() {

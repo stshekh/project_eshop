@@ -7,12 +7,5 @@
 <html>
 <head></head>
 <body>
-<div class="col-md-2">
-    <security:authorize access="isAuthenticated()">
-        authenticated as <security:authentication property="principal.username"/>
-        <a href="<c:url value="/logout" />">Logout</a>
-    </security:authorize>
-</div>
-
 </body>
 </html>
