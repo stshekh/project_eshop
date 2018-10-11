@@ -59,6 +59,7 @@
             <column name="NAME" type="VARCHAR(255)"/>
             <column name="PRICE" type="DECIMAL(19, 2)"/>
             <column name="UNIQUE_NUMBER" type="VARCHAR(255)"/>
+            <column name="ENABLE" type="TINYINT(1)"/>
         </createTable>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-6">
@@ -84,6 +85,7 @@
             </column>
             <column name="CREATED" type="datetime"/>
             <column name="QUANTITY" type="BIGINT"/>
+            <column name="STATUS" type="VARCHAR(25)"/>
         </createTable>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-8">
@@ -256,40 +258,76 @@
     <changeSet author="Dell (generated)" id="1538416069810-34">
         <insert tableName="T_ROLE">
             <column name="ID_ROLE" value="1"/>
-            <column name="ROLE_NAME" value="Admin"/>
+            <column name="ROLE_NAME" value="Security user"/>
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-35">
         <insert tableName="T_ROLE">
             <column name="ID_ROLE" value="2"/>
-            <column name="ROLE_NAME" value="Plain user"/>
+            <column name="ROLE_NAME" value="Customer user"/>
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-36">
-        <insert tableName="T_PERMISSION">
-            <column name="ID_PERMISSION" value="1"/>
-            <column name="PERMISSION_NAME" value="VIEW_PROFILE"/>
+        <insert tableName="T_ROLE">
+            <column name="ID_ROLE" value="3"/>
+            <column name="ROLE_NAME" value="Sale user"/>
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-37">
-        <insert tableName="T_PERMISSION">
-            <column name="ID_PERMISSION" value="2"/>
-            <column name="PERMISSION_NAME" value="VIEW_USERS"/>
+        <insert tableName="T_ROLE">
+            <column name="ID_ROLE" value="4"/>
+            <column name="ROLE_NAME" value="API user"/>
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-38">
-        <insert tableName="T_ROLE_PERMISSION">
-            <column name="PERMISSION_ID" value="1"/>
-            <column name="ROLE_ID" value="2"/>
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="1"/>
+            <column name="PERMISSION_NAME" value="VIEW_USERS"/>
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-39">
-        <insert tableName="T_ROLE_PERMISSION">
-            <column name="PERMISSION_ID" value="2"/>
-            <column name="ROLE_ID" value="1"/>
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="2"/>
+            <column name="PERMISSION_NAME" value="VIEW_PROFILE"/>
         </insert>
     </changeSet>
     <changeSet author="Dell (generated)" id="1538416069810-40">
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="3"/>
+            <column name="PERMISSION_NAME" value="MANAGE_ITEMS"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-41">
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="4"/>
+            <column name="PERMISSION_NAME" value="API_PERMISSIONS"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-42">
+        <insert tableName="T_ROLE_PERMISSION">
+            <column name="PERMISSION_ID" value="1"/>
+            <column name="ROLE_ID" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-43">
+        <insert tableName="T_ROLE_PERMISSION">
+            <column name="PERMISSION_ID" value="2"/>
+            <column name="ROLE_ID" value="2"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-44">
+        <insert tableName="T_ROLE_PERMISSION">
+            <column name="PERMISSION_ID" value="3"/>
+            <column name="ROLE_ID" value="3"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-45">
+        <insert tableName="T_ROLE_PERMISSION">
+            <column name="PERMISSION_ID" value="4"/>
+            <column name="ROLE_ID" value="4"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-46">
         <insert tableName="T_USER">
             <column name="ID" value="1"/>
             <column name="EMAIL" value="superadmin@facades.com"/>

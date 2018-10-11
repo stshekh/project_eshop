@@ -21,6 +21,8 @@ public class Item implements Serializable {
     private String uniqueNumber;
     @Column(name = "PRICE")
     private BigDecimal price;
+    @Column(name = "ENABLE")
+    private boolean enable;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
@@ -82,6 +84,14 @@ public class Item implements Serializable {
 
     public void setDiscounts(Set<Discount> discounts) {
         this.discounts = discounts;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     @Override

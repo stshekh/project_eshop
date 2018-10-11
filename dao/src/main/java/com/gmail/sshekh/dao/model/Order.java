@@ -26,6 +26,10 @@ public class Order implements Serializable {
     @Column(name = "QUANTITY")
     private Long quantity;
 
+    @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
+
     public Order(User user, Item item) {
         this.user = user;
         this.item = item;
@@ -73,6 +77,14 @@ public class Order implements Serializable {
 
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 
     @Override
