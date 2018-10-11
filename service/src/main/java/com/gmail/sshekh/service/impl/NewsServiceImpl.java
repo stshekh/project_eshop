@@ -8,14 +8,12 @@ import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.NewsDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,6 +32,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsDTO save(NewsDTO newsDTO) {
         News news = newsConverter.toEntity(newsDTO);
+        news.setCreated(LocalDateTime.now());
         newsDao.create(news);
         return newsDTOConverter.toDTO(news);
     }

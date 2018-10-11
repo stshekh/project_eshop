@@ -30,7 +30,6 @@ public class NewsDTOConverter implements DTOConverter<News, NewsDTO> {
         newsDTO.setId(entity.getIdNews());
         newsDTO.setTitle(entity.getTitle());
         newsDTO.setContent(entity.getContent());
-        newsDTO.setCreated(entity.getCreated());
         newsDTO.setUser(userDTOConverter.toDTO(entity.getUser()));
         newsDTO.setComments(commentDTOConverter.toDTOSet(entity.getComments()));
         return newsDTO;

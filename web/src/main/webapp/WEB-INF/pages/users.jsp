@@ -67,13 +67,6 @@
                                                role="button">Enable status</a>
                                         </td>
                                     </security:authorize>
-                                    <security:authorize access="hasAuthority('VIEW_PROFILE')">
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/users/${user.id}/profile"
-                                               class="btn btn-primary" aria-pressed="true"
-                                               role="button">Manage profile</a>
-                                        </td>
-                                    </security:authorize>
                                 </tr>
                             </c:forEach>
                             </tbody>

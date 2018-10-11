@@ -20,7 +20,7 @@
         </ul>
         <security:authorize access="isAuthenticated()">
             <p class="navbar-text navbar-right">Signed in as <a
-                    href="#"
+                    href="${pageContext.request.contextPath}/users/profile"
                     class="navbar-link"><security:authentication
                     property="principal.username"/></a></br>
                 <a href="<c:url value="/logout" />">Logout</a>

@@ -20,6 +20,7 @@ public class PageProperties {
     private String userRoleUpdatePage;
     private String userEnableUpdatePage;
     private String newsPagePath;
+    private String newsCreatePage;
     private String profilePagePath;
     private String profileCreatePagePath;
 
@@ -36,6 +37,11 @@ public class PageProperties {
         this.newsPagePath = environment.getProperty("news.page.path");
         this.profilePagePath = environment.getProperty("profile.page.path");
         this.profileCreatePagePath = environment.getProperty("profile.create.path");
+        this.newsCreatePage = environment.getProperty("news.create.page");
+    }
+
+    public String getNewsCreatePage() {
+        return newsCreatePage;
     }
 
     public String getProfileCreatePagePath() {

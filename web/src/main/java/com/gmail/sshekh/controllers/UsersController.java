@@ -9,14 +9,18 @@ import com.gmail.sshekh.service.dto.ProfileDTO;
 import com.gmail.sshekh.service.dto.RoleDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
 import com.gmail.sshekh.service.dto.UserRoleDTO;
+import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
 import java.util.List;
 
@@ -69,7 +73,7 @@ public class UsersController {
 
     //Shows one user page
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_USERS','VIEW_PROFILE')")
     public String getUser(@PathVariable("id") Long id, ModelMap modelMap) {
         UserDTO user = userService.findUserById(id);
         modelMap.addAttribute("user", user);
@@ -78,7 +82,7 @@ public class UsersController {
 
     //Updates user
     @PostMapping(value = "/{id}")
-    @PreAuthorize("hasAnyAuthority('VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_USERS','VIEW_PROFILE')")
     public String updateUser(
             @PathVariable("id") Long id,
             @ModelAttribute UserDTO user,
@@ -90,7 +94,7 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return pageProperties.getUsersPagePath();
         } else {
-            user = userService.update(user);//TODO if-else in converter on RoleDto
+            user = userService.update(user);
             modelMap.addAttribute("user", user);
             return "redirect:/users";
         }
@@ -183,49 +187,65 @@ public class UsersController {
         return "redirect:/users";
     }
 
-    @GetMapping(value = "/{id}/profile")
+    @GetMapping(value = "/profile")
     @PreAuthorize("hasAuthority('VIEW_PROFILE')")
-    public String createProfilePage(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String createProfilePage(ModelMap modelMap) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        Long id = userPrincipal.getId();
+        if (profileService.findProfileById(id) != null) {
+            return "redirect:/users/profile/update";
+        }
         ProfileDTO profile = new ProfileDTO();
-        profile.setUserId(id);
+        profile.setUserId(userPrincipal.getId());
         modelMap.addAttribute("profile", profile);
         return pageProperties.getProfileCreatePagePath();
     }
 
     //Creates users profile
-    @PostMapping(value = "/{id}/profile")
+    @PostMapping(value = "/profile")
     @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String createProfile(
-            @PathVariable("id") Long id,
             @ModelAttribute ProfileDTO profile,
             ModelMap modelMap
     ) {
-        profile.setUserId(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        profile.setUserId(userPrincipal.getId());
         profile = profileService.save(profile);
         modelMap.addAttribute("profile", profile);
         return "redirect:/users";
 
     }
 
-    @GetMapping(value = "/{id}/profile/update")
+    @GetMapping(value = "/profile/update")
     @PreAuthorize("hasAuthority('VIEW_PROFILE')")
-    public String updateProfilePage(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String updateProfilePage(ModelMap modelMap) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        Long id = userPrincipal.getId();
+        UserDTO user = userService.findUserById(id);
         ProfileDTO profile = profileService.findProfileById(id);
         modelMap.addAttribute("profile", profile);
+        modelMap.addAttribute("user", user);
         return pageProperties.getProfilePagePath();
     }
 
     //Updates users profile
-    @PostMapping(value = "/{id}/profile/update")
+    @PostMapping(value = "/profile/update")
     @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String updateProfile(
-            @PathVariable("id") Long id,
             @ModelAttribute ProfileDTO profile,
             ModelMap modelMap
     ) {
-        profile.setUserId(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        UserDTO user = userService.findUserById(userPrincipal.getId());
+        profile.setUserId(userPrincipal.getId());
         profile = profileService.update(profile);
+        user = userService.update(user);
         modelMap.addAttribute("profile", profile);
+        modelMap.addAttribute("user", user);
         return "redirect:/users";
 
     }

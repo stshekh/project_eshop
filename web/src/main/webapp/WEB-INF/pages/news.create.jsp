@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <jsp:include page="util/head.jsp"/>
-    <title>Update user</title>
+    <title>Create user</title>
 </head>
 <body>
 <%@ include file="util/menu.jsp" %>
@@ -15,14 +15,14 @@
         <div class="col-md-4"></div>
         <div class="col-md-4 shadow-lg bg-white rounded">
             <form:errors path="*" cssClass="error"/>
-            <form:form action="${pageContext.request.contextPath}/users/profile" modelAttribute="profile" method="post">
+            <form:form action="${pageContext.request.contextPath}/news/create" modelAttribute="news" method="post">
                 <div class="form-group">
-                    <form:label path="address">Address</form:label>
-                    <form:input path="address" class="form-control" placeholder="Address"/>
+                    <form:label path="title">Title</form:label>
+                    <form:input path="title" class="form-control" placeholder="Title"/>
                 </div>
                 <div class="form-group">
-                    <form:label path="telephone">Telephone</form:label>
-                    <form:input path="telephone" class="form-control" placeholder="Telephone"/>
+                    <form:label path="content">Content</form:label>
+                    <form:textarea path="content" class="form-control" placeholder="Content"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form:form>

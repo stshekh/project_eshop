@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 public class ProfileDTOConverter implements DTOConverter<Profile, ProfileDTO> {
     @Override
     public ProfileDTO toDTO(Profile entity) {
+        if (entity == null) {
+            return null;
+        }
         ProfileDTO profileDTO = new ProfileDTO();
         profileDTO.setUserId(entity.getUserId());
         profileDTO.setAddress(entity.getAddress());

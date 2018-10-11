@@ -24,10 +24,12 @@
                     <form:label path="surname">Last name</form:label>
                     <form:input path="surname" class="form-control" placeholder="Last name"/>
                 </div>
-                <div class="form-group">
-                    <form:label path="email">Email</form:label>
-                    <form:input path="email" class="form-control" placeholder="Email"/>
-                </div>
+                <security:authorize access="hasAuthority('VIEW_USERS')">
+                    <div class="form-group">
+                        <form:label path="email">Email</form:label>
+                        <form:input path="email" class="form-control" placeholder="Email"/>
+                    </div>
+                </security:authorize>
                 <div class="form-group">
                     <form:label path="password">Password</form:label>
                     <form:input path="password" class="form-control" type="password" placeholder="Password"/>

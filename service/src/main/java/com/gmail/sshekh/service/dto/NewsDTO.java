@@ -8,7 +8,6 @@ public class NewsDTO {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime created;
     private UserDTO user;
     private Set<CommentDTO> comments=new HashSet<>();
 
@@ -34,14 +33,6 @@ public class NewsDTO {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
     }
 
     public UserDTO getUser() {
