@@ -15,8 +15,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -52,8 +55,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(CommentDTO commentDTO) {
-        Comment comment = commentConverter.toEntity(commentDTO);
-        commentDao.delete(comment);
+    public void delete(Long id) {
+        commentDao.deleteById(id);
+    }
+
+    @Override
+    public Set<CommentDTO> getCommentsByNewsId(Long id) {
+        List<Comment> comments = commentDao.getCommentsByNewsId(id);
+        return new HashSet<>(commentDTOConverter.toDTOList(comments));
     }
 }

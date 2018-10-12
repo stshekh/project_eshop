@@ -18,7 +18,7 @@ public class News implements Serializable {
     private Long idNews;
     @Column(name = "TITLE")
     private String title;
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition = "TEXT", length = 65535)
     private String content;
     @Column(name = "CREATION_TIME")
     private LocalDateTime created;
@@ -27,9 +27,6 @@ public class News implements Serializable {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NEWS_ID", nullable = false)
-    private Set<Comment> comments = new HashSet<>();
 
     public Long getIdNews() {
         return idNews;
@@ -69,14 +66,6 @@ public class News implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
     }
 
     @Override

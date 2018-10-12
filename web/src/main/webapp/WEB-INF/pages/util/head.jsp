@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
-<head></head>
+<head>
+
+</head>
 <body>
 </body>
 </html>

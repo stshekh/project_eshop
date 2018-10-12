@@ -1,10 +1,10 @@
 package com.gmail.sshekh.service.converter.impl.dto;
 
 import com.gmail.sshekh.dao.model.Comment;
-import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.dao.model.News;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.CommentDTO;
-import com.gmail.sshekh.service.dto.UserDTO;
+import com.gmail.sshekh.service.dto.NewsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Component("commentDTOConverter")
 public class CommentDTOConverter implements DTOConverter<Comment, CommentDTO> {
     @Autowired
-    @Qualifier("userDTOConverter")
-    private DTOConverter<User, UserDTO> userDTOConverter;
+    @Qualifier("newsDTOConverter")
+    private DTOConverter<News, NewsDTO> newsDTOConverter;
 
     @Override
     public CommentDTO toDTO(Comment entity) {
@@ -25,7 +25,9 @@ public class CommentDTOConverter implements DTOConverter<Comment, CommentDTO> {
         commentDTO.setId(entity.getIdComment());
         commentDTO.setContent(entity.getContent());
         commentDTO.setCreated(entity.getCreated());
-        commentDTO.setUser(userDTOConverter.toDTO(entity.getUser()));
+        if (commentDTO.getNews() != null) {
+            commentDTO.setNews(newsDTOConverter.toDTO(entity.getNews()));
+        }
         return commentDTO;
     }
 

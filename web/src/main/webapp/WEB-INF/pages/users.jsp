@@ -17,11 +17,13 @@
         <div class="col-md-16">
             <form action="${pageContext.request.contextPath}/users/delete" method="post">
                 <div class="row">
-                    <div class="col-md-16">
-                        <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
-                           aria-pressed="true" role="button">ADD</a>
-                        <button type="submit" class="btn btn-warning">DELETE</button>
-                    </div>
+                    <security:authorize access="hasAuthority('VIEW_USERS')">
+                        <div class="col-md-16">
+                            <a href="${pageContext.request.contextPath}/users/create" class="btn btn-primary"
+                               aria-pressed="true" role="button">ADD</a>
+                            <button type="submit" class="btn btn-warning">DELETE</button>
+                        </div>
+                    </security:authorize>
                 </div>
                 <div class="row">
                     <div class="col-md-16">

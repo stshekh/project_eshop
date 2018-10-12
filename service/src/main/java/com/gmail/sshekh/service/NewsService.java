@@ -11,5 +11,7 @@ public interface NewsService {
 
     List<NewsDTO> findAll();
 
-    void delete(NewsDTO newsDTO);
+    void delete(Long id);
+
+    NewsDTO findOne(Long id);
 }

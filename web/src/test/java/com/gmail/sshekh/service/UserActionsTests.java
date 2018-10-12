@@ -181,9 +181,6 @@ public class UserActionsTests {
         user.setRole(role);
         user1.setRole(role1);
         news.setUser(user);
-        commentUs.setUser(user);
-        commentUs1.setUser(user1);
-        news.setComments(commentSet);
 
         Session session = userDao.getCurrentSession();
         try {
@@ -204,8 +201,6 @@ public class UserActionsTests {
             logger.info(news1.stream().findAny().get().getTitle() + " " + news1.stream().findAny().get().getContent() + " " + news1.stream().findAny().get().getUser().getFirstName());
             Assert.assertEquals(1, news1.size());
             news1.stream().findAny().ifPresent(comment -> {
-                Assert.assertEquals(2, comment.getComments().size());
-                logger.info(comment.getComments());
             });
             transaction.commit();
         } catch (Exception e) {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -51,8 +52,15 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public void delete(NewsDTO newsDTO) {
-        News news = newsConverter.toEntity(newsDTO);
+    public void delete(Long id) {
+        News news = newsDao.findOne(id);
+        news.setUser(null);
         newsDao.delete(news);
+    }
+
+    @Override
+    public NewsDTO findOne(Long id) {
+        News news = newsDao.findOne(id);
+        return newsDTOConverter.toDTO(news);
     }
 }

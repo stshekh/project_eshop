@@ -1,9 +1,11 @@
 package com.gmail.sshekh.service.converter.impl.entity;
 
+import com.gmail.sshekh.dao.model.Comment;
 import com.gmail.sshekh.dao.model.Discount;
 import com.gmail.sshekh.dao.model.Role;
 import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.service.converter.Converter;
+import com.gmail.sshekh.service.dto.CommentDTO;
 import com.gmail.sshekh.service.dto.DiscountDTO;
 import com.gmail.sshekh.service.dto.RoleDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
@@ -23,6 +25,9 @@ public class UserConverter implements Converter<UserDTO, User> {
     @Autowired
     @Qualifier("discountConverter")
     private Converter<DiscountDTO, Discount> discountConverter;
+    @Autowired
+    @Qualifier("commentConverter")
+    private Converter<CommentDTO, Comment> commentConverter;
 
     @Override
     public User toEntity(UserDTO dto) {
@@ -33,6 +38,9 @@ public class UserConverter implements Converter<UserDTO, User> {
         user.setLastName(dto.getSurname());
         user.setPassword(dto.getPassword());
         user.setEnabled(dto.isEnabled());
+        if (!dto.getComments().isEmpty()) {
+            user.setComments(commentConverter.toEntitySet(dto.getComments()));
+        }
         if (dto.getRole() != null) {
             user.setRole(roleConverter.toEntity(dto.getRole()));
         }

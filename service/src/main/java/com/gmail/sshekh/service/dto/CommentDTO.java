@@ -6,7 +6,15 @@ public class CommentDTO {
     private Long id;
     private String content;
     private LocalDateTime created;
-    private UserDTO user;
+    private NewsDTO news;
+
+    public NewsDTO getNews() {
+        return news;
+    }
+
+    public void setNews(NewsDTO news) {
+        this.news = news;
+    }
 
     public Long getId() {
         return id;
@@ -30,13 +38,5 @@ public class CommentDTO {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
     }
 }

@@ -3,7 +3,9 @@ package com.gmail.sshekh.dao.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "T_COMMENT")
@@ -13,14 +15,14 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_COMMENT")
     private Long idComment;
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition = "TEXT", length = 65535)
     private String content;
     @Column(name = "CREATED")
     private LocalDateTime created;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "NEWS_ID", nullable = false)
+    private News news;
 
     public Long getIdComment() {
         return idComment;
@@ -46,12 +48,12 @@ public class Comment implements Serializable {
         this.created = created;
     }
 
-    public User getUser() {
-        return user;
+    public News getNews() {
+        return news;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setNews(News news) {
+        this.news = news;
     }
 
     @Override
@@ -59,14 +61,14 @@ public class Comment implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(idComment, comment.idComment) &&
-                Objects.equals(content, comment.content) &&
-                Objects.equals(created, comment.created) &&
-                Objects.equals(user, comment.user);
+        return Objects.equals(getIdComment(), comment.getIdComment()) &&
+                Objects.equals(getContent(), comment.getContent()) &&
+                Objects.equals(getCreated(), comment.getCreated()) &&
+                Objects.equals(getNews(), comment.getNews());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idComment, content, created, user);
+        return Objects.hash(getIdComment(), getContent(), getCreated(), getNews());
     }
 }

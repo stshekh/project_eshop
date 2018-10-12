@@ -2,14 +2,15 @@ package com.gmail.sshekh.service.dto;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class NewsDTO {
     private Long id;
     private String title;
     private String content;
+    private LocalDateTime created;
     private UserDTO user;
-    private Set<CommentDTO> comments=new HashSet<>();
 
     public Long getId() {
         return id;
@@ -35,6 +36,14 @@ public class NewsDTO {
         this.content = content;
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     public UserDTO getUser() {
         return user;
     }
@@ -43,11 +52,20 @@ public class NewsDTO {
         this.user = user;
     }
 
-    public Set<CommentDTO> getComments() {
-        return comments;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewsDTO newsDTO = (NewsDTO) o;
+        return Objects.equals(getId(), newsDTO.getId()) &&
+                Objects.equals(getTitle(), newsDTO.getTitle()) &&
+                Objects.equals(getContent(), newsDTO.getContent()) &&
+                Objects.equals(getCreated(), newsDTO.getCreated()) &&
+                Objects.equals(getUser(), newsDTO.getUser());
     }
 
-    public void setComments(Set<CommentDTO> comments) {
-        this.comments = comments;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getContent(), getCreated(), getUser());
     }
 }

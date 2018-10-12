@@ -12,7 +12,7 @@
                     <a class="nav-link" href=${pageContext.request.contextPath}/users>Users</a>
                 </li>
             </security:authorize>
-            <security:authorize access="hasAuthority('MANAGE_ITEMS')">
+            <security:authorize access="hasAnyAuthority('MANAGE_ITEMS','VIEW_PROFILE')">
                 <li class="nav-item">
                     <a class="nav-link disabled" href=${pageContext.request.contextPath}/news>News</a>
                 </li>

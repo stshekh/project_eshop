@@ -23,6 +23,9 @@ public class PageProperties {
     private String newsCreatePage;
     private String profilePagePath;
     private String profileCreatePagePath;
+    private String oneNewsPage;
+    private String newsUpdatePage;
+    private String commentCreatePage;
 
     @PostConstruct
     public void initialize() {
@@ -38,6 +41,21 @@ public class PageProperties {
         this.profilePagePath = environment.getProperty("profile.page.path");
         this.profileCreatePagePath = environment.getProperty("profile.create.path");
         this.newsCreatePage = environment.getProperty("news.create.page");
+        this.oneNewsPage = environment.getProperty("one.news.page");
+        this.newsUpdatePage = environment.getProperty("news.update.page");
+        this.commentCreatePage = environment.getProperty("comment.create.page");
+    }
+
+    public String getCommentCreatePage() {
+        return commentCreatePage;
+    }
+
+    public String getNewsUpdatePage() {
+        return newsUpdatePage;
+    }
+
+    public String getOneNewsPage() {
+        return oneNewsPage;
     }
 
     public String getNewsCreatePage() {

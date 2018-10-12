@@ -1,7 +1,9 @@
 package com.gmail.sshekh.service.dto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserDTO {
     private Long id;
@@ -14,6 +16,7 @@ public class UserDTO {
     private ProfileDTO profile;
     private List<OrderDTO> orders = new ArrayList<>();
     private DiscountDTO discountDTO;
+    private Set<CommentDTO> comments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -93,5 +96,13 @@ public class UserDTO {
 
     public void setDiscountDTO(DiscountDTO discountDTO) {
         this.discountDTO = discountDTO;
+    }
+
+    public Set<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<CommentDTO> comments) {
+        this.comments = comments;
     }
 }
