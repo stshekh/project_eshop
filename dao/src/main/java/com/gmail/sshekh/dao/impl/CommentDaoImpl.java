@@ -6,7 +6,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class CommentDaoImpl extends GenericDaoImpl<Comment> implements CommentDao {
@@ -15,10 +14,20 @@ public class CommentDaoImpl extends GenericDaoImpl<Comment> implements CommentDa
     }
 
     @Override
-    public List<Comment> getCommentsByNewsId(Long id) {
-        String hql = "FROM Comment AS c WHERE c.news.idNews=:id";
+    public List<Comment> getCommentsByNewsId(Long id, int startPosition, int maxResult) {
+        String hql = "FROM Comment AS c WHERE c.news.idNews=:id ORDER BY c.created desc";//TODO ask Artem why order by doesn't work with DateTime
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
-        return (List<Comment>) query.list();
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResult);
+        return query.list();
+    }
+
+    @Override
+    public Long countCommentsPerNews(Long id) {
+        String hql = "SELECT COUNT(*) FROM Comment AS c WHERE c.news.idNews=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (Long) query.uniqueResult();
     }
 }

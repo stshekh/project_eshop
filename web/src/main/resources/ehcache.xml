@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<ehcache>
+    <cache name="com.gmail.sshekh.dao.model.User"
+           maxElementsInMemory="40"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"
+           eternal="true"
+           overflowToDisk="false"/>
+
+    <cache name="com.gmail.sshekh.dao.model.News"
+           maxElementsInMemory="100"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"
+           eternal="true"
+           overflowToDisk="false"/>
+
+    <cache name="com.gmail.sshekh.dao.model.Item"
+           maxElementsInMemory="60"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"
+           eternal="true"
+           overflowToDisk="false"/>
+</ehcache>

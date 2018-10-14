@@ -30,4 +30,6 @@ public interface UserService {
     Set<BusinessCardDTO> getBusinessCards(Long id);
 
     BusinessCardDTO deleteUsersBusinessCard(Long id);
+
+    Integer countUsers();
 }

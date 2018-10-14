@@ -64,7 +64,7 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
             }
         }
         if (isUser) {
-            return "/orders";
+            return "/news";//TODO change to orders when finished work with news
         } else if (isAdmin) {
             return "/users";
         } else if ((isSalesMan)) {

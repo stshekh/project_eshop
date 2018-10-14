@@ -73,6 +73,17 @@
                             </c:forEach>
                             </tbody>
                         </table>
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <%for (int i = 1; i <= (int) request.getAttribute("pages"); i++) {%>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/users?page=<%=i %>"><%=i %>
+                                    </a>
+                                </li>
+                                <%} %>
+                            </ul>
+                        </nav>
 
                     </div>
                 </div>

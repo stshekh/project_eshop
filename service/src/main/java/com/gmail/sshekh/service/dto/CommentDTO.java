@@ -6,10 +6,19 @@ public class CommentDTO {
     private Long id;
     private String content;
     private LocalDateTime created;
+    private String username;
     private NewsDTO news;
 
     public NewsDTO getNews() {
         return news;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setNews(NewsDTO news) {

@@ -38,11 +38,12 @@
             </tbody>
         </table>
     </div>
-</div><br><br>
+</div>
+<br><br>
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-16"><h3 class="h3">Comments</h3>
-        <form action="${pageContext.request.contextPath}/comments/delete" method="post">
+        <form action="${pageContext.request.contextPath}/news/${news.id}/comments/delete" method="post">
             <div class="row">
                 <div class="col-md-16">
                     <security:authorize access="hasAuthority('VIEW_PROFILE')">
@@ -63,7 +64,6 @@
                             <th scope="col">#</th>
                             <th scope="col">Content</th>
                             <th scope="col">Creation time</th>
-                            <th scope="col">Who created</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,6 +77,17 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <%for (int i = 1; i <= (int) request.getAttribute("pages"); i++) {%>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}/news/show/${news.id}?page=<%=i %>"><%=i %>
+                                </a>
+                            </li>
+                            <%} %>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </form>

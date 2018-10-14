@@ -20,7 +20,7 @@ public class Comment implements Serializable {
     @Column(name = "CREATED")
     private LocalDateTime created;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NEWS_ID", nullable = false)
     private News news;
 

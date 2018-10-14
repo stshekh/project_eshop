@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserDao extends GenericDao<User> {
+
     User findUserByEmail(String email);
 
     User findUserById(Long id);
@@ -16,4 +17,6 @@ public interface UserDao extends GenericDao<User> {
     Long getRoleIdByUserId(Long id);
 
     Set<BusinessCard> getUsersBusinessCards(Long id);
+
+    Long countUsers();
 }

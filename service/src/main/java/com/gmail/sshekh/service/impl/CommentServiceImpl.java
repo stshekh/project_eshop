@@ -1,7 +1,10 @@
 package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.CommentDao;
+import com.gmail.sshekh.dao.NewsDao;
+import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.Comment;
+import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
@@ -28,6 +31,10 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentDao commentDao;
     @Autowired
+    private NewsDao newsDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
     @Qualifier("commentDTOConverter")
     private DTOConverter<Comment, CommentDTO> commentDTOConverter;
     @Autowired
@@ -35,9 +42,16 @@ public class CommentServiceImpl implements CommentService {
     private Converter<CommentDTO, Comment> commentConverter;
 
     @Override
-    public CommentDTO save(CommentDTO commentDTO) {
+    public CommentDTO save(CommentDTO commentDTO, Long idNews, Long idUser) {
         Comment comment = commentConverter.toEntity(commentDTO);
+        comment.setCreated(LocalDateTime.now());
+        comment.setNews(newsDao.findOne(idNews));
+        Set<Comment> comments = new HashSet<>();
+        comments.add(comment);
+        User user = userDao.findUserById(idUser);
+        user.setComments(comments);
         commentDao.create(comment);
+        //comment.setNews(commentDTO.getNews());
         return commentDTOConverter.toDTO(comment);
     }
 
@@ -60,8 +74,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Set<CommentDTO> getCommentsByNewsId(Long id) {
-        List<Comment> comments = commentDao.getCommentsByNewsId(id);
+    public Set<CommentDTO> getCommentsByNewsId(Long id, int startPosition, int maxResult) {
+        int firstPosition;
+        if (startPosition > 1)
+            firstPosition = (startPosition - 1) * maxResult;
+        else firstPosition = 0;
+        List<Comment> comments = commentDao.getCommentsByNewsId(id, firstPosition, maxResult);
         return new HashSet<>(commentDTOConverter.toDTOList(comments));
+    }
+
+    @Override
+    public Integer countCommentsPerNews(Long id) {
+        return commentDao.countCommentsPerNews(id).intValue();
     }
 }

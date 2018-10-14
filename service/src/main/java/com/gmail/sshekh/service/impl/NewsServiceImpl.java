@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 @Transactional
 public class NewsServiceImpl implements NewsService {
+
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
     @Autowired
     private NewsDao newsDao;
@@ -46,8 +46,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<NewsDTO> findAll() {
-        List<News> news = newsDao.findAll();
+    public List<NewsDTO> findAll(int startPosition, int maxResult) {
+        int firstPosition;
+        if (startPosition > 1)
+            firstPosition = (startPosition - 1) * maxResult;
+        else firstPosition = 0;
+        List<News> news = newsDao.findAllNews(firstPosition, maxResult);
         return newsDTOConverter.toDTOList(news);
     }
 
@@ -55,6 +59,7 @@ public class NewsServiceImpl implements NewsService {
     public void delete(Long id) {
         News news = newsDao.findOne(id);
         news.setUser(null);
+
         newsDao.delete(news);
     }
 
@@ -62,5 +67,10 @@ public class NewsServiceImpl implements NewsService {
     public NewsDTO findOne(Long id) {
         News news = newsDao.findOne(id);
         return newsDTOConverter.toDTO(news);
+    }
+
+    @Override
+    public Integer countAllNews() {
+        return newsDao.countAllNews().intValue();
     }
 }

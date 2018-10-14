@@ -5,19 +5,17 @@ import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.CommentDTO;
-import com.gmail.sshekh.service.dto.UserDTO;
 import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import static com.gmail.sshekh.controllers.utils.UsersLoginUtil.getLoggedInUser;
 
 @Controller
+@RequestMapping("/news/{idNews}")
 public class CommentsController {
     private final CommentService commentService;
     private final UserService userService;
@@ -46,34 +44,29 @@ public class CommentsController {
         for (Long id : ids) {
             commentService.delete(id);
         }
-        return "redirect:/news";
+        return "redirect:/news/{idNews}";
     }
 
-    @GetMapping("/news/{id}/comments/create")
+    @GetMapping("/comments/create")
     @PreAuthorize("hasAuthority('VIEW_PROFILE')")
     public String commentCreatePage(
-            @PathVariable("id") Long id,
+            @PathVariable("idNews") Long idNews,
             ModelMap modelMap) {
-        CommentDTO comment = new CommentDTO();
-        comment.setNews(newsService.findOne(id));
-        modelMap.addAttribute("comment", comment);
+        modelMap.addAttribute("comment", new CommentDTO());
+        modelMap.addAttribute("news", newsService.findOne(idNews));
         return pageProperties.getCommentCreatePage();
     }
 
-    @PostMapping(value = "/news/{id}/comments/create")
-    @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
-    public String createNews(
-            @PathVariable("id") Long id,
+    @PostMapping(value = "/comments/create")
+    @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+    public String createComments(
+            @PathVariable("idNews") Long idNews,
             @ModelAttribute("comment") CommentDTO comment,
             ModelMap modelMap
     ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        UserDTO userDTO = userService.findUserById(userPrincipal.getId());
-        comment.setNews(newsService.findOne(id));
-        commentService.save(comment);
-        userDTO.setComments((Set<CommentDTO>) comment);
+        UserPrincipal userPrincipal = getLoggedInUser();
+        commentService.save(comment, idNews, userPrincipal.getId());
         modelMap.addAttribute("comment", comment);
-        return "redirect:/news";
+        return "redirect:/news/show/{idNews}";
     }
 }

@@ -10,14 +10,17 @@ import com.gmail.sshekh.service.dto.UserDTO;
 import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
+
+import static com.gmail.sshekh.controllers.utils.PaginationUtil.COMMENTS_PER_PAGE;
+import static com.gmail.sshekh.controllers.utils.PaginationUtil.NEWS_PER_PAGE;
+import static com.gmail.sshekh.controllers.utils.PaginationUtil.getNumberOfPages;
+import static com.gmail.sshekh.controllers.utils.UsersLoginUtil.getLoggedInUser;
 
 @Controller
 @RequestMapping("/news")
@@ -42,9 +45,14 @@ public class NewsController {
 
     //ShowAllNews
     @GetMapping
-    public String getNews(ModelMap modelMap) {
-        List<NewsDTO> newsList = newsService.findAll();
+    public String getNews(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            ModelMap modelMap
+    ) {
+        Integer totalPages = getNumberOfPages(newsService.countAllNews(), NEWS_PER_PAGE);
+        List<NewsDTO> newsList = newsService.findAll(page, NEWS_PER_PAGE);
         modelMap.addAttribute("newsList", newsList);
+        modelMap.addAttribute("pages", totalPages);
         return pageProperties.getNewsPagePath();
     }
 
@@ -63,8 +71,7 @@ public class NewsController {
             @ModelAttribute("news") NewsDTO news,
             ModelMap modelMap
     ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        UserPrincipal userPrincipal = getLoggedInUser();
         news.setUser(userService.findUserById(userPrincipal.getId()));
         news = newsService.save(news);
         modelMap.addAttribute("news", news);
@@ -84,24 +91,30 @@ public class NewsController {
     }
 
     @GetMapping(value = "/show/{id}")
-    public String showOneNews(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String showOneNewsPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @PathVariable("id") Long id,
+            ModelMap modelMap
+    ) {
+        Integer totalPages = getNumberOfPages(commentService.countCommentsPerNews(id), COMMENTS_PER_PAGE);
         NewsDTO news = newsService.findOne(id);
-        Set<CommentDTO> comments = commentService.getCommentsByNewsId(id);
+        Set<CommentDTO> comments = commentService.getCommentsByNewsId(id, page, COMMENTS_PER_PAGE);
         modelMap.addAttribute("news", news);
         modelMap.addAttribute("comments", comments);
+        modelMap.addAttribute("pages", totalPages);
         return pageProperties.getOneNewsPage();
     }
 
-    //Shows one user page
+    //Shows one news page
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGE_ITEMS')")
-    public String getUser(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String getNews(@PathVariable("id") Long id, ModelMap modelMap) {
         NewsDTO news = newsService.findOne(id);
         modelMap.addAttribute("news", news);
         return pageProperties.getNewsUpdatePage();
     }
 
-    //Updates user
+    //Updates news
     @PostMapping(value = "/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGE_ITEMS')")
     public String updateNews(
@@ -109,16 +122,12 @@ public class NewsController {
             @ModelAttribute NewsDTO news,
             ModelMap modelMap
     ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        UserPrincipal userPrincipal = getLoggedInUser();
         UserDTO user = userService.findUserById(userPrincipal.getId());
         news.setUser(user);
         news.setId(id);
         news = newsService.update(news);
         modelMap.addAttribute("news", news);
         return "redirect:/news";
-
     }
-
-
 }

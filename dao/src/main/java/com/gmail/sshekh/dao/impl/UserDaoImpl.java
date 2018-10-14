@@ -40,7 +40,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
     @Override
     public List<User> findAll(int startPosition, int maxResult) {
-        String hql = "FROM User AS U ORDER BY U.id asc";
+        String hql = "FROM User AS u ORDER BY u.firstName ASC";
         Query query = getCurrentSession().createQuery(hql);
         query.setFirstResult(startPosition);
         query.setMaxResults(maxResult);
@@ -62,5 +62,12 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setParameter("id", id);
         Set<BusinessCard> businessCards = new HashSet<>(query.list());
         return businessCards;
+    }
+
+    @Override
+    public Long countUsers() {
+        String hql = "SELECT COUNT(*) FROM User AS u";
+        Query query = getCurrentSession().createQuery(hql);
+        return (Long) query.uniqueResult();
     }
 }

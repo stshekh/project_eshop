@@ -100,7 +100,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public List<UserDTO> findAll(int startPosition, int maxResult) {
-        List<User> users = userDao.findAll(startPosition, maxResult);
+        int firstPosition;
+        if (startPosition > 1)
+            firstPosition = (startPosition - 1) * maxResult;
+        else firstPosition = 0;
+        List<User> users = userDao.findAll(firstPosition, maxResult);
         return userDTOConverter.toDTOList(users);
     }
 
@@ -136,9 +140,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public BusinessCardDTO deleteUsersBusinessCard(Long id) {
         return null;
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public Integer countUsers() {
+        return userDao.countUsers().intValue();
+    }
 
 }

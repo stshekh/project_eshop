@@ -26,9 +26,7 @@ public class CommentConverter implements Converter<CommentDTO, Comment> {
         comment.setIdComment(dto.getId());
         comment.setCreated(dto.getCreated());
         comment.setContent(dto.getContent());
-        if (dto.getNews() != null) {
-            comment.setNews(newsConverter.toEntity(dto.getNews()));
-        }
+
         return comment;
     }
 

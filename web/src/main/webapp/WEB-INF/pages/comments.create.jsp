@@ -15,7 +15,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-4 shadow-lg bg-white rounded">
             <form:errors path="*" cssClass="error"/>
-            <form:form action="${pageContext.request.contextPath}/news/${id}/comments/create" modelAttribute="comment" method="post">
+            <form:form action="${pageContext.request.contextPath}/news/${news.id}/comments/create" modelAttribute="comment" method="post">
                 <div class="form-group">
                     <form:label path="content">Content</form:label>
                     <form:textarea path="content" class="form-control" placeholder="Content"/>

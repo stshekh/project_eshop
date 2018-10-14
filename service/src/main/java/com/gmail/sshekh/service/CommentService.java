@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface CommentService {
-    CommentDTO save(CommentDTO commentDTO);
+    CommentDTO save(CommentDTO commentDTO, Long idNews, Long idUser);
 
     CommentDTO update(CommentDTO commentDTO);
 
@@ -14,5 +14,7 @@ public interface CommentService {
 
     void delete(Long id);
 
-    Set<CommentDTO> getCommentsByNewsId(Long id);
+    Set<CommentDTO> getCommentsByNewsId(Long id, int startPosition, int maxResult);
+
+    Integer countCommentsPerNews(Long id);
 }

@@ -9,9 +9,11 @@ public interface NewsService {
 
     NewsDTO update(NewsDTO newsDTO);
 
-    List<NewsDTO> findAll();
+    List<NewsDTO> findAll(int startPosition, int maxResult);
 
     void delete(Long id);
 
     NewsDTO findOne(Long id);
+
+    Integer countAllNews();
 }
