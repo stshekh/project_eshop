@@ -2,12 +2,14 @@ package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.RoleDao;
 import com.gmail.sshekh.dao.UserDao;
+import com.gmail.sshekh.dao.model.BusinessCard;
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.User;
 import com.gmail.sshekh.service.DiscountService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
+import com.gmail.sshekh.service.dto.BusinessCardDTO;
 import com.gmail.sshekh.service.dto.DiscountDTO;
 import com.gmail.sshekh.service.dto.OrderDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,6 +40,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     @Qualifier("userDTOConverter")
     private DTOConverter<User, UserDTO> userDTOConverter;
+    @Autowired
+    @Qualifier("businessCardDTOConverter")
+    private DTOConverter<BusinessCard, BusinessCardDTO> businessCardDTOConverter;
     @Autowired
     @Qualifier("userConverter")
     private Converter<UserDTO, User> userConverter;
@@ -121,4 +127,18 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(userDTO.isEnabled());
         userDao.update(user);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public Set<BusinessCardDTO> getBusinessCards(Long id) {
+        Set<BusinessCard> businessCards = userDao.getUsersBusinessCards(id);
+        return businessCardDTOConverter.toDTOSet(businessCards);
+    }
+
+    @Override
+    public BusinessCardDTO deleteUsersBusinessCard(Long id) {
+        return null;
+    }
+
+
 }

@@ -79,7 +79,8 @@ public class DatabaseConfig {
                 Permission.class,
                 Profile.class,
                 Role.class,
-                User.class
+                User.class,
+                BusinessCard.class
         );
         return factoryBean;
     }

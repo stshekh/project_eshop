@@ -39,7 +39,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <a href="${pageContext.request.contextPath}/users"/>Back to users list</a>
+                <a href="${pageContext.request.contextPath}/users">Back to users list</a>
             </form:form>
         </div>
     </div>

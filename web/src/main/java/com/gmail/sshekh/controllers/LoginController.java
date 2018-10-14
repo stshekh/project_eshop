@@ -40,7 +40,7 @@ public class LoginController {
     @GetMapping("/register")
     public String getRegisterPage(ModelMap modelMap) {
         modelMap.addAttribute("user", new UserDTO());
-        return pageProperties.getUserCreatePagePath();
+        return pageProperties.getUserRegisterPagePath();
     }
 
     @PostMapping("/register")
@@ -52,7 +52,7 @@ public class LoginController {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
             modelMap.addAttribute("user", user);
-            return pageProperties.getUserCreatePagePath();
+            return pageProperties.getUserRegisterPagePath();
         } else {
             userService.save(user);
             return "redirect:/login";

@@ -1,14 +1,8 @@
 package com.gmail.sshekh.service.converter.impl.entity;
 
-import com.gmail.sshekh.dao.model.Comment;
-import com.gmail.sshekh.dao.model.Discount;
-import com.gmail.sshekh.dao.model.Role;
-import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.dao.model.*;
 import com.gmail.sshekh.service.converter.Converter;
-import com.gmail.sshekh.service.dto.CommentDTO;
-import com.gmail.sshekh.service.dto.DiscountDTO;
-import com.gmail.sshekh.service.dto.RoleDTO;
-import com.gmail.sshekh.service.dto.UserDTO;
+import com.gmail.sshekh.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -28,6 +22,9 @@ public class UserConverter implements Converter<UserDTO, User> {
     @Autowired
     @Qualifier("commentConverter")
     private Converter<CommentDTO, Comment> commentConverter;
+    @Autowired
+    @Qualifier("businessCardConverter")
+    private Converter<BusinessCardDTO, BusinessCard> businessCardConverter;
 
     @Override
     public User toEntity(UserDTO dto) {

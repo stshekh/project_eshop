@@ -16,6 +16,7 @@ public class PageProperties {
     private String itemsPagePath;
     private String usersPagePath;
     private String userCreatePagePath;
+    private String userRegisterPagePath;
     private String userUpdatePagePath;
     private String userRoleUpdatePage;
     private String userEnableUpdatePage;
@@ -26,6 +27,8 @@ public class PageProperties {
     private String oneNewsPage;
     private String newsUpdatePage;
     private String commentCreatePage;
+    private String usersBusinessCards;
+    private String usersCreateBusinessCard;
 
     @PostConstruct
     public void initialize() {
@@ -44,6 +47,21 @@ public class PageProperties {
         this.oneNewsPage = environment.getProperty("one.news.page");
         this.newsUpdatePage = environment.getProperty("news.update.page");
         this.commentCreatePage = environment.getProperty("comment.create.page");
+        this.usersBusinessCards = environment.getProperty("business.cards.page");
+        this.usersCreateBusinessCard = environment.getProperty("business.card.create.page");
+        this.userRegisterPagePath = environment.getProperty("user.register.page.path");
+    }
+
+    public String getUserRegisterPagePath() {
+        return userRegisterPagePath;
+    }
+
+    public String getUsersCreateBusinessCard() {
+        return usersCreateBusinessCard;
+    }
+
+    public String getUsersBusinessCards() {
+        return usersBusinessCards;
     }
 
     public String getCommentCreatePage() {

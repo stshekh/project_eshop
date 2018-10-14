@@ -5,10 +5,14 @@
 <html lang="en">
 <head>
     <style>
-        td.clip {
-            width: 300px;
-            overflow: hidden; /* Обрезаем все, что не помещается в область */
-            text-overflow: ellipsis; /* Добавляем многоточие */
+        td.item-node {
+            max-width: 30em;
+        }
+
+        div.ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
     <jsp:include page="util/head.jsp"/>
@@ -50,8 +54,9 @@
                                 <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
                                 </th>
                                 <td>${news.title}</td>
-                                <td class="clip">${news.content}<a
-                                        href="${pageContext.request.contextPath}/news/show/${news.id}">More</a>
+                                <td class="item-node">
+                                    <div class="ellipsis">${news.content}</div>
+                                    <a href="${pageContext.request.contextPath}/news/show/${news.id}">More</a>
                                 </td>
                                 <td>${news.created}</td>
                                 <td>${news.user.getName()}</td>

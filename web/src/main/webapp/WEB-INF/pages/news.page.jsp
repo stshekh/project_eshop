@@ -6,9 +6,7 @@
 <head>
     <style>
         td.clip {
-            width: 300px;
-            overflow: hidden; /* Обрезаем все, что не помещается в область */
-            text-overflow: ellipsis; /* Добавляем многоточие */
+            width: 50em;
         }
     </style>
     <jsp:include page="util/head.jsp"/>
@@ -20,11 +18,11 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-16">
+        <h2 class="h2">${news.title}</h2><br>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
                 <th scope="col">News text</th>
                 <th scope="col">Creation time</th>
                 <th scope="col">Who created</th>
@@ -33,8 +31,6 @@
             <tbody>
             <tr>
                 <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
-                </th>
-                <td>${news.title}</td>
                 <td class="clip">${news.content}</td>
                 <td>${news.created}</td>
                 <td>${news.user.getName()}</td>
@@ -42,15 +38,16 @@
             </tbody>
         </table>
     </div>
-</div>
+</div><br><br>
 <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-16">
+    <div class="col-md-16"><h3 class="h3">Comments</h3>
         <form action="${pageContext.request.contextPath}/comments/delete" method="post">
             <div class="row">
                 <div class="col-md-16">
                     <security:authorize access="hasAuthority('VIEW_PROFILE')">
-                        <a href="${pageContext.request.contextPath}/news/${news.id}/comments/create" class="btn btn-outline-primary"
+                        <a href="${pageContext.request.contextPath}/news/${news.id}/comments/create"
+                           class="btn btn-outline-primary"
                            aria-pressed="true" role="button">ADD</a>
                     </security:authorize>
                     <security:authorize access="hasAuthority('MANAGE_ITEMS')">

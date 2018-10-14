@@ -22,7 +22,7 @@
             <column autoIncrement="true" name="ID_COMMENT" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="CONTENT" type="VARCHAR(255)"/>
+            <column name="CONTENT" type="TEXT"/>
             <column name="CREATED" type="datetime"/>
             <column name="USER_ID" type="BIGINT"/>
             <column name="NEWS_ID" type="BIGINT">
@@ -67,7 +67,7 @@
             <column autoIncrement="true" name="ID_NEWS" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="CONTENT" type="VARCHAR(255)"/>
+            <column name="CONTENT" type="TEXT"/>
             <column name="CREATION_TIME" type="datetime"/>
             <column name="TITLE" type="VARCHAR(255)"/>
             <column name="USER_ID" type="BIGINT">
@@ -336,6 +336,34 @@
             <column name="PASSWORD" value="$2a$10$G3EjXdLH0j3ev/9ms.eyMe6YbGN8906bN3643nWSz.NTilEdtNMkG"/>
             <column name="ID_ROLE" value="1"/>
             <column name="ENABLED" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-47">
+        <createTable tableName="t_business_card">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="TITLE" type="VARCHAR(60)"/>
+            <column name="FULL_NAME" type="VARCHAR(60)"/>
+            <column name="WORKING_TELEPHONE" type="VARCHAR(20)"/>
+            <column name="USER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-48">
+        <createIndex indexName="FKit_business_card_index" tableName="t_business_card">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-49">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="t_business_card"
+                                 constraintName="FKtfdfs10jlse87business_card_fk" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="ID" referencedTableName="t_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Dell (generated)" id="1538416069810-50">
+        <insert tableName="T_PERMISSION">
+            <column name="ID_PERMISSION" value="5"/>
+            <column name="PERMISSION_NAME" value="MANAGE_BUSINESS_CARD"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

@@ -40,6 +40,9 @@
                     <input id="password" class="form-control input-md" type="password" name="password"
                            value="${user.password}"/>
                 </div>
+                <div>
+                    <a href=${pageContext.request.contextPath}/users/${user.id}/businessCard" />">Business cards</a>
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form:form>
         </div>

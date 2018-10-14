@@ -24,6 +24,9 @@
                     <form:label path="telephone">Telephone</form:label>
                     <form:input path="telephone" class="form-control" placeholder="Telephone"/>
                 </div>
+                <div>
+                    <a href=${pageContext.request.contextPath}/users/businessCard/>Business cards</a>
+                </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form:form>
         </div>

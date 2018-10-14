@@ -1,13 +1,16 @@
 package com.gmail.sshekh.dao.impl;
 
 import com.gmail.sshekh.dao.UserDao;
+import com.gmail.sshekh.dao.model.BusinessCard;
 import com.gmail.sshekh.dao.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
@@ -50,5 +53,14 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (Long) query.uniqueResult();
+    }
+
+    @Override
+    public Set<BusinessCard> getUsersBusinessCards(Long id) {
+        String hql = "SELECT businessCards FROM User u WHERE u.id=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        Set<BusinessCard> businessCards = new HashSet<>(query.list());
+        return businessCards;
     }
 }

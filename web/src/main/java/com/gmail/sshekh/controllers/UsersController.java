@@ -1,14 +1,9 @@
 package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.controllers.properties.PageProperties;
-import com.gmail.sshekh.service.ProfileService;
-import com.gmail.sshekh.service.RoleService;
-import com.gmail.sshekh.service.UserRoleService;
-import com.gmail.sshekh.service.UserService;
-import com.gmail.sshekh.service.dto.ProfileDTO;
-import com.gmail.sshekh.service.dto.RoleDTO;
-import com.gmail.sshekh.service.dto.UserDTO;
-import com.gmail.sshekh.service.dto.UserRoleDTO;
+import com.gmail.sshekh.dao.model.BusinessCard;
+import com.gmail.sshekh.service.*;
+import com.gmail.sshekh.service.dto.*;
 import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -22,7 +17,9 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import sun.plugin.liveconnect.SecurityContextHelper;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
@@ -33,6 +30,8 @@ public class UsersController {
     private final UserRoleService userRoleService;
     private final RoleService roleService;
     private final ProfileService profileService;
+    private final Validator businessCardValidator;
+    private final BusinessCardService businessCardService;
 
     @Autowired
     public UsersController(
@@ -41,7 +40,9 @@ public class UsersController {
             Validator userValidator,
             UserRoleService userRoleService,
             RoleService roleService,
-            ProfileService profileService
+            ProfileService profileService,
+            Validator businessCardValidator,
+            BusinessCardService businessCardService
     ) {
         this.pageProperties = pageProperties;
         this.userService = userService;
@@ -49,6 +50,8 @@ public class UsersController {
         this.userRoleService = userRoleService;
         this.roleService = roleService;
         this.profileService = profileService;
+        this.businessCardValidator = businessCardValidator;
+        this.businessCardService = businessCardService;
     }
 
     //Shows all the users on page
@@ -160,7 +163,7 @@ public class UsersController {
     }
 
     //Creating new user
-    @PostMapping
+    @PostMapping(value = "/create")
     public String createUser(
             @ModelAttribute("user") UserDTO user,
             BindingResult result,
@@ -188,7 +191,7 @@ public class UsersController {
     }
 
     @GetMapping(value = "/profile")
-    @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
     public String createProfilePage(ModelMap modelMap) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
@@ -204,7 +207,7 @@ public class UsersController {
 
     //Creates users profile
     @PostMapping(value = "/profile")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
     public String createProfile(
             @ModelAttribute ProfileDTO profile,
             ModelMap modelMap
@@ -219,7 +222,7 @@ public class UsersController {
     }
 
     @GetMapping(value = "/profile/update")
-    @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
     public String updateProfilePage(ModelMap modelMap) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
@@ -233,7 +236,7 @@ public class UsersController {
 
     //Updates users profile
     @PostMapping(value = "/profile/update")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
     public String updateProfile(
             @ModelAttribute ProfileDTO profile,
             ModelMap modelMap
@@ -247,6 +250,42 @@ public class UsersController {
         modelMap.addAttribute("profile", profile);
         modelMap.addAttribute("user", user);
         return "redirect:/users";
+    }
 
+    @GetMapping(value = "/businessCard")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    public String getBusinessCards(ModelMap modelMap) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        Long id = userPrincipal.getId();
+        List<BusinessCardDTO> businessCards = businessCardService.getBusinessCardsByUserId(id);
+        modelMap.addAttribute("businessCards", businessCards);
+        return pageProperties.getUsersBusinessCards();
+    }
+
+    @GetMapping(value = "/businessCard/create")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    public String getBusinessCardPage(ModelMap modelMap) {
+        modelMap.addAttribute("businessCard", new BusinessCardDTO());
+        return pageProperties.getUsersCreateBusinessCard();
+    }
+
+    //Creating new user
+    @PostMapping(value = "/businessCard/create")
+    public String createUsersBusinessCard(
+            @ModelAttribute("businessCard") BusinessCardDTO businessCard,
+            BindingResult result,
+            ModelMap modelMap
+    ) {
+        businessCardValidator.validate(businessCard, result);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        if (result.hasErrors()) {
+            modelMap.addAttribute("businessCard", businessCard);
+            return pageProperties.getUsersCreateBusinessCard();
+        } else {
+            businessCardService.save(businessCard, userPrincipal.getId());
+            return "redirect:/users/businessCard";
+        }
     }
 }
