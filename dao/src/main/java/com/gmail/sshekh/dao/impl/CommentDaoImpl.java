@@ -24,10 +24,26 @@ public class CommentDaoImpl extends GenericDaoImpl<Comment> implements CommentDa
     }
 
     @Override
-    public Long countCommentsPerNews(Long id) {
+    public Long countCommentsPerArticle(Long id) {
         String hql = "SELECT COUNT(*) FROM Comment AS c WHERE c.news.idNews=:id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (Long) query.uniqueResult();
+    }
+
+    @Override
+    public int deleteCommentsFromArticle(Long id) {
+        String hql = "DELETE FROM Comment c WHERE c.news.idNews=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return query.executeUpdate();
+    }
+
+    @Override
+    public List<Comment> getCommentsPerArticle(Long id) {
+        String hql = "FROM Comment AS c WHERE c.news.idNews=:id";//TODO ask Artem why order by doesn't work with DateTime
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return query.list();
     }
 }

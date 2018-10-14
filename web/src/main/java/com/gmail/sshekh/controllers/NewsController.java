@@ -96,7 +96,7 @@ public class NewsController {
             @PathVariable("id") Long id,
             ModelMap modelMap
     ) {
-        Integer totalPages = getNumberOfPages(commentService.countCommentsPerNews(id), COMMENTS_PER_PAGE);
+        Integer totalPages = getNumberOfPages(commentService.countCommentsPerArticle(id), COMMENTS_PER_PAGE);
         NewsDTO news = newsService.findOne(id);
         Set<CommentDTO> comments = commentService.getCommentsByNewsId(id, page, COMMENTS_PER_PAGE);
         modelMap.addAttribute("news", news);

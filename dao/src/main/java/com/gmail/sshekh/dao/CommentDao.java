@@ -8,5 +8,9 @@ public interface CommentDao extends GenericDao<Comment> {
 
     List<Comment> getCommentsByNewsId(Long id, int startPosition, int maxResult);
 
-    Long countCommentsPerNews(Long id);
+    Long countCommentsPerArticle(Long id);
+
+    int deleteCommentsFromArticle(Long id);
+
+    List<Comment> getCommentsPerArticle(Long id);
 }

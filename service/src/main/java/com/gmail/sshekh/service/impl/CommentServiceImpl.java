@@ -11,15 +11,12 @@ import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.CommentDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,7 +81,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Integer countCommentsPerNews(Long id) {
-        return commentDao.countCommentsPerNews(id).intValue();
+    public Integer countCommentsPerArticle(Long id) {
+        return commentDao.countCommentsPerArticle(id).intValue();
+    }
+
+    @Override
+    public void deleteAllCommentsFromArticle(Long id) {
+        List<Comment> comments = commentDao.getCommentsPerArticle(id);
+        for (Comment comment : comments) {
+            delete(comment.getIdComment());
+        }
     }
 }

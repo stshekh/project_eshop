@@ -44,7 +44,7 @@ public class CommentsController {
         for (Long id : ids) {
             commentService.delete(id);
         }
-        return "redirect:/news/{idNews}";
+        return "redirect:/news/show/{idNews}";
     }
 
     @GetMapping("/comments/create")

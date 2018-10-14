@@ -2,6 +2,7 @@ package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.NewsDao;
 import com.gmail.sshekh.dao.model.News;
+import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
@@ -23,6 +24,8 @@ public class NewsServiceImpl implements NewsService {
     private static final Logger logger = LogManager.getLogger(NewsServiceImpl.class);
     @Autowired
     private NewsDao newsDao;
+    @Autowired
+    private CommentService commentService;
     @Autowired
     @Qualifier("newsDTOConverter")
     private DTOConverter<News, NewsDTO> newsDTOConverter;
@@ -58,8 +61,8 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public void delete(Long id) {
         News news = newsDao.findOne(id);
+        commentService.deleteAllCommentsFromArticle(id);
         news.setUser(null);
-
         newsDao.delete(news);
     }
 
