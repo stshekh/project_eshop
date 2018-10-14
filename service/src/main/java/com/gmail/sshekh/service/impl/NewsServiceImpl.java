@@ -1,6 +1,7 @@
 package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.NewsDao;
+import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.News;
 import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
@@ -27,6 +28,8 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     private CommentService commentService;
     @Autowired
+    private UserDao userDao;
+    @Autowired
     @Qualifier("newsDTOConverter")
     private DTOConverter<News, NewsDTO> newsDTOConverter;
     @Autowired
@@ -42,8 +45,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDTO update(NewsDTO newsDTO) {
-        News news = newsConverter.toEntity(newsDTO);
+    public NewsDTO update(NewsDTO newsDTO, Long userId) {
+        News news = newsDao.findOne(newsDTO.getId());
+        news.setUser(userDao.findUserById(userId));
+        news.setTitle(newsDTO.getTitle());
+        news.setContent(newsDTO.getContent());
         newsDao.update(news);
         return newsDTOConverter.toDTO(news);
     }

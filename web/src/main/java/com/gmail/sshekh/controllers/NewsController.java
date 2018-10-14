@@ -123,10 +123,8 @@ public class NewsController {
             ModelMap modelMap
     ) {
         UserPrincipal userPrincipal = getLoggedInUser();
-        UserDTO user = userService.findUserById(userPrincipal.getId());
-        news.setUser(user);
         news.setId(id);
-        news = newsService.update(news);
+        news = newsService.update(news, userPrincipal.getId());
         modelMap.addAttribute("news", news);
         return "redirect:/news";
     }

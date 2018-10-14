@@ -7,7 +7,7 @@ import java.util.List;
 public interface NewsService {
     NewsDTO save(NewsDTO newsDTO);
 
-    NewsDTO update(NewsDTO newsDTO);
+    NewsDTO update(NewsDTO newsDTO, Long userId);
 
     List<NewsDTO> findAll(int startPosition, int maxResult);
 
