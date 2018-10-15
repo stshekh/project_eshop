@@ -36,7 +36,7 @@ public class UserConverter implements Converter<UserDTO, User> {
         user.setPassword(dto.getPassword());
         user.setEnabled(dto.isEnabled());
         if (!dto.getComments().isEmpty()) {
-            user.setComments(commentConverter.toEntitySet(dto.getComments()));
+            user.setComments(commentConverter.toEntityList(dto.getComments()));
         }
         if (dto.getRole() != null) {
             user.setRole(roleConverter.toEntity(dto.getRole()));

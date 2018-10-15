@@ -25,7 +25,7 @@
                 <th scope="col">#</th>
                 <th scope="col">News text</th>
                 <th scope="col">Creation time</th>
-                <th scope="col">Who created</th>
+                <th scope="col">Author</th>
             </tr>
             </thead>
             <tbody>
@@ -64,6 +64,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Content</th>
                             <th scope="col">Creation time</th>
+                            <th scope="col">Who created</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -73,6 +74,7 @@
                                 </th>
                                 <td>${comment.content}</td>
                                 <td>${comment.created}</td>
+                                <td>${comment.username}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

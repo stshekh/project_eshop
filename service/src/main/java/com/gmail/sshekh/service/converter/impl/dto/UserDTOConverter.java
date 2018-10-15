@@ -37,7 +37,7 @@ public class UserDTOConverter implements DTOConverter<User, UserDTO> {
         userDTO.setEnabled(entity.isEnabled());
 
         if (!entity.getComments().isEmpty()) {
-            userDTO.setComments(commentDTOConverter.toDTOSet(entity.getComments()));
+            userDTO.setComments(commentDTOConverter.toDTOList(entity.getComments()));
         }
 
         if (entity.getRole() != null) {

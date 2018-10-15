@@ -98,7 +98,7 @@ public class NewsController {
     ) {
         Integer totalPages = getNumberOfPages(commentService.countCommentsPerArticle(id), COMMENTS_PER_PAGE);
         NewsDTO news = newsService.findOne(id);
-        Set<CommentDTO> comments = commentService.getCommentsByNewsId(id, page, COMMENTS_PER_PAGE);
+        List<CommentDTO> comments = commentService.getCommentsByNewsId(id, page, COMMENTS_PER_PAGE);
         modelMap.addAttribute("news", news);
         modelMap.addAttribute("comments", comments);
         modelMap.addAttribute("pages", totalPages);

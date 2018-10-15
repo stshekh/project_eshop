@@ -85,7 +85,7 @@ public class UserActionsTests {
         orderService.save(orderDTO);
 
         for (int i = 0; i < 4; i++) {
-            orderService.addOrdersToItemsAndUsers(new BigDecimal(250), new BigDecimal(450), orderDTO);//TODO change method name
+            orderService.addOrdersToItemsAndUsers(new BigDecimal(250), new BigDecimal(450), orderDTO);
         }
         userDTO=userService.findUserByEmail("user@user");
         for (int i = 0; i < userDTO.getOrders().size(); i++) {

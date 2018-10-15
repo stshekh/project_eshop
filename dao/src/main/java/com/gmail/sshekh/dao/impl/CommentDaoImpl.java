@@ -15,7 +15,7 @@ public class CommentDaoImpl extends GenericDaoImpl<Comment> implements CommentDa
 
     @Override
     public List<Comment> getCommentsByNewsId(Long id, int startPosition, int maxResult) {
-        String hql = "FROM Comment AS c WHERE c.news.idNews=:id ORDER BY c.created desc";//TODO ask Artem why order by doesn't work with DateTime
+        String hql = "FROM Comment AS c WHERE c.news.idNews=:id ORDER BY c.created desc";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         query.setFirstResult(startPosition);
@@ -41,9 +41,17 @@ public class CommentDaoImpl extends GenericDaoImpl<Comment> implements CommentDa
 
     @Override
     public List<Comment> getCommentsPerArticle(Long id) {
-        String hql = "FROM Comment AS c WHERE c.news.idNews=:id";//TODO ask Artem why order by doesn't work with DateTime
+        String hql = "FROM Comment AS c WHERE c.news.idNews=:id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return query.list();
+    }
+
+    @Override
+    public String getUserNameByCommentId(Long id) {
+        String hql = "SELECT user.firstName FROM Comment c JOIN c.user user WHERE c.idComment=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (String) query.uniqueResult();
     }
 }

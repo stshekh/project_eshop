@@ -14,7 +14,7 @@ public interface CommentService {
 
     void delete(Long id);
 
-    Set<CommentDTO> getCommentsByNewsId(Long id, int startPosition, int maxResult);
+    List<CommentDTO> getCommentsByNewsId(Long id, int startPosition, int maxResult);
 
     Integer countCommentsPerArticle(Long id);
 

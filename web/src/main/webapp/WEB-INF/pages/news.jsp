@@ -42,7 +42,7 @@
                             <th scope="col">Title</th>
                             <th scope="col">News short text</th>
                             <th scope="col">Creation time</th>
-                            <th scope="col">Who created</th>
+                            <th scope="col">Author</th>
                             <security:authorize access="hasAuthority('MANAGE_ITEMS')">
                                 <th scope="col">Actions</th>
                             </security:authorize>

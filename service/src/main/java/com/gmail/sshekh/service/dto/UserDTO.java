@@ -16,7 +16,7 @@ public class UserDTO {
     private ProfileDTO profile;
     private List<OrderDTO> orders = new ArrayList<>();
     private DiscountDTO discountDTO;
-    private Set<CommentDTO> comments = new HashSet<>();
+    private List<CommentDTO> comments = new ArrayList<>();
     private Set<BusinessCardDTO> businessCards = new HashSet<>();
 
     public Long getId() {
@@ -99,11 +99,11 @@ public class UserDTO {
         this.discountDTO = discountDTO;
     }
 
-    public Set<CommentDTO> getComments() {
+    public List<CommentDTO> getComments() {
         return comments;
     }
 
-    public void setComments(Set<CommentDTO> comments) {
+    public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
 

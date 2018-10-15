@@ -70,4 +70,12 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         Query query = getCurrentSession().createQuery(hql);
         return (Long) query.uniqueResult();
     }
+
+    @Override
+    public String getUserNameByCommentId(Long id) {
+        String hql = "SELECT u.firstName FROM User u JOIN u.comments comment WHERE comment.idComment=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (String) query.uniqueResult();
+    }
 }

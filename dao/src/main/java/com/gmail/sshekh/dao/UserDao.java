@@ -19,4 +19,6 @@ public interface UserDao extends GenericDao<User> {
     Set<BusinessCard> getUsersBusinessCards(Long id);
 
     Long countUsers();
+
+    String getUserNameByCommentId(Long id);
 }

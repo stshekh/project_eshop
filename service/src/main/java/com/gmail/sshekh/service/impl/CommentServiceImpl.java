@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,12 +44,11 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentConverter.toEntity(commentDTO);
         comment.setCreated(LocalDateTime.now());
         comment.setNews(newsDao.findOne(idNews));
-        Set<Comment> comments = new HashSet<>();
+        List<Comment> comments = new ArrayList<>();
         comments.add(comment);
         User user = userDao.findUserById(idUser);
         user.setComments(comments);
         commentDao.create(comment);
-        //comment.setNews(commentDTO.getNews());
         return commentDTOConverter.toDTO(comment);
     }
 
@@ -71,13 +71,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Set<CommentDTO> getCommentsByNewsId(Long id, int startPosition, int maxResult) {
+    public List<CommentDTO> getCommentsByNewsId(Long id, int startPosition, int maxResult) {
         int firstPosition;
         if (startPosition > 1)
             firstPosition = (startPosition - 1) * maxResult;
         else firstPosition = 0;
         List<Comment> comments = commentDao.getCommentsByNewsId(id, firstPosition, maxResult);
-        return new HashSet<>(commentDTOConverter.toDTOList(comments));
+        List<CommentDTO> commentDTOS = commentDTOConverter.toDTOList(comments);
+        for (CommentDTO comment : commentDTOS) {
+            comment.setUsername(userDao.getUserNameByCommentId(comment.getId()));
+        }
+        return commentDTOS;
     }
 
     @Override
