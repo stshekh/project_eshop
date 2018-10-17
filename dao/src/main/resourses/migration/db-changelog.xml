@@ -391,7 +391,7 @@
     <changeSet author="com.gmail.sshekh" id="1538416069810-53">
         <insert tableName="T_USER">
             <column name="ID" value="4"/>
-            <column name="EMAIL" value="apiuser@facades.com "/>
+            <column name="EMAIL" value="apiuser@facades.com"/>
             <column name="FIRST_NAME" value="Api user"/>
             <column name="LAST_NAME" value="Api user"/>
             <column name="PASSWORD" value="$2a$06$BJ6wz5V/VSb9SFTEtO/ZPeAkluPpkzw.dPgOuYMPGyFRAbzvkcxpK"/>

@@ -21,7 +21,9 @@
                             <th scope="col">Created</th>
                             <th scope="col">Item name</th>
                             <th scope="col">Price per item</th>
-                            <th scope="col">Username</th>
+                            <security:authorize access="hasAuthority('MANAGE_ITEMS')">
+                                <th scope="col">Username</th>
+                            </security:authorize>
                             <th scope="col">Quantity</th>
                             <th scope="col">Status</th>
                         </tr>
@@ -33,7 +35,9 @@
                                 <td>${order.created}</td>
                                 <td>${order.item.getName()}</td>
                                 <td>${order.item.price}</td>
-                                <td>${order.user.getName()}</td>
+                                <security:authorize access="hasAuthority('MANAGE_ITEMS')">
+                                    <td>${order.user.getName()}</td>
+                                </security:authorize>
                                 <td>${order.quantity}</td>
                                 <td>${order.status}</td>
                                 <security:authorize access="hasAuthority('MANAGE_ITEMS')">
@@ -51,9 +55,16 @@
                         <ul class="pagination">
                             <%for (int i = 1; i <= (int) request.getAttribute("pages"); i++) {%>
                             <li class="page-item">
-                                <a class="page-link"
-                                   href="${pageContext.request.contextPath}/orders?page=<%=i %>"><%=i %>
-                                </a>
+                                <security:authorize access="hasAuthority('MANAGE_ITEMS')">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/orders?page=<%=i %>"><%=i %>
+                                    </a>
+                                </security:authorize>
+                                <security:authorize access="hasAuthority('VIEW_PROFILE')">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/orders/users?page=<%=i %>"><%=i %>
+                                    </a>
+                                </security:authorize>
                             </li>
                             <%} %>
                         </ul>

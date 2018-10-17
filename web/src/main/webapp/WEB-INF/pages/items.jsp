@@ -45,7 +45,7 @@
                                 <td>${item.name}</td>
                                 <td>${item.description}</td>
                                 <td>${item.uniqueNumber}</td>
-                                <td>${item.price}BYN</td>
+                                <td>${item.price} BYN</td>
                                 <security:authorize access="hasAuthority('MANAGE_ITEMS')">
                                     <td>
                                         <a href="${pageContext.request.contextPath}/items/${item.id}"

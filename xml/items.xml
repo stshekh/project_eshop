@@ -16,28 +16,28 @@
         <price>114.12</price>
 		<isAlive>true</isAlive>   
     </thing>
-	    <thing>
+	<thing>
         <name>Facade mirage</name>
-        <description>Short description2
+        <description>Short description3
         </description>
         <uniqueNumber>0</uniqueNumber>	
         <price>153.99</price>
 		<isAlive>true</isAlive>   
     </thing>
-	    <thing>
+	<thing>
         <name>Facade Milano</name>
-        <description>Short description2
+        <description>Short description4
         </description>
         <uniqueNumber>0</uniqueNumber>	
         <price>189.1</price>
 		<isAlive>true</isAlive>   
     </thing>
-	    <thing>
-        <name>Facade Modern</name>
-        <description>Short description2
+	<thing>
+        <name>Facade Prestige</name>
+        <description>Short description5
         </description>
         <uniqueNumber>0</uniqueNumber>	
-        <price>140</price>
+        <price>149</price>
 		<isAlive>true</isAlive>   
     </thing>
 </store>
