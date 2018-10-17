@@ -47,10 +47,6 @@ public class UserDTOConverter implements DTOConverter<User, UserDTO> {
         if (entity.getDiscount() != null) {
             userDTO.setDiscountDTO(discountDTOConverter.toDTO(entity.getDiscount()));
         }
-
-        if (!entity.getOrders().isEmpty()) {
-            userDTO.setOrders(orderDTOConverter.toDTOList(entity.getOrders()));
-        }
         return userDTO;
     }
 

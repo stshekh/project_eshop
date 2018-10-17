@@ -15,35 +15,33 @@
         <div class="col-md-4"></div>
         <div class="col-md-4 shadow-lg bg-white rounded">
             <form:errors path="*" cssClass="error"/>
-            <form:form action="${pageContext.request.contextPath}/users/roles/${user.userId}" modelAttribute="user"
+            <form:form action="${pageContext.request.contextPath}/orders/${order.user.getId()}/${order.item.getId()}/status" modelAttribute="order"
                        method="post">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">FirstName</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Item name</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>${user.userName}</td>
-                        <td>
-                            <select id="roleId" name="roleId">
-                                <c:forEach items="${roles}" var="role">
-                                    <option value="${role.idRole}" ${role.idRole==user.roleId? 'selected':''}>
-                                            ${role.roleName}
-                                    </option>
-                                </c:forEach>
-                            </select>
+                        <td>${order.user.getName()}</td>
+                        <td><select id="status" name="status">
+                            <option value="NEW" ${order.status.equals("NEW")? 'selected':''}>NEW</option>
+                            <option value="REVIEWING" ${order.status.equals("REVIEWING")? 'selected':''}>REVIEWING</option>
+                            <option value="IN_PROGRESS" ${order.status.equals("IN_PROGRESS")? 'selected':''}>IN_PROGRESS</option>
+                            <option value="DELIVERED" ${order.status.equals("DELIVERED")? 'selected':''}>DELIVERED</option>
+                        </select>
                         </td>
                         <td>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">Update status</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <a href="${pageContext.request.contextPath}/users"/>Back to users list</a>
+                <a href="${pageContext.request.contextPath}/orders">Back to orders list</a>
             </form:form>
         </div>
     </div>

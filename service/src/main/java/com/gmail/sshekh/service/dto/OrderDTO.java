@@ -9,6 +9,7 @@ public class OrderDTO {
     private Long quantity;
     private UserDTO user;
     private ItemDTO item;
+    private String status;
 
     public OrderIdDTO getId() {
         return id;
@@ -48,6 +49,14 @@ public class OrderDTO {
 
     public void setItem(ItemDTO item) {
         this.item = item;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

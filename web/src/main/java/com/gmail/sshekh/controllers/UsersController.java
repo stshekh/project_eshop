@@ -140,7 +140,6 @@ public class UsersController {
         userService.setEnabled(user);
         modelMap.addAttribute("user", user);
         return "redirect:/users/enabled/{id}";
-
     }
 
     //Moves to the create-page of the user

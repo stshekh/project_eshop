@@ -26,6 +26,7 @@ public class Order implements Serializable {
     @Column(name = "QUANTITY")
     private Long quantity;
 
+
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private StatusEnum status;

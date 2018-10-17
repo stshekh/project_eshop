@@ -1,8 +1,6 @@
 package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.controllers.exceptions.LoginFailureException;
-import com.gmail.sshekh.controllers.properties.PageProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 

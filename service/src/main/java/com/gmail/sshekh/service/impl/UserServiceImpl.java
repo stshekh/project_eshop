@@ -126,8 +126,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public UserDTO findUserById(Long id) {
-        User user = userDao.findUserById(id);
-        return userDTOConverter.toDTO(user);
+        return userDTOConverter.toDTO(userDao.findOne(id));
     }
 
     @Override

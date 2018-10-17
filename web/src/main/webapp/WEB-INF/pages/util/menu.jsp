@@ -22,9 +22,14 @@
                     <a class="nav-link disabled" href=${pageContext.request.contextPath}/items>Items</a>
                 </li>
             </security:authorize>
-            <security:authorize access="hasAnyAuthority('MANAGE_ITEMS','VIEW_PROFILE')">
+            <security:authorize access="hasAuthority('MANAGE_ITEMS')">
                 <li class="nav-item">
                     <a class="nav-link disabled" href=${pageContext.request.contextPath}/orders>Orders</a>
+                </li>
+            </security:authorize>
+            <security:authorize access="hasAuthority('VIEW_PROFILE')">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href=${pageContext.request.contextPath}/orders/users>Orders</a>
                 </li>
             </security:authorize>
         </ul>

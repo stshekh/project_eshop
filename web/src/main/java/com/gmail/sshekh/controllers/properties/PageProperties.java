@@ -49,5 +49,7 @@ public class PageProperties {
     private String itemsCreatePage;
     @Value("${items.update.page}")
     private String itemsUpdatePage;
+    @Value("${order.status.update}")
+    private String orderStatusUpdate;
 }
 

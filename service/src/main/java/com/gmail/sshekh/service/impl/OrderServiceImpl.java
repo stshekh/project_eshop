@@ -3,14 +3,15 @@ package com.gmail.sshekh.service.impl;
 import com.gmail.sshekh.dao.ItemDao;
 import com.gmail.sshekh.dao.OrderDao;
 import com.gmail.sshekh.dao.UserDao;
-import com.gmail.sshekh.dao.model.Item;
-import com.gmail.sshekh.dao.model.Order;
-import com.gmail.sshekh.dao.model.User;
+import com.gmail.sshekh.dao.model.*;
 import com.gmail.sshekh.service.ItemService;
 import com.gmail.sshekh.service.OrderService;
+import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.ItemDTO;
 import com.gmail.sshekh.service.dto.OrderDTO;
+import com.gmail.sshekh.service.dto.OrderIdDTO;
+import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
 
 @Service
 @Transactional
@@ -35,6 +38,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     @Qualifier("orderDTOConverter")
     private DTOConverter<Order, OrderDTO> orderDTOConverter;
+    @Autowired
+    @Qualifier("orderIdDTOConverter")
+    private DTOConverter<OrderId, OrderIdDTO> orderIdDTOConverter;
+    @Autowired
+    @Qualifier("orderIdConverter")
+    private Converter<OrderIdDTO, OrderId> orderIdConverter;
     @Autowired
     private ItemService itemService;
 
@@ -77,5 +86,50 @@ public class OrderServiceImpl implements OrderService {
         user.getOrders().add(order);
         order.getUser().getOrders().add(order);
         userDao.update(user);
+    }
+
+    @Override
+    public Integer countAllOrders() {
+        return orderDao.countAllOrders().intValue();
+    }
+
+    @Override
+    public List<OrderDTO> findAll(int startPosition, int maxOnPage) {
+        int firstPosition;
+        if (startPosition > 1)
+            firstPosition = (startPosition - 1) * maxOnPage;
+        else firstPosition = 0;
+        List<Order> orders = orderDao.findAll(firstPosition, maxOnPage);
+        return orderDTOConverter.toDTOList(orders);
+    }
+
+    @Override
+    public OrderDTO getOrderByOrderId(Long idUser, Long idItem) {
+        OrderIdDTO id = new OrderIdDTO();
+        id.setUserId(idUser);
+        id.setItemId(idItem);
+        return orderDTOConverter.toDTO(orderDao.getOrderByOrderId(orderIdConverter.toEntity(id)));
+    }
+
+    @Override
+    public void updateStatus(OrderDTO orderDTO, Long idUser, Long idItem) {
+        OrderIdDTO id = new OrderIdDTO();
+        id.setUserId(idUser);
+        id.setItemId(idItem);
+        OrderId orderId = orderIdConverter.toEntity(id);
+        Order order = orderDao.getOrderByOrderId(orderId);
+        order.setStatus(StatusEnum.valueOf(orderDTO.getStatus()));
+        orderDao.update(order);
+    }
+
+    @Override
+    public List<OrderDTO> getUsersOrders(int startPosition, int maxOnPage) {
+        int firstPosition;
+        if (startPosition > 1)
+            firstPosition = (startPosition - 1) * maxOnPage;
+        else firstPosition = 0;
+        UserPrincipal userPrincipal = getLoggedInUser();
+        Long userId = userPrincipal.getId();
+        return orderDTOConverter.toDTOList(orderDao.findOrdersByUserId(userId, firstPosition, maxOnPage));
     }
 }

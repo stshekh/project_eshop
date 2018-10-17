@@ -2,6 +2,8 @@ package com.gmail.sshekh.service.converter.impl.dto;
 
 import com.gmail.sshekh.dao.model.Order;
 import com.gmail.sshekh.dao.model.OrderId;
+import com.gmail.sshekh.service.ItemService;
+import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.OrderDTO;
 import com.gmail.sshekh.service.dto.OrderIdDTO;
@@ -18,15 +20,20 @@ public class OrderDTOConverter implements DTOConverter<Order, OrderDTO> {
     @Autowired
     @Qualifier("orderIdDTOConverter")
     private DTOConverter<OrderId, OrderIdDTO> orderIdDTOConverter;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public OrderDTO toDTO(Order entity) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(orderIdDTOConverter.toDTO(entity.getId()));
-        //orderDTO.setUser(new UserDTOConverter().toDTO(entity.getUser()));
-        //orderDTO.setItem(new ItemDTOConverter().toDTO(entity.getItem()));
+        orderDTO.setItem(itemService.findOne(entity.getId().getItemId()));
+        orderDTO.setUser(userService.findUserById(entity.getId().getUserId()));
         orderDTO.setCreated(entity.getCreated());
         orderDTO.setQuantity(entity.getQuantity());
+        orderDTO.setStatus(entity.getStatus().name());
         return orderDTO;
     }
 
