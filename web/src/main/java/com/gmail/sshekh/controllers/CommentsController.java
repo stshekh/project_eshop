@@ -4,10 +4,13 @@ import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
 import com.gmail.sshekh.service.dto.CommentDTO;
+import com.gmail.sshekh.service.dto.NewsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -16,14 +19,17 @@ public class CommentsController {
 
     private final CommentService commentService;
     private final NewsService newsService;
+    private final Validator commentValidator;
 
     @Autowired
     public CommentsController(
             CommentService commentService,
-            NewsService newsService
+            NewsService newsService,
+            Validator commentValidator
     ) {
         this.commentService = commentService;
         this.newsService = newsService;
+        this.commentValidator = commentValidator;
     }
 
 
@@ -53,10 +59,17 @@ public class CommentsController {
     public String createComments(
             @PathVariable("idNews") Long idNews,
             @ModelAttribute("comment") CommentDTO comment,
-            ModelMap modelMap
+            ModelMap modelMap,
+            BindingResult bindingResult
     ) {
-        commentService.save(comment, idNews);
-        modelMap.addAttribute("comment", comment);
-        return "redirect:/news/show/{idNews}";
+        commentValidator.validate(comment, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "comments.create";
+        } else {
+            commentService.save(comment, idNews);
+            modelMap.addAttribute("comment", comment);
+            modelMap.addAttribute("news", newsService.findOne(idNews));
+            return "redirect:/news/show/{idNews}";
+        }
     }
 }

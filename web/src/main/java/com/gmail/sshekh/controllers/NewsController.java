@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,14 +21,17 @@ import static com.gmail.sshekh.service.utils.PaginationUtil.*;
 public class NewsController {
     private final NewsService newsService;
     private final CommentService commentService;
+    private final Validator newsValidator;
 
     @Autowired
     public NewsController(
             NewsService newsService,
-            CommentService commentService
+            CommentService commentService,
+            Validator newsValidator
     ) {
         this.newsService = newsService;
         this.commentService = commentService;
+        this.newsValidator = newsValidator;
     }
 
     //ShowAllNews
@@ -56,11 +61,17 @@ public class NewsController {
     @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
     public String createNews(
             @ModelAttribute("news") NewsDTO news,
-            ModelMap modelMap
+            ModelMap modelMap,
+            BindingResult bindingResult
     ) {
-        news = newsService.save(news);
-        modelMap.addAttribute("news", news);
-        return "redirect:/news";
+        newsValidator.validate(news, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "news.create";
+        } else {
+            news = newsService.save(news);
+            modelMap.addAttribute("news", news);
+            return "redirect:/news";
+        }
     }
 
     //Deleting news
@@ -107,11 +118,17 @@ public class NewsController {
     public String updateNews(
             @PathVariable("id") Long id,
             @ModelAttribute NewsDTO news,
-            ModelMap modelMap
+            ModelMap modelMap,
+            BindingResult bindingResult
     ) {
-        news.setId(id);
-        news = newsService.update(news);
-        modelMap.addAttribute("news", news);
-        return "redirect:/news";
+        newsValidator.validate(news, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "news.update";
+        } else {
+            news.setId(id);
+            news = newsService.update(news);
+            modelMap.addAttribute("news", news);
+            return "redirect:/news";
+        }
     }
 }
