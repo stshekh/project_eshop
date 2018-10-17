@@ -117,6 +117,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void copy(Long id, ItemDTO item) {
+        Item item1 = itemDao.findOne(id);
+        ItemDTO itemDTO = itemDTOConverter.toDTO(item1);
+        itemDTO.setId(null);
+        save(itemDTO);
+    }
+
+    @Override
     public void setDiscountsToItems(BigDecimal rate, BigDecimal fromPrice, BigDecimal toPrice) {
         Set<DiscountDTO> discounts = discountService.getDiscountOfRate(rate);
         Set<ItemDTO> items = showItemsOfPrice(fromPrice, toPrice);

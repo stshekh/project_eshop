@@ -31,4 +31,6 @@ public interface ItemService {
     ItemDTO findOne(Long id);
 
     void delete(Long id);
+
+    void copy(Long id, ItemDTO item);
 }

@@ -34,7 +34,7 @@
                             <th scope="col">Item name</th>
                             <th scope="col">Item description</th>
                             <th scope="col">Unique number</th>
-                            <th scope="col">Price, $</th>
+                            <th scope="col">Price, BYN</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -52,6 +52,14 @@
                                            class="btn btn-primary" aria-pressed="true"
                                            role="button">Update</a>
                                     </td>
+                                </security:authorize>
+                                <security:authorize access="hasAuthority('MANAGE_ITEMS')">
+                                    <form action="${pageContext.request.contextPath}/items/${item.id}/copy"
+                                          method="post">
+                                        <td>
+                                            <button type="submit" class="btn btn-outline-success">Copy</button>
+                                        </td>
+                                    </form>
                                 </security:authorize>
                                 <security:authorize access="hasAuthority('VIEW_PROFILE')">
                                     <td>

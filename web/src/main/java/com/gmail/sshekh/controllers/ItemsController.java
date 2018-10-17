@@ -65,6 +65,17 @@ public class ItemsController {
         return "redirect:/items";
     }
 
+    //Copy items
+    @PostMapping("/{id}/copy")
+    @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
+    public String copyItems(
+            @PathVariable("id") Long id,
+            @ModelAttribute("item") ItemDTO item
+    ) {
+        itemService.copy(id, item);
+        return "redirect:/items";
+    }
+
     //Go to item create page
     @GetMapping(value = "/create")
     @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
