@@ -17,30 +17,27 @@ import java.util.List;
 
 @Controller
 public class LoginController {
-    private final PageProperties pageProperties;
     private final UserService userService;
     private final Validator userValidator;
 
     @Autowired
     public LoginController(
-            PageProperties pageProperties,
             UserService userService,
             Validator userValidator
     ) {
-        this.pageProperties = pageProperties;
         this.userService = userService;
         this.userValidator = userValidator;
     }
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return pageProperties.getLoginPagePath();
+        return "login";
     }
 
     @GetMapping("/register")
     public String getRegisterPage(ModelMap modelMap) {
         modelMap.addAttribute("user", new UserDTO());
-        return pageProperties.getUserRegisterPagePath();
+        return "users.register";
     }
 
     @PostMapping("/register")
@@ -52,7 +49,7 @@ public class LoginController {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
             modelMap.addAttribute("user", user);
-            return pageProperties.getUserRegisterPagePath();
+            return "users.register";
         } else {
             userService.save(user);
             return "redirect:/login";

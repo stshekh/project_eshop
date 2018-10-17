@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ItemService {
+
     ItemDTO save(ItemDTO itemDTO);
 
     ItemDTO update(ItemDTO itemDTO);
@@ -26,4 +27,6 @@ public interface ItemService {
     ItemDTO getItemOfPrice(BigDecimal fromPrice, BigDecimal toPrice);
 
     Integer countAllItems();
+
+    ItemDTO findOne(Long id);
 }

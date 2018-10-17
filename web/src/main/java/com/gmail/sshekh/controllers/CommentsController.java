@@ -15,16 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class CommentsController {
 
     private final CommentService commentService;
-    private final PageProperties pageProperties;
     private final NewsService newsService;
 
     @Autowired
     public CommentsController(
-            PageProperties pageProperties,
             CommentService commentService,
             NewsService newsService
     ) {
-        this.pageProperties = pageProperties;
         this.commentService = commentService;
         this.newsService = newsService;
     }
@@ -48,7 +45,7 @@ public class CommentsController {
             ModelMap modelMap) {
         modelMap.addAttribute("comment", new CommentDTO());
         modelMap.addAttribute("news", newsService.findOne(idNews));
-        return pageProperties.getCommentCreatePage();
+        return "comments.create";
     }
 
     @PostMapping(value = "/comments/create")

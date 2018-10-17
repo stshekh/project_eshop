@@ -1,6 +1,5 @@
 package com.gmail.sshekh.controllers;
 
-import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.ItemService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.ItemDTO;
@@ -8,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,20 +19,16 @@ import static com.gmail.sshekh.service.utils.PaginationUtil.getNumberOfPages;
 @Controller
 @RequestMapping("/items")
 public class ItemsController {
-
-    private final PageProperties pageProperties;
+    private final Validator itemValidator;
     private final ItemService itemService;
-    private final UserService userService;
 
     @Autowired
     public ItemsController(
-            PageProperties pageProperties,
-            ItemService itemService,
-            UserService userService
+            Validator itemValidator,
+            ItemService itemService
     ) {
-        this.pageProperties = pageProperties;
+        this.itemValidator = itemValidator;
         this.itemService = itemService;
-        this.userService = userService;
     }
 
     //ShowAllItems
@@ -48,7 +42,7 @@ public class ItemsController {
         modelMap.addAttribute("pages", totalPages);
         List<ItemDTO> items = itemService.findAll(page, ITEMS_PER_PAGE);
         modelMap.addAttribute("items", items);
-        return pageProperties.getItemsPagePath();
+        return "items";
     }
 
     //Removing items
@@ -60,6 +54,64 @@ public class ItemsController {
         for (Long id : ids) {
             itemService.remove(id);
         }
-        return "redirect:/news";
+        return "redirect:/items";
+    }
+
+    //Go to item create page
+    @GetMapping(value = "/create")
+    @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
+    public String getCreatePage(ModelMap modelMap) {
+        modelMap.addAttribute("item", new ItemDTO());
+        return "items.create";
+    }
+
+    //Creating items
+    @PostMapping(value = "/create")
+    @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
+    public String createItem(
+            @ModelAttribute("item") ItemDTO item,
+            BindingResult bindingResult,
+            ModelMap modelMap
+    ) {
+        itemValidator.validate(item, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "items.create";
+        } else {
+            item = itemService.save(item);
+            modelMap.addAttribute("item", item);
+            return "redirect:/items";
+        }
+    }
+
+    //Shows one item page
+    @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
+    public String getItem(
+            @PathVariable("id") Long id,
+            ModelMap modelMap
+    ) {
+        ItemDTO item = itemService.findOne(id);
+        modelMap.addAttribute("item", item);
+        return "items.update";
+    }
+
+    //Updates item
+    @PostMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
+    public String updateItem(
+            @PathVariable("id") Long id,
+            @ModelAttribute ItemDTO item,
+            BindingResult bindingResult,
+            ModelMap modelMap
+    ) {
+        item.setId(id);
+        itemValidator.validate(item, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "items.update";
+        } else {
+            item = itemService.update(item);
+            modelMap.addAttribute("item", item);
+            return "redirect:/users";
+        }
     }
 }

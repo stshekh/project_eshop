@@ -10,25 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class AppExceptionHandler {
-    private final PageProperties pageProperties;
-
-    @Autowired
-    public AppExceptionHandler(PageProperties pageProperties) {
-        this.pageProperties = pageProperties;
-    }
-
 
     @ExceptionHandler(LoginFailureException.class)
     public String loginErrorHandler(HttpServletRequest req, Exception e) {
         req.setAttribute("exception", e);
         req.setAttribute("url", req.getRequestURL());
-        return pageProperties.getLoginPagePath();
+        return "login";
     }
 
     @ExceptionHandler(Exception.class)
     public String defaultErrorHandler(HttpServletRequest req, Exception e) {
         req.setAttribute("exception", e);
         req.setAttribute("url", req.getRequestURL());
-        return pageProperties.getErrorsPagePath();
+        return "errors";
     }
 }

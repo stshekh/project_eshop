@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -37,6 +38,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO save(ItemDTO itemDTO) {
         Item item = itemConverter.toEntity(itemDTO);
+        item.setEnable(true);
+        item.setUniqueNumber("F" + String.valueOf(LocalDateTime.now()));
         itemDao.create(item);
         return itemDTOConverter.toDTO(item);
     }
@@ -44,6 +47,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO update(ItemDTO itemDTO) {
         Item item = itemConverter.toEntity(itemDTO);
+        item.setEnable(true);
         itemDao.update(item);
         return itemDTOConverter.toDTO(item);
     }
@@ -95,6 +99,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Integer countAllItems() {
         return itemDao.countAllItems().intValue();
+    }
+
+    @Override
+    public ItemDTO findOne(Long id) {
+        return itemDTOConverter.toDTO(itemDao.findOne(id));
     }
 
     @Override

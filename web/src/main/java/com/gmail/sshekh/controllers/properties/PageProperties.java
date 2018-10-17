@@ -1,138 +1,53 @@
 package com.gmail.sshekh.controllers.properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Component
 public class PageProperties {
-    @Autowired
-    private Environment environment;
 
+
+    @Value("${login.page.path}")
     private String loginPagePath;
+    @Value("${errors.page.path}")
     private String errorsPagePath;
+    @Value("${items.page.path}")
     private String itemsPagePath;
+    @Value("${users.page.path}")
     private String usersPagePath;
+    @Value("${user.create.page.path}")
     private String userCreatePagePath;
+    @Value("${user.register.page.path}")
     private String userRegisterPagePath;
+    @Value("${user.update.page.path}")
     private String userUpdatePagePath;
+    @Value("${user.role.update.page}")
     private String userRoleUpdatePage;
+    @Value("${user.enable.page}")
     private String userEnableUpdatePage;
+    @Value("${news.page.path}")
     private String newsPagePath;
+    @Value("${news.create.page}")
     private String newsCreatePage;
+    @Value("${profile.page.path}")
     private String profilePagePath;
+    @Value("${profile.create.path}")
     private String profileCreatePagePath;
+    @Value("${one.news.page}")
     private String oneNewsPage;
+    @Value("${news.update.page}")
     private String newsUpdatePage;
+    @Value("${comment.create.page}")
     private String commentCreatePage;
+    @Value("${business.cards.page}")
     private String usersBusinessCards;
+    @Value("${business.card.create.page}")
     private String usersCreateBusinessCard;
+    @Value("${items.upload.page}")
     private String fileUploadPagePath;
-
-    @PostConstruct
-    public void initialize() {
-        this.errorsPagePath = environment.getProperty("errors.page.path");
-        this.loginPagePath = environment.getProperty("login.page.path");
-        this.itemsPagePath = environment.getProperty("items.page.path");
-        this.usersPagePath = environment.getProperty("users.page.path");
-        this.userUpdatePagePath = environment.getProperty("user.update.page.path");
-        this.userCreatePagePath = environment.getProperty("user.create.page.path");
-        this.userRoleUpdatePage = environment.getProperty("user.role.update.page");
-        this.userEnableUpdatePage = environment.getProperty("user.enable.page");
-        this.newsPagePath = environment.getProperty("news.page.path");
-        this.profilePagePath = environment.getProperty("profile.page.path");
-        this.profileCreatePagePath = environment.getProperty("profile.create.path");
-        this.newsCreatePage = environment.getProperty("news.create.page");
-        this.oneNewsPage = environment.getProperty("one.news.page");
-        this.newsUpdatePage = environment.getProperty("news.update.page");
-        this.commentCreatePage = environment.getProperty("comment.create.page");
-        this.usersBusinessCards = environment.getProperty("business.cards.page");
-        this.usersCreateBusinessCard = environment.getProperty("business.card.create.page");
-        this.userRegisterPagePath = environment.getProperty("user.register.page.path");
-        this.fileUploadPagePath = environment.getProperty("items.upload.page");//TODO CHANGE PATH
-    }
-
-    public String getFileUploadPagePath() {
-        return fileUploadPagePath;
-    }
-
-    public String getUserRegisterPagePath() {
-        return userRegisterPagePath;
-    }
-
-    public String getUsersCreateBusinessCard() {
-        return usersCreateBusinessCard;
-    }
-
-    public String getUsersBusinessCards() {
-        return usersBusinessCards;
-    }
-
-    public String getCommentCreatePage() {
-        return commentCreatePage;
-    }
-
-    public String getNewsUpdatePage() {
-        return newsUpdatePage;
-    }
-
-    public String getOneNewsPage() {
-        return oneNewsPage;
-    }
-
-    public String getNewsCreatePage() {
-        return newsCreatePage;
-    }
-
-    public String getProfileCreatePagePath() {
-        return profileCreatePagePath;
-    }
-
-    public String getProfilePagePath() {
-        return profilePagePath;
-    }
-
-    public String getNewsPagePath() {
-        return newsPagePath;
-    }
-
-    public Environment getEnvironment() {
-        return environment;
-    }
-
-    public String getErrorsPagePath() {
-        return errorsPagePath;
-    }
-
-    public String getUsersPagePath() {
-        return usersPagePath;
-    }
-
-    public String getLoginPagePath() {
-        return loginPagePath;
-    }
-
-    public String getItemsPagePath() {
-        return itemsPagePath;
-    }
-
-    public String getUserCreatePagePath() {
-        return userCreatePagePath;
-    }
-
-    public String getUserUpdatePagePath() {
-        return userUpdatePagePath;
-    }
-
-    public String getUserRoleUpdatePage() {
-        return userRoleUpdatePage;
-    }
-
-    public String getUserEnableUpdatePage() {
-        return userEnableUpdatePage;
-    }
+    @Value("${items.create.page}")
+    private String itemsCreatePage;
+    @Value("${items.update.page}")
+    private String itemsUpdatePage;
 }
 

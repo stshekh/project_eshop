@@ -44,7 +44,7 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
 
     @Override
     public Long countAllItems() {
-        String hql = "SELECT COUNT(*) FROM Item AS i";
+        String hql = "SELECT COUNT(*) FROM Item AS i WHERE i.enable IS TRUE";
         Query query = getCurrentSession().createQuery(hql);
         return (Long) query.uniqueResult();
     }

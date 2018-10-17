@@ -23,17 +23,14 @@ import java.io.IOException;
 @RequestMapping("/items/upload")
 public class FileUploadController {
 
-    private final PageProperties pageProperties;
     private final UploadService uploadService;
     private final FileProperties fileProperties;
 
     @Autowired
     public FileUploadController(
-            @Qualifier("pageProperties") PageProperties pageProperties,
             @Qualifier("uploadService") UploadService uploadService,
             @Qualifier("fileProperties") FileProperties fileProperties
     ) {
-        this.pageProperties = pageProperties;
         this.uploadService = uploadService;
         this.fileProperties = fileProperties;
     }
@@ -42,7 +39,7 @@ public class FileUploadController {
 
     @PreAuthorize("hasAuthority('MANAGE_ITEMS')")
     public String displayForm() {
-        return pageProperties.getFileUploadPagePath();
+        return "file.upload";
     }
 
     @PostMapping

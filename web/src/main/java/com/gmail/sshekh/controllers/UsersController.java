@@ -1,6 +1,5 @@
 package com.gmail.sshekh.controllers;
 
-import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.*;
 import com.gmail.sshekh.service.dto.*;
 import com.gmail.sshekh.service.principal.UserPrincipal;
@@ -12,17 +11,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.gmail.sshekh.service.utils.PaginationUtil.USERS_PER_PAGE;
 import static com.gmail.sshekh.service.utils.PaginationUtil.getNumberOfPages;
 import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
-
-import java.util.List;
 
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-    private final PageProperties pageProperties;
     private final UserService userService;
     private final Validator userValidator;
     private final UserRoleService userRoleService;
@@ -33,7 +31,6 @@ public class UsersController {
 
     @Autowired
     public UsersController(
-            PageProperties pageProperties,
             UserService userService,
             Validator userValidator,
             UserRoleService userRoleService,
@@ -42,7 +39,6 @@ public class UsersController {
             Validator businessCardValidator,
             BusinessCardService businessCardService
     ) {
-        this.pageProperties = pageProperties;
         this.userService = userService;
         this.userValidator = userValidator;
         this.userRoleService = userRoleService;
@@ -63,18 +59,7 @@ public class UsersController {
         modelMap.addAttribute("pages", totalPages);
         List<UserDTO> users = userService.findAll(page, USERS_PER_PAGE);
         modelMap.addAttribute("users", users);
-        return pageProperties.getUsersPagePath();
-    }
-
-    //Show user with set filter
-    @GetMapping("/filter")
-    public String getUser(
-            @RequestParam(value = "email", defaultValue = "user@user.com") String email,
-            ModelMap modelMap
-    ) {
-        UserDTO user = userService.findUserByEmail(email);
-        modelMap.addAttribute("user", user);
-        return pageProperties.getUsersPagePath();
+        return "users";
     }
 
     //Shows one user page
@@ -83,7 +68,7 @@ public class UsersController {
     public String getUser(@PathVariable("id") Long id, ModelMap modelMap) {
         UserDTO user = userService.findUserById(id);
         modelMap.addAttribute("user", user);
-        return pageProperties.getUserUpdatePagePath();
+        return "users.update";
     }
 
     //Updates user
@@ -98,7 +83,7 @@ public class UsersController {
         user.setId(id);
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            return pageProperties.getUsersPagePath();
+            return "users";
         } else {
             user = userService.update(user);
             modelMap.addAttribute("user", user);
@@ -115,7 +100,7 @@ public class UsersController {
         modelMap.addAttribute("user", user);
         List<RoleDTO> roles = roleService.findAll();
         modelMap.addAttribute("roles", roles);
-        return pageProperties.getUserRoleUpdatePage();
+        return "users.role.update";
     }
 
     //Updates user role
@@ -139,7 +124,7 @@ public class UsersController {
     public String getUsersStatus(@PathVariable("id") Long id, ModelMap modelMap) {
         UserDTO user = userService.findUserById(id);
         modelMap.addAttribute("user", user);
-        return pageProperties.getUserEnableUpdatePage();
+        return "users.enable.update";
     }
 
 
@@ -162,7 +147,7 @@ public class UsersController {
     @GetMapping(value = "/create")
     public String addUserPage(ModelMap modelMap) {
         modelMap.addAttribute("user", new UserDTO());
-        return pageProperties.getUserCreatePagePath();
+        return "users.create";
     }
 
     //Creating new user
@@ -175,7 +160,7 @@ public class UsersController {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
             modelMap.addAttribute("user", user);
-            return pageProperties.getUserCreatePagePath();
+            return "users.create";
         } else {
             userService.save(user);
             return "redirect:/users";
@@ -204,7 +189,7 @@ public class UsersController {
         ProfileDTO profile = new ProfileDTO();
         profile.setUserId(userPrincipal.getId());
         modelMap.addAttribute("profile", profile);
-        return pageProperties.getProfileCreatePagePath();
+        return "users.profile.create";
     }
 
     //Creates users profile
@@ -230,7 +215,7 @@ public class UsersController {
         modelMap.addAttribute("user", user);
         ProfileDTO profile = profileService.findProfileById(id);
         modelMap.addAttribute("profile", profile);
-        return pageProperties.getProfilePagePath();
+        return "users.profile.update";
     }
 
     //Updates users profile
@@ -256,14 +241,14 @@ public class UsersController {
     public String getBusinessCards(ModelMap modelMap) {
         List<BusinessCardDTO> businessCards = businessCardService.getUsersBusinessCards();
         modelMap.addAttribute("businessCards", businessCards);
-        return pageProperties.getUsersBusinessCards();
+        return "users.business.cards";
     }
 
     @GetMapping(value = "/businessCard/create")
     @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String getBusinessCardPage(ModelMap modelMap) {
         modelMap.addAttribute("businessCard", new BusinessCardDTO());
-        return pageProperties.getUsersCreateBusinessCard();
+        return "users.business.cards.create";
     }
 
     //Creating new user
@@ -276,7 +261,7 @@ public class UsersController {
         businessCardValidator.validate(businessCard, result);
         if (result.hasErrors()) {
             modelMap.addAttribute("businessCard", businessCard);
-            return pageProperties.getUsersCreateBusinessCard();
+            return "users.business.cards.create";
         } else {
             businessCardService.save(businessCard);
             return "redirect:/users/businessCard";
