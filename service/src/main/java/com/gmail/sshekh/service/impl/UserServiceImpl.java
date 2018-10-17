@@ -57,10 +57,13 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public UserDTO save(UserDTO userDTO) {
         User user = userConverter.toEntity(userDTO);
-        user.setRole(roleDao.findRoleById(2L));
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        user.setEnabled(true);
-        userDao.create(user);
+        if (userDao.findUserByEmail(user.getEmail()) == null) {
+        } else {
+            user.setRole(roleDao.findRoleById(2L));
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            user.setEnabled(true);
+            userDao.create(user);
+        }
         return userDTOConverter.toDTO(user);
     }
 
@@ -77,7 +80,6 @@ public class UserServiceImpl implements UserService {
             user.setComments(userDao.findUserById(userDTO.getId()).getComments());
         }
         userDao.update(user);
-        //TODO order user converter correctly
         return userDTOConverter.toDTO(user);
     }
 

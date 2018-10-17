@@ -19,7 +19,7 @@
                        modelAttribute="order" method="post">
                 <div class="form-group">
                     <form:label path="quantity">Quantity</form:label>
-                    <form:textarea path="quantity" class="form-control" placeholder="Quantity"/>
+                    <form:input path="quantity" class="form-control" placeholder="Quantity"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Order</button>
             </form:form>

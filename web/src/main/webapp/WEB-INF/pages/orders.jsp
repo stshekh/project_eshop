@@ -20,6 +20,7 @@
                         <tr>
                             <th scope="col">Created</th>
                             <th scope="col">Item name</th>
+                            <th scope="col">Price per item</th>
                             <th scope="col">Username</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Status</th>
@@ -31,6 +32,7 @@
 
                                 <td>${order.created}</td>
                                 <td>${order.item.getName()}</td>
+                                <td>${order.item.price}</td>
                                 <td>${order.user.getName()}</td>
                                 <td>${order.quantity}</td>
                                 <td>${order.status}</td>

@@ -24,16 +24,19 @@ public class ItemsController {
     private final Validator itemValidator;
     private final ItemService itemService;
     private final OrderService orderService;
+    private final Validator orderValidator;
 
     @Autowired
     public ItemsController(
             Validator itemValidator,
             ItemService itemService,
-            OrderService orderService
+            OrderService orderService,
+            Validator orderValidator
     ) {
         this.itemValidator = itemValidator;
         this.itemService = itemService;
         this.orderService = orderService;
+        this.orderValidator = orderValidator;
     }
 
     //ShowAllItems
@@ -137,10 +140,16 @@ public class ItemsController {
     public String addItemsToOrder(
             @ModelAttribute("order") OrderDTO order,
             @PathVariable("idItem") Long idItem,
+            BindingResult bindingResult,
             ModelMap modelMap
     ) {
-        orderService.save(order, idItem);
-        modelMap.addAttribute("order", order);
-        return "redirect:/orders/users";
+        orderValidator.validate(order, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "orders.create";
+        } else {
+            orderService.save(order, idItem);
+            modelMap.addAttribute("order", order);
+            return "redirect:/orders/users";
+        }
     }
 }

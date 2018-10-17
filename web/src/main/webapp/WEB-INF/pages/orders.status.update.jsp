@@ -13,26 +13,34 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4 shadow-lg bg-white rounded">
+        <div class="col-md-6 shadow-lg bg-white rounded">
             <form:errors path="*" cssClass="error"/>
-            <form:form action="${pageContext.request.contextPath}/orders/${order.user.getId()}/${order.item.getId()}/status" modelAttribute="order"
-                       method="post">
+            <form:form
+                    action="${pageContext.request.contextPath}/orders/${order.user.getId()}/${order.item.getId()}/status"
+                    modelAttribute="order"
+                    method="post">
                 <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">Item name</th>
+                        <th scope="col">Customer name</th>
                         <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
+                        <td>${order.item.getName()}</td>
                         <td>${order.user.getName()}</td>
                         <td><select id="status" name="status">
                             <option value="NEW" ${order.status.equals("NEW")? 'selected':''}>NEW</option>
-                            <option value="REVIEWING" ${order.status.equals("REVIEWING")? 'selected':''}>REVIEWING</option>
-                            <option value="IN_PROGRESS" ${order.status.equals("IN_PROGRESS")? 'selected':''}>IN_PROGRESS</option>
-                            <option value="DELIVERED" ${order.status.equals("DELIVERED")? 'selected':''}>DELIVERED</option>
+                            <option value="REVIEWING" ${order.status.equals("REVIEWING")? 'selected':''}>REVIEWING
+                            </option>
+                            <option value="IN_PROGRESS" ${order.status.equals("IN_PROGRESS")? 'selected':''}>
+                                IN_PROGRESS
+                            </option>
+                            <option value="DELIVERED" ${order.status.equals("DELIVERED")? 'selected':''}>DELIVERED
+                            </option>
                         </select>
                         </td>
                         <td>

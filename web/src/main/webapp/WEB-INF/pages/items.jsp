@@ -4,21 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-        var numCount = document.getElementById('num_count');
-        var plusBtn = document.getElementById('button_plus');
-        var minusBtn = document.getElementById('button_minus');
-        plusBtn.onclick = function () {
-            var qty = parseInt(numCount.value);
-            qty = qty + 1;
-            numCount.value = qty;
-        }
-        minusBtn.onclick = function () {
-            var qty = parseInt(numCount.value);
-            qty = qty - 1;
-            numCount.value = qty;
-        }
-    </script>
+
     <jsp:include page="util/head.jsp"/>
     <title>Items</title>
 </head>
@@ -59,7 +45,7 @@
                                 <td>${item.name}</td>
                                 <td>${item.description}</td>
                                 <td>${item.uniqueNumber}</td>
-                                <td>${item.price}$</td>
+                                <td>${item.price}BYN</td>
                                 <security:authorize access="hasAuthority('MANAGE_ITEMS')">
                                     <td>
                                         <a href="${pageContext.request.contextPath}/items/${item.id}"

@@ -23,7 +23,6 @@ public class Discount implements Serializable {
     @Column(name = "EXPIRATION_DATE")
     private LocalDateTime expDate;
 
-    //TODO create Unidirectional mapping with items
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "T_DISCOUNT_ITEM",
