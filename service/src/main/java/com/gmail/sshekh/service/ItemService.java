@@ -29,4 +29,6 @@ public interface ItemService {
     Integer countAllItems();
 
     ItemDTO findOne(Long id);
+
+    void delete(Long id);
 }

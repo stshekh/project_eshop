@@ -1,8 +1,10 @@
 package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.service.ItemService;
+import com.gmail.sshekh.service.OrderService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.ItemDTO;
+import com.gmail.sshekh.service.dto.OrderDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,14 +23,17 @@ import static com.gmail.sshekh.service.utils.PaginationUtil.getNumberOfPages;
 public class ItemsController {
     private final Validator itemValidator;
     private final ItemService itemService;
+    private final OrderService orderService;
 
     @Autowired
     public ItemsController(
             Validator itemValidator,
-            ItemService itemService
+            ItemService itemService,
+            OrderService orderService
     ) {
         this.itemValidator = itemValidator;
         this.itemService = itemService;
+        this.orderService = orderService;
     }
 
     //ShowAllItems
@@ -113,5 +118,29 @@ public class ItemsController {
             modelMap.addAttribute("item", item);
             return "redirect:/users";
         }
+    }
+
+
+    @GetMapping(value = "/{id}/orders/create")
+    @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+    public String getOrderCreatePage(
+            @PathVariable("id") Long id,
+            ModelMap modelMap
+    ) {
+        modelMap.addAttribute("order", new OrderDTO());
+        modelMap.addAttribute("item", itemService.findOne(id));
+        return "orders.create";
+    }
+
+    @PostMapping(value = "/{idItem}/orders/create")
+    @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+    public String addItemsToOrder(
+            @ModelAttribute("order") OrderDTO order,
+            @PathVariable("idItem") Long idItem,
+            ModelMap modelMap
+    ) {
+        orderService.save(order, idItem);
+        modelMap.addAttribute("order", order);
+        return "redirect:/orders/users";
     }
 }

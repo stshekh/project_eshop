@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
@@ -48,13 +49,14 @@ public class OrderServiceImpl implements OrderService {
     private ItemService itemService;
 
     @Override
-    public void save(OrderDTO orderDTO) {
-        //TODO test either it works or not
-        Item item = itemDao.findOne(orderDTO.getItem().getId());
-        User user = userDao.findOne(orderDTO.getUser().getId());
+    public void save(OrderDTO orderDTO, Long idItem) {
+        UserPrincipal userPrincipal = getLoggedInUser();
+        Item item = itemDao.findOne(idItem);
+        User user = userDao.findOne(userPrincipal.getId());
         Order order = new Order(user, item);
         order.setQuantity(orderDTO.getQuantity());
-        order.setCreated(orderDTO.getCreated());
+        order.setCreated(LocalDateTime.now());
+        order.setStatus(StatusEnum.NEW);
         user.getOrders().add(order);
         item.getOrders().add(order);
         userDao.update(user);

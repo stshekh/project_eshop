@@ -1,6 +1,7 @@
 package com.gmail.sshekh.service.impl;
 
 import com.gmail.sshekh.dao.ItemDao;
+import com.gmail.sshekh.dao.OrderDao;
 import com.gmail.sshekh.dao.model.Item;
 import com.gmail.sshekh.service.DiscountService;
 import com.gmail.sshekh.service.ItemService;
@@ -25,6 +26,8 @@ public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger(ItemServiceImpl.class);
     @Autowired
     private ItemDao itemDao;
+    @Autowired
+    private OrderDao orderDao;
     @Autowired
     @Qualifier("itemDTOConverter")
     private DTOConverter<Item, ItemDTO> itemDTOConverter;
@@ -104,6 +107,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO findOne(Long id) {
         return itemDTOConverter.toDTO(itemDao.findOne(id));
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (orderDao.getOrderByItemId(id) == null) {
+            itemDao.deleteById(id);
+        }
     }
 
     @Override

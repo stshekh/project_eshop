@@ -14,4 +14,6 @@ public interface OrderDao extends GenericDao<Order> {
     List<Order> findAll(int firstPosition, int maxOnPage);
 
     Order getOrderByOrderId(OrderId id);
+
+    Order getOrderByItemId(Long id);
 }

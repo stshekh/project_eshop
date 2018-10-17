@@ -16,7 +16,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     @Override
     public List<Order> findOrdersByUserId(Long id, int firstPosition, int maxOnPage) {
-        String hql = "FROM Order AS o WHERE o.user.id=:id";
+        String hql = "FROM Order AS o WHERE o.user.id=:id ORDER BY o.created DESC";
         Query query = getCurrentSession().createQuery(hql);
         query.setFirstResult(firstPosition);
         query.setMaxResults(maxOnPage);
@@ -43,6 +43,14 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
     @Override
     public Order getOrderByOrderId(OrderId id) {
         String hql = "FROM Order AS o WHERE o.id=:id";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("id", id);
+        return (Order) query.uniqueResult();
+    }
+
+    @Override
+    public Order getOrderByItemId(Long id) {
+        String hql = "FROM Order AS o WHERE o.id.itemId=:id";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("id", id);
         return (Order) query.uniqueResult();

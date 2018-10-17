@@ -68,20 +68,11 @@
                                     </td>
                                 </security:authorize>
                                 <security:authorize access="hasAuthority('VIEW_PROFILE')">
-                                    <form action="${pageContext.request.contextPath}/items/${item.id}/orders/create"
-                                          method="post">
-                                        <td>
-                                            <div class="input-group quantity_goods">
-                                                <input type="number" step="1" min="1" id="num_count"
-                                                       name="quantity" value="1" title="Qty">
-                                                <input type="button" value="-" id="button_minus">
-                                                <input type="button" value="+" id="button_plus">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-outline-success">Add to cart</button>
-                                        </td>
-                                    </form>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/items/${item.id}/orders/create"
+                                           class="btn btn-primary" aria-pressed="true"
+                                           role="button">Add to cart</a>
+                                    </td>
                                 </security:authorize>
                             </tr>
                         </c:forEach>
