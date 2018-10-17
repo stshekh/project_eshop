@@ -1,6 +1,7 @@
 package com.gmail.sshekh.controllers.properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,7 @@ public class PageProperties {
     private String commentCreatePage;
     private String usersBusinessCards;
     private String usersCreateBusinessCard;
+    private String fileUploadPagePath;
 
     @PostConstruct
     public void initialize() {
@@ -50,6 +52,11 @@ public class PageProperties {
         this.usersBusinessCards = environment.getProperty("business.cards.page");
         this.usersCreateBusinessCard = environment.getProperty("business.card.create.page");
         this.userRegisterPagePath = environment.getProperty("user.register.page.path");
+        this.fileUploadPagePath = environment.getProperty("items.upload.page");//TODO CHANGE PATH
+    }
+
+    public String getFileUploadPagePath() {
+        return fileUploadPagePath;
     }
 
     public String getUserRegisterPagePath() {

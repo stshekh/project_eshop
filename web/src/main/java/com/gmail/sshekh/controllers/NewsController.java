@@ -6,7 +6,6 @@ import com.gmail.sshekh.service.NewsService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.CommentDTO;
 import com.gmail.sshekh.service.dto.NewsDTO;
-import com.gmail.sshekh.service.dto.UserDTO;
 import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +14,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
-import static com.gmail.sshekh.controllers.utils.PaginationUtil.COMMENTS_PER_PAGE;
-import static com.gmail.sshekh.controllers.utils.PaginationUtil.NEWS_PER_PAGE;
-import static com.gmail.sshekh.controllers.utils.PaginationUtil.getNumberOfPages;
-import static com.gmail.sshekh.controllers.utils.UsersLoginUtil.getLoggedInUser;
+import static com.gmail.sshekh.service.utils.PaginationUtil.*;
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
 
 @Controller
 @RequestMapping("/news")
@@ -45,14 +41,15 @@ public class NewsController {
 
     //ShowAllNews
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('MANAGE_ITEMS','VIEW_PROFILE')")
     public String getNews(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             ModelMap modelMap
     ) {
         Integer totalPages = getNumberOfPages(newsService.countAllNews(), NEWS_PER_PAGE);
+        modelMap.addAttribute("pages", totalPages);
         List<NewsDTO> newsList = newsService.findAll(page, NEWS_PER_PAGE);
         modelMap.addAttribute("newsList", newsList);
-        modelMap.addAttribute("pages", totalPages);
         return pageProperties.getNewsPagePath();
     }
 
@@ -71,8 +68,6 @@ public class NewsController {
             @ModelAttribute("news") NewsDTO news,
             ModelMap modelMap
     ) {
-        UserPrincipal userPrincipal = getLoggedInUser();
-        news.setUser(userService.findUserById(userPrincipal.getId()));
         news = newsService.save(news);
         modelMap.addAttribute("news", news);
         return "redirect:/news";
@@ -90,22 +85,24 @@ public class NewsController {
         return "redirect:/news";
     }
 
+
     @GetMapping(value = "/show/{id}")
+    @PreAuthorize("hasAnyAuthority('MANAGE_ITEMS','VIEW_PROFILE')")
     public String showOneNewsPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @PathVariable("id") Long id,
             ModelMap modelMap
     ) {
         Integer totalPages = getNumberOfPages(commentService.countCommentsPerArticle(id), COMMENTS_PER_PAGE);
-        NewsDTO news = newsService.findOne(id);
-        List<CommentDTO> comments = commentService.getCommentsByNewsId(id, page, COMMENTS_PER_PAGE);
-        modelMap.addAttribute("news", news);
-        modelMap.addAttribute("comments", comments);
         modelMap.addAttribute("pages", totalPages);
+        NewsDTO news = newsService.findOne(id);
+        modelMap.addAttribute("news", news);
+        List<CommentDTO> comments = commentService.getCommentsByNewsId(id, page, COMMENTS_PER_PAGE);
+        modelMap.addAttribute("comments", comments);
         return pageProperties.getOneNewsPage();
     }
 
-    //Shows one news page
+    //Redirects to update page
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGE_ITEMS')")
     public String getNews(@PathVariable("id") Long id, ModelMap modelMap) {
@@ -114,7 +111,7 @@ public class NewsController {
         return pageProperties.getNewsUpdatePage();
     }
 
-    //Updates news
+    //Updates article
     @PostMapping(value = "/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGE_ITEMS')")
     public String updateNews(
@@ -122,9 +119,8 @@ public class NewsController {
             @ModelAttribute NewsDTO news,
             ModelMap modelMap
     ) {
-        UserPrincipal userPrincipal = getLoggedInUser();
         news.setId(id);
-        news = newsService.update(news, userPrincipal.getId());
+        news = newsService.update(news);
         modelMap.addAttribute("news", news);
         return "redirect:/news";
     }

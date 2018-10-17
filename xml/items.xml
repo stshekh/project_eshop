@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<store>
+    <thing>
+        <name>Facade Miracle</name>
+        <description>Short description
+        </description>
+        <uniqueNumber>0</uniqueNumber>	
+        <price>178.11</price>
+		<isAlive>true</isAlive>
+    </thing>
+    <thing>
+        <name>Facade syberia</name>
+        <description>Short description2
+        </description>
+        <uniqueNumber>0</uniqueNumber>	
+        <price>114.12</price>
+		<isAlive>true</isAlive>   
+    </thing>
+	    <thing>
+        <name>Facade mirage</name>
+        <description>Short description2
+        </description>
+        <uniqueNumber>0</uniqueNumber>	
+        <price>153.99</price>
+		<isAlive>true</isAlive>   
+    </thing>
+	    <thing>
+        <name>Facade Milano</name>
+        <description>Short description2
+        </description>
+        <uniqueNumber>0</uniqueNumber>	
+        <price>189.1</price>
+		<isAlive>true</isAlive>   
+    </thing>
+	    <thing>
+        <name>Facade Modern</name>
+        <description>Short description2
+        </description>
+        <uniqueNumber>0</uniqueNumber>	
+        <price>140</price>
+		<isAlive>true</isAlive>   
+    </thing>
+</store>

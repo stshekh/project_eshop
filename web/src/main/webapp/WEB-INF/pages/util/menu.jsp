@@ -17,6 +17,16 @@
                     <a class="nav-link disabled" href=${pageContext.request.contextPath}/news>News</a>
                 </li>
             </security:authorize>
+            <security:authorize access="hasAnyAuthority('MANAGE_ITEMS','VIEW_PROFILE')">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href=${pageContext.request.contextPath}/items>Items</a>
+                </li>
+            </security:authorize>
+            <security:authorize access="hasAnyAuthority('MANAGE_ITEMS','VIEW_PROFILE')">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href=${pageContext.request.contextPath}/orders>Orders</a>
+                </li>
+            </security:authorize>
         </ul>
         <security:authorize access="isAuthenticated()">
             <p class="navbar-text navbar-right">Signed in as <a

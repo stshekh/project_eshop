@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource({"classpath:database.properties", "classpath:page.properties"})
+@PropertySource({"classpath:database.properties", "classpath:page.properties", "classpath:file.properties"})
 @ComponentScan(basePackages = {
         "com.gmail.sshekh.service",
         "com.gmail.sshekh.dao",

@@ -1,15 +1,16 @@
 package com.gmail.sshekh.service;
 
-import com.gmail.sshekh.dao.model.BusinessCard;
 import com.gmail.sshekh.service.dto.BusinessCardDTO;
 
 import java.util.List;
 
 public interface BusinessCardService {
 
-    BusinessCardDTO save(BusinessCardDTO businessCard, Long id);
+    BusinessCardDTO save(BusinessCardDTO businessCard);
 
     void deleteBusinessCardById(Long id);
 
-    List<BusinessCardDTO> getBusinessCardsByUserId(Long id);
+    List<BusinessCardDTO> getUsersBusinessCards();
+
+    List<BusinessCardDTO> getUsersBusinessCards(Long id);
 }

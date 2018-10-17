@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 public interface CommentService {
-    CommentDTO save(CommentDTO commentDTO, Long idNews, Long idUser);
+
+    CommentDTO save(CommentDTO commentDTO, Long idNews);
 
     CommentDTO update(CommentDTO commentDTO);
 

@@ -5,9 +5,10 @@ import com.gmail.sshekh.service.dto.NewsDTO;
 import java.util.List;
 
 public interface NewsService {
+
     NewsDTO save(NewsDTO newsDTO);
 
-    NewsDTO update(NewsDTO newsDTO, Long userId);
+    NewsDTO update(NewsDTO newsDTO);
 
     List<NewsDTO> findAll(int startPosition, int maxResult);
 

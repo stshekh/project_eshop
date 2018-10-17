@@ -15,7 +15,7 @@ public class NewsDaoImpl extends GenericDaoImpl<News> implements NewsDao {
 
     @Override
     public List<News> findAllNews(int startPosition, int maxResult) {
-        String hql = "FROM News AS n ORDER BY n.created";//TODO ask why it doesn't show news
+        String hql = "FROM News AS n ORDER BY n.created DESC";//TODO ask why it doesn't show news
         Query query = getCurrentSession().createQuery(hql);
         query.setFirstResult(startPosition);
         query.setMaxResults(maxResult);

@@ -41,7 +41,7 @@
                            value="${user.password}"/>
                 </div>
                 <div>
-                    <a href=${pageContext.request.contextPath}/users/${user.id}/businessCard" />">Business cards</a>
+                    <a href=${pageContext.request.contextPath}/users/${user.id}/businessCard" />Business cards</a>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form:form>

@@ -55,9 +55,20 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void delete(ItemDTO itemDTO) {
-        Item item = itemConverter.toEntity(itemDTO);
-        itemDao.delete(item);
+    public List<ItemDTO> findAll(int startPosition, int maxOnPage) {
+        int firstPosition;
+        if (startPosition > 1)
+            firstPosition = (startPosition - 1) * maxOnPage;
+        else firstPosition = 0;
+        List<Item> items = itemDao.getAllItems(firstPosition, maxOnPage);
+        return itemDTOConverter.toDTOList(items);
+    }
+
+    @Override
+    public void remove(Long id) {
+        Item item = itemDao.findOne(id);
+        item.setEnable(false);
+        itemDao.update(item);
     }
 
     @Override
@@ -79,6 +90,11 @@ public class ItemServiceImpl implements ItemService {
         List<ItemDTO> itemDTOS = itemDTOConverter.toDTOList(items);
         int index = random.nextInt(itemDTOS.size());
         return itemDTOS.get(index);
+    }
+
+    @Override
+    public Integer countAllItems() {
+        return itemDao.countAllItems().intValue();
     }
 
     @Override

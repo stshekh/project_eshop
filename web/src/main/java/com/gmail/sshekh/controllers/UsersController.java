@@ -12,9 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.sshekh.controllers.utils.PaginationUtil.USERS_PER_PAGE;
-import static com.gmail.sshekh.controllers.utils.PaginationUtil.getNumberOfPages;
-import static com.gmail.sshekh.controllers.utils.UsersLoginUtil.getLoggedInUser;
+import static com.gmail.sshekh.service.utils.PaginationUtil.USERS_PER_PAGE;
+import static com.gmail.sshekh.service.utils.PaginationUtil.getNumberOfPages;
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
 
 import java.util.List;
 
@@ -60,9 +60,9 @@ public class UsersController {
             ModelMap modelMap
     ) {
         Integer totalPages = getNumberOfPages(userService.countUsers(), USERS_PER_PAGE);
+        modelMap.addAttribute("pages", totalPages);
         List<UserDTO> users = userService.findAll(page, USERS_PER_PAGE);
         modelMap.addAttribute("users", users);
-        modelMap.addAttribute("pages", totalPages);
         return pageProperties.getUsersPagePath();
     }
 
@@ -112,9 +112,9 @@ public class UsersController {
     @PreAuthorize("hasAuthority('VIEW_USERS')")
     public String getUsersRole(@PathVariable("id") Long id, ModelMap modelMap) {
         UserRoleDTO user = userRoleService.getUsersRole(id);
+        modelMap.addAttribute("user", user);
         List<RoleDTO> roles = roleService.findAll();
         modelMap.addAttribute("roles", roles);
-        modelMap.addAttribute("user", user);
         return pageProperties.getUserRoleUpdatePage();
     }
 
@@ -194,7 +194,7 @@ public class UsersController {
     }
 
     @GetMapping(value = "/profile")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String createProfilePage(ModelMap modelMap) {
         UserPrincipal userPrincipal = getLoggedInUser();
         Long id = userPrincipal.getId();
@@ -209,60 +209,58 @@ public class UsersController {
 
     //Creates users profile
     @PostMapping(value = "/profile")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String createProfile(
             @ModelAttribute ProfileDTO profile,
             ModelMap modelMap
     ) {
-        UserPrincipal userPrincipal = getLoggedInUser();
-        profile.setUserId(userPrincipal.getId());
+
         profile = profileService.save(profile);
         modelMap.addAttribute("profile", profile);
-        return "redirect:/users";
+        return "redirect:/items";
 
     }
 
     @GetMapping(value = "/profile/update")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String updateProfilePage(ModelMap modelMap) {
         UserPrincipal userPrincipal = getLoggedInUser();
         Long id = userPrincipal.getId();
         UserDTO user = userService.findUserById(id);
+        modelMap.addAttribute("user", user);
         ProfileDTO profile = profileService.findProfileById(id);
         modelMap.addAttribute("profile", profile);
-        modelMap.addAttribute("user", user);
         return pageProperties.getProfilePagePath();
     }
 
     //Updates users profile
     @PostMapping(value = "/profile/update")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String updateProfile(
             @ModelAttribute ProfileDTO profile,
+            @ModelAttribute UserDTO user,
             ModelMap modelMap
     ) {
-        UserPrincipal userPrincipal = getLoggedInUser();
-        UserDTO user = userService.findUserById(userPrincipal.getId());
-        profile.setUserId(userPrincipal.getId());
+        //TODO create validators
         profile = profileService.update(profile);
-        user = userService.update(user);
         modelMap.addAttribute("profile", profile);
+        UserPrincipal userPrincipal = getLoggedInUser();
+        user.setId(userPrincipal.getId());
+        user = userService.update(user);
         modelMap.addAttribute("user", user);
-        return "redirect:/users";
+        return "redirect:/items";
     }
 
     @GetMapping(value = "/businessCard")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String getBusinessCards(ModelMap modelMap) {
-        UserPrincipal userPrincipal = getLoggedInUser();
-        Long id = userPrincipal.getId();
-        List<BusinessCardDTO> businessCards = businessCardService.getBusinessCardsByUserId(id);
+        List<BusinessCardDTO> businessCards = businessCardService.getUsersBusinessCards();
         modelMap.addAttribute("businessCards", businessCards);
         return pageProperties.getUsersBusinessCards();
     }
 
     @GetMapping(value = "/businessCard/create")
-    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE', 'VIEW_USERS')")
+    @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String getBusinessCardPage(ModelMap modelMap) {
         modelMap.addAttribute("businessCard", new BusinessCardDTO());
         return pageProperties.getUsersCreateBusinessCard();
@@ -276,12 +274,11 @@ public class UsersController {
             ModelMap modelMap
     ) {
         businessCardValidator.validate(businessCard, result);
-        UserPrincipal userPrincipal = getLoggedInUser();
         if (result.hasErrors()) {
             modelMap.addAttribute("businessCard", businessCard);
             return pageProperties.getUsersCreateBusinessCard();
         } else {
-            businessCardService.save(businessCard, userPrincipal.getId());
+            businessCardService.save(businessCard);
             return "redirect:/users/businessCard";
         }
     }

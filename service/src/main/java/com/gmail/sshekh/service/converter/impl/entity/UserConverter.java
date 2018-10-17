@@ -1,5 +1,6 @@
 package com.gmail.sshekh.service.converter.impl.entity;
 
+import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.*;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.dto.*;
@@ -25,16 +26,26 @@ public class UserConverter implements Converter<UserDTO, User> {
     @Autowired
     @Qualifier("businessCardConverter")
     private Converter<BusinessCardDTO, BusinessCard> businessCardConverter;
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public User toEntity(UserDTO dto) {
         User user = new User();
-        user.setId(dto.getId());
-        user.setEmail(dto.getEmail());
-        user.setFirstName(dto.getName());
-        user.setLastName(dto.getSurname());
+        if (dto.getId() != null) {
+            user = userDao.findOne(dto.getId());
+        }
+        if (dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
+        }
+        if (dto.getName() != null) {
+            user.setFirstName(dto.getName());
+        }
+        if (dto.getSurname() != null) {
+            user.setLastName(dto.getSurname());
+        }
         user.setPassword(dto.getPassword());
-        user.setEnabled(dto.isEnabled());
+        user.setEnabled(true);
         if (!dto.getComments().isEmpty()) {
             user.setComments(commentConverter.toEntityList(dto.getComments()));
         }

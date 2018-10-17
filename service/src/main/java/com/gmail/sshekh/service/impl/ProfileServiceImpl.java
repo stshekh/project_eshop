@@ -7,6 +7,7 @@ import com.gmail.sshekh.service.ProfileService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.ProfileDTO;
+import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
 
 @Service
 @Transactional
@@ -36,6 +39,8 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDTO save(ProfileDTO profileDTO) {
         Profile profile = profileConverter.toEntity(profileDTO);
+        UserPrincipal userPrincipal = getLoggedInUser();
+        profile.setUserId(userPrincipal.getId());
         profile.setUser(userDao.findUserById(profile.getUserId()));
         profileDao.create(profile);
         return profileDTOConverter.toDTO(profile);
@@ -43,7 +48,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDTO update(ProfileDTO profileDTO) {
+        UserPrincipal userPrincipal = getLoggedInUser();
         Profile profile = profileConverter.toEntity(profileDTO);
+        profile.setUserId(userPrincipal.getId());
         profileDao.update(profile);
         return profileDTOConverter.toDTO(profile);
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository
+@Repository("itemDao")
 public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
     public ItemDaoImpl() {
         super(Item.class);
@@ -42,5 +42,19 @@ public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
         return (Long) query.uniqueResult();
     }
 
+    @Override
+    public Long countAllItems() {
+        String hql = "SELECT COUNT(*) FROM Item AS i";
+        Query query = getCurrentSession().createQuery(hql);
+        return (Long) query.uniqueResult();
+    }
 
+    @Override
+    public List<Item> getAllItems(int startPosition, int maxResult) {
+        String hql = "FROM Item AS i WHERE i.enable IS TRUE ORDER BY i.name ASC";
+        Query query = getCurrentSession().createQuery(hql);
+        query.setFirstResult(startPosition);
+        query.setMaxResults(maxResult);
+        return query.list();
+    }
 }

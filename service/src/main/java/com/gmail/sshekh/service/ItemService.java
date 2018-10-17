@@ -13,7 +13,9 @@ public interface ItemService {
 
     List<ItemDTO> findAll();
 
-    void delete(ItemDTO itemDTO);
+    List<ItemDTO> findAll(int startPosition, int maxOnPage);
+
+    void remove(Long id);
 
     Set<ItemDTO> showItems(BigDecimal rate);
 
@@ -22,4 +24,6 @@ public interface ItemService {
     Set<ItemDTO> showItemsOfPrice(BigDecimal fromPrice, BigDecimal toPrice);
 
     ItemDTO getItemOfPrice(BigDecimal fromPrice, BigDecimal toPrice);
+
+    Integer countAllItems();
 }

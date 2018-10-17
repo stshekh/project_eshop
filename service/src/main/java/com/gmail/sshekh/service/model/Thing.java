@@ -1,19 +1,27 @@
-package com.gmail.sshekh.service.dto;
+package com.gmail.sshekh.service.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-public class ItemDTO {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "thing", propOrder = {
+        "id",
+        "name",
+        "description",
+        "uniqueNumber",
+        "price",
+        "isAlive"
+})
+public class Thing {
+
     private Long id;
     private String name;
     private String description;
     private String uniqueNumber;
     private BigDecimal price;
-    private List<OrderDTO> orders = new ArrayList<>();
-    private Set<DiscountDTO> discounts = new HashSet<>();
+    private Boolean isAlive;
 
     public Long getId() {
         return id;
@@ -55,19 +63,11 @@ public class ItemDTO {
         this.price = price;
     }
 
-    public List<OrderDTO> getOrders() {
-        return orders;
+    public Boolean getAlive() {
+        return isAlive;
     }
 
-    public void setOrders(List<OrderDTO> orders) {
-        this.orders = orders;
-    }
-
-    public Set<DiscountDTO> getDiscounts() {
-        return discounts;
-    }
-
-    public void setDiscounts(Set<DiscountDTO> discounts) {
-        this.discounts = discounts;
+    public void setAlive(Boolean alive) {
+        isAlive = alive;
     }
 }

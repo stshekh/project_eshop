@@ -13,6 +13,7 @@ import com.gmail.sshekh.service.dto.BusinessCardDTO;
 import com.gmail.sshekh.service.dto.DiscountDTO;
 import com.gmail.sshekh.service.dto.OrderDTO;
 import com.gmail.sshekh.service.dto.UserDTO;
+import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -64,12 +67,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
     public UserDTO update(UserDTO userDTO) {
-        List<OrderDTO> orderDTOS = userDTO.getOrders();
-        List<Order> orders = orderConverter.toEntityList(orderDTOS);
-        User user = userConverter.toEntity(userDTO);
+        User user = userDao.findOne(userDTO.getId());
+        List<Order> orders = user.getOrders();
+        user = userConverter.toEntity(userDTO);
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setRole(roleDao.findRoleById(userDao.getRoleIdByUserId(user.getId())));
         user.setOrders(orders);
+        if (userDao.findUserById(userDTO.getId()).getComments() != null) {
+            user.setComments(userDao.findUserById(userDTO.getId()).getComments());
+        }
         userDao.update(user);
         //TODO order user converter correctly
         return userDTOConverter.toDTO(user);

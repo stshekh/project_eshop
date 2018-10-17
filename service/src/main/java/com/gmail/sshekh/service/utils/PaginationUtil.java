@@ -1,4 +1,4 @@
-package com.gmail.sshekh.controllers.utils;
+package com.gmail.sshekh.service.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

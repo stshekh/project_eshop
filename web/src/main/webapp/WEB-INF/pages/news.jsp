@@ -52,7 +52,6 @@
                         <c:forEach items="${newsList}" var="news">
                             <tr>
                                 <th scope="row"><input type="checkbox" name="ids" value="${news.id}"></th>
-                                </th>
                                 <td>${news.title}</td>
                                 <td class="item-node">
                                     <div class="ellipsis">${news.content}</div>

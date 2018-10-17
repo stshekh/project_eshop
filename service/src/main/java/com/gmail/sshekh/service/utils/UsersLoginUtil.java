@@ -1,4 +1,4 @@
-package com.gmail.sshekh.controllers.utils;
+package com.gmail.sshekh.service.utils;
 
 import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.security.core.Authentication;

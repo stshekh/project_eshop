@@ -3,22 +3,18 @@ package com.gmail.sshekh.controllers;
 import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
-import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.CommentDTO;
-import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.sshekh.controllers.utils.UsersLoginUtil.getLoggedInUser;
-
 @Controller
 @RequestMapping("/news/{idNews}")
 public class CommentsController {
+
     private final CommentService commentService;
-    private final UserService userService;
     private final PageProperties pageProperties;
     private final NewsService newsService;
 
@@ -26,12 +22,10 @@ public class CommentsController {
     public CommentsController(
             PageProperties pageProperties,
             CommentService commentService,
-            UserService userService,
             NewsService newsService
     ) {
         this.pageProperties = pageProperties;
         this.commentService = commentService;
-        this.userService = userService;
         this.newsService = newsService;
     }
 
@@ -64,8 +58,7 @@ public class CommentsController {
             @ModelAttribute("comment") CommentDTO comment,
             ModelMap modelMap
     ) {
-        UserPrincipal userPrincipal = getLoggedInUser();
-        commentService.save(comment, idNews, userPrincipal.getId());
+        commentService.save(comment, idNews);
         modelMap.addAttribute("comment", comment);
         return "redirect:/news/show/{idNews}";
     }

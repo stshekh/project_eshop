@@ -9,6 +9,7 @@ import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.CommentDTO;
+import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
 
 @Service
 @Transactional
@@ -40,13 +41,14 @@ public class CommentServiceImpl implements CommentService {
     private Converter<CommentDTO, Comment> commentConverter;
 
     @Override
-    public CommentDTO save(CommentDTO commentDTO, Long idNews, Long idUser) {
+    public CommentDTO save(CommentDTO commentDTO, Long idNews) {
         Comment comment = commentConverter.toEntity(commentDTO);
         comment.setCreated(LocalDateTime.now());
         comment.setNews(newsDao.findOne(idNews));
         List<Comment> comments = new ArrayList<>();
         comments.add(comment);
-        User user = userDao.findUserById(idUser);
+        UserPrincipal userPrincipal = getLoggedInUser();
+        User user = userDao.findUserById(userPrincipal.getId());
         user.setComments(comments);
         commentDao.create(comment);
         return commentDTOConverter.toDTO(comment);

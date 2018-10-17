@@ -10,9 +10,5 @@ public interface CommentDao extends GenericDao<Comment> {
 
     Long countCommentsPerArticle(Long id);
 
-    int deleteCommentsFromArticle(Long id);
-
     List<Comment> getCommentsPerArticle(Long id);
-
-    String getUserNameByCommentId(Long id);
 }

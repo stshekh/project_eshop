@@ -31,7 +31,7 @@ public class UserActionsTests {
         for (int i = 1; i <= 30; i++) {
             ItemDTO itemDTO = new ItemDTO();
             itemDTO.setName("Tov" + i);
-            itemDTO.setUnqueNumber("tov" + i);
+            itemDTO.setUniqueNumber("tov" + i);
             itemDTO.setPrice(BigDecimal.valueOf(fromAmount + random.nextInt(toAmount - fromAmount + 1)));
             itemDTO.setDescription(i + "sometext" + i);
             itemService.save(itemDTO);

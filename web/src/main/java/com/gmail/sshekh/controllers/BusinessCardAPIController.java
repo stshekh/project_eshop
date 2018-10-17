@@ -1,7 +1,6 @@
 package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.service.BusinessCardService;
-import com.gmail.sshekh.service.ProfileService;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.BusinessCardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
@@ -33,7 +31,7 @@ public class BusinessCardAPIController {
 
     @GetMapping(value = "/{id}/businessCards")
     public List<BusinessCardDTO> getUsersBusinessCards(@PathVariable(name = "id") Long id) {
-        return businessCardService.getBusinessCardsByUserId(id);
+        return businessCardService.getUsersBusinessCards(id);
     }
 
     @DeleteMapping(value = "/{id}/businessCard/{bId}")

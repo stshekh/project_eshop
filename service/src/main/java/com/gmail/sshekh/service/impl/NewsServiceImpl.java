@@ -5,9 +5,11 @@ import com.gmail.sshekh.dao.UserDao;
 import com.gmail.sshekh.dao.model.News;
 import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
+import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.converter.Converter;
 import com.gmail.sshekh.service.converter.DTOConverter;
 import com.gmail.sshekh.service.dto.NewsDTO;
+import com.gmail.sshekh.service.principal.UserPrincipal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.gmail.sshekh.service.utils.UsersLoginUtil.getLoggedInUser;
+
 @Service
 @Transactional
 public class NewsServiceImpl implements NewsService {
@@ -27,6 +31,8 @@ public class NewsServiceImpl implements NewsService {
     private NewsDao newsDao;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -39,15 +45,18 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsDTO save(NewsDTO newsDTO) {
         News news = newsConverter.toEntity(newsDTO);
+        UserPrincipal userPrincipal = getLoggedInUser();
+        news.setUser(userDao.findUserById(userPrincipal.getId()));
         news.setCreated(LocalDateTime.now());
         newsDao.create(news);
         return newsDTOConverter.toDTO(news);
     }
 
     @Override
-    public NewsDTO update(NewsDTO newsDTO, Long userId) {
+    public NewsDTO update(NewsDTO newsDTO) {
         News news = newsDao.findOne(newsDTO.getId());
-        news.setUser(userDao.findUserById(userId));
+        UserPrincipal userPrincipal = getLoggedInUser();
+        news.setUser(userDao.findUserById(userPrincipal.getId()));
         news.setTitle(newsDTO.getTitle());
         news.setContent(newsDTO.getContent());
         newsDao.update(news);
