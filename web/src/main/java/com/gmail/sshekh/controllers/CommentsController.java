@@ -1,10 +1,8 @@
 package com.gmail.sshekh.controllers;
 
-import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.CommentService;
 import com.gmail.sshekh.service.NewsService;
 import com.gmail.sshekh.service.dto.CommentDTO;
-import com.gmail.sshekh.service.dto.NewsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

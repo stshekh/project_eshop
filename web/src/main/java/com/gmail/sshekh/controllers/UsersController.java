@@ -28,6 +28,7 @@ public class UsersController {
     private final ProfileService profileService;
     private final Validator businessCardValidator;
     private final BusinessCardService businessCardService;
+    private final Validator userProfileValidator;
 
     @Autowired
     public UsersController(
@@ -37,7 +38,8 @@ public class UsersController {
             RoleService roleService,
             ProfileService profileService,
             Validator businessCardValidator,
-            BusinessCardService businessCardService
+            BusinessCardService businessCardService,
+            Validator userProfileValidator
     ) {
         this.userService = userService;
         this.userValidator = userValidator;
@@ -46,6 +48,7 @@ public class UsersController {
         this.profileService = profileService;
         this.businessCardValidator = businessCardValidator;
         this.businessCardService = businessCardService;
+        this.userProfileValidator = userProfileValidator;
     }
 
     //Shows all the users on page
@@ -196,13 +199,17 @@ public class UsersController {
     @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")
     public String createProfile(
             @ModelAttribute ProfileDTO profile,
-            ModelMap modelMap
+            ModelMap modelMap,
+            BindingResult result
     ) {
-
-        profile = profileService.save(profile);
-        modelMap.addAttribute("profile", profile);
-        return "redirect:/items";
-
+        userProfileValidator.validate(profile, result);
+        if (result.hasErrors()) {
+            return "users.profile.create";
+        } else {
+            profile = profileService.save(profile);
+            modelMap.addAttribute("profile", profile);
+            return "redirect:/items";
+        }
     }
 
     @GetMapping(value = "/profile/update")
@@ -225,7 +232,6 @@ public class UsersController {
             @ModelAttribute UserDTO user,
             ModelMap modelMap
     ) {
-        //TODO create validators
         profile = profileService.update(profile);
         modelMap.addAttribute("profile", profile);
         UserPrincipal userPrincipal = getLoggedInUser();
@@ -234,6 +240,7 @@ public class UsersController {
         modelMap.addAttribute("user", user);
         return "redirect:/items";
     }
+
 
     @GetMapping(value = "/businessCard")
     @PreAuthorize("hasAnyAuthority('VIEW_PROFILE')")

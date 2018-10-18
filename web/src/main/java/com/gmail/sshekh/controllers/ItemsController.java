@@ -2,7 +2,6 @@ package com.gmail.sshekh.controllers;
 
 import com.gmail.sshekh.service.ItemService;
 import com.gmail.sshekh.service.OrderService;
-import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.ItemDTO;
 import com.gmail.sshekh.service.dto.OrderDTO;
 import org.springframework.beans.factory.annotation.Autowired;

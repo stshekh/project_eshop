@@ -1,6 +1,5 @@
 package com.gmail.sshekh.controllers;
 
-import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.UploadService;
 import com.gmail.sshekh.service.properties.FileProperties;
 import org.springframework.beans.factory.annotation.Autowired;

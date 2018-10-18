@@ -1,6 +1,5 @@
 package com.gmail.sshekh.controllers;
 
-import com.gmail.sshekh.controllers.properties.PageProperties;
 import com.gmail.sshekh.service.UserService;
 import com.gmail.sshekh.service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 public class LoginController {
